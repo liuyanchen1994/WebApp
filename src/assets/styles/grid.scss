@@ -1,0 +1,43 @@
+//布局系统
+div {
+
+}
+
+.container-flex {
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: column;
+    min-height: 100vh;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.row-left {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.row-right {
+    display: flex;
+    flex-flow: row-reverse wrap;
+}
+.fl-center{
+    justify-content: center
+}
+.column{
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+$weights:1 2 3 4 5 6 7 8 9 10 11 12;
+@each $weight in $weights {
+    .flex#{$weight} {
+        width:25/3*$weight/100*100%;
+    }
+    .offset#{$weight}{
+        margin-left:25/3*$weight/100*100%;
+    }
+}
