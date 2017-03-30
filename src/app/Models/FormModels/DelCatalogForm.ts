@@ -1,5 +1,5 @@
 
-import { Model } from "./Model"
+import { Model } from 'app/Models/Model';
 
 /**
  * 删除目录 

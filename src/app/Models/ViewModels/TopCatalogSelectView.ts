@@ -1,19 +1,19 @@
 
-import { Model } from "./Model"
+import { Model } from 'app/Models/Model';
 
 export interface TopCatalogSelectView extends Model {
 
     //
-    id: string
+    id: string;
 
     //
-    status: number
+    status: number;
 
     //
-    createdTime: Date
+    createdTime: Date;
 
     //
-    updatedTime: Date
+    updatedTime: Date;
 
 
     //
