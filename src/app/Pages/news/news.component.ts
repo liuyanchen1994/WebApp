@@ -12,10 +12,12 @@ export class NewsComponent implements OnInit {
   constructor(private service: BingNewsService) { }
 
   ngOnInit() {
-    this.service.getNews()
+    this.service.get()
       .subscribe(arg => {
 
         this.news = arg;
+        console.log(arg);
+
       });
   }
 

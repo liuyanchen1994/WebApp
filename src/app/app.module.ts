@@ -13,6 +13,7 @@ import { NewsComponent } from './Pages/news/news.component';
 import { DownloadComponent } from './Pages/download/download.component';
 import { NotFoundComponent } from './Pages/not-found/not-found.component';
 import { BingNewsService } from './Services/bing-news.service';
+import { BaseService } from "app/Services/base.service";
 
 const appRoutes: Routes = [
   { path: 'news', component: NewsComponent },
@@ -48,6 +49,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
+    BaseService,
     BingNewsService
   ],
   bootstrap: [AppComponent]
