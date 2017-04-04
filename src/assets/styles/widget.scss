@@ -74,30 +74,7 @@ button.default {
     @include buttonType($text-default, $bg-default);
 }
 
-//导航样式 app-title-bar
-app-title-bar {
-    background: $gr-dark;
-    color: $th-lighterAlt;
-    padding: .8rem;
-    align-items: baseline;
-    justify-content: space-between;
-    .app-title {
-        color: $th-secondary;
-        margin: 0 1rem;
-        cursor: pointer;
-        font-size: 1.2em;
-    }
-    .app-nav-location {
 
-    }
-    .title-bar-action{
-
-    }
-    .title-bar-user{
-
-    }
-
-}
 
 input,
 select,

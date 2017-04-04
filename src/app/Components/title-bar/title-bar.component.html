@@ -1,24 +1,35 @@
-<div class="row-left">
-    <div class="app-title">
-        <span routerLink="/">MSDev</span>
+<div class="container-fluid app-title-bar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 text-left">
+                <div class="row">
+                    <div class="col-12 col-md-auto">
+                        <span class="app-title" routerLink="/news">
+                            <strong>MSDev</strong>
+                        </span>
+                    </div>
+                    <div class="app-nav-location col">
+                        <!--导航路径-->
+                        <span>
+                            <a routerLink="/news">资讯</a>
+                        </span>
+                        <span>
+                            <a routerLink="/download">下载</a>
+                        </span>
+                    </div>
+                </div>
 
-    </div>
-    <div class="app-nav-location row">
-        <!--导航路径-->
-        <div class="nav">
-            <a routerLink="/news">资讯</a>
-        </div>
-        <div class="nav">
-            <a routerLink="/download">下载</a>
-        </div>
-    </div>
-</div>
+            </div>
 
-<div class="row-left">
-    <div class="title-bar-action">
-        <!--操作-->
+            <div class="col-md-6 text-right">
+                <span class="title-bar-action">
+                    <!--操作-->
+                </span>
+                <span class="title-bar-user fl-end">
+                    <!--用户信息及操作-->
+                </span>
+            </div>
+        </div>
     </div>
-    <div class="title-bar-user fl-end">
-        <!--用户信息及操作-->
-    </div>
+
 </div>

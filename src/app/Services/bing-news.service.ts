@@ -11,16 +11,11 @@ import { BaseService } from "app/Services/base.service";
 export class BingNewsService {
 
 
-  constructor(private service: BaseService) { }
-  // getNews(): Observable<BingNewsListView[]> {
-  //   return this.http
-  //     .get('http://api.msdev.cc/api/BingNews/PageList/1')
-  //     .map((response: Response) => response.json());
-  // }
+    constructor(private service: BaseService) { }
 
-  get(): Observable<BingNewsListView[]> {
-    let url = "http://api.msdev.cc/api/BingNews/PageList/1";
-    return this.service.get<BingNewsListView[]>(url);
+    get(): Observable<BingNewsListView[]> {
+        let url = "http://api.msdev.cc/api/BingNews/PageList/1";
+        return this.service.get<BingNewsListView[]>(url);
 
-  }
+    }
 }

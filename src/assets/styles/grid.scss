@@ -1,8 +1,4 @@
 //布局系统
-div {
-
-}
-
 .container-flex {
     display: flex;
     display: -webkit-flex;
@@ -25,7 +21,17 @@ div {
     flex-flow: row-reverse wrap;
 }
 .fl-center{
-    justify-content: center
+    display: flex;
+    justify-content: center;
+    
+}
+.fl-end{
+    display: flex;
+    justify-content: flex-end;
+}
+.fl-start{
+    display: flex;
+    justify-content: flex-start;
 }
 .column{
     display: flex;
@@ -39,5 +45,13 @@ $weights:1 2 3 4 5 6 7 8 9 10 11 12;
     }
     .offset#{$weight}{
         margin-left:25/3*$weight/100*100%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    @each $weight in $weights {     
+        .offset#{$weight}{
+            margin-left:1rem;
+        }
     }
 }

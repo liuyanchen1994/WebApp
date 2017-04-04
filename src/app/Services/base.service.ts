@@ -24,6 +24,7 @@ export class BaseService {
             })
             .catch(this.handleError);
     }
+
     post<T>(url: string, param: any): Observable<T> {
         let params = new URLSearchParams();
         for (var key in param) {
@@ -44,7 +45,7 @@ export class BaseService {
     }
 
     /**
-    * Handle HTTP error
+    * 处理http错误
     */
     private handleError(error: any) {
         let errMsg = (error.message) ? error.message :
