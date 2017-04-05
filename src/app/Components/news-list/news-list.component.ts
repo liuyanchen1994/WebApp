@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BingNewsService } from "app/Services/bing-news.service";
 import { BingNewsListView } from "app/Models/ViewModels/BingNewsListView";
+import { Toast } from "app/Helpers/Toast";
 
 @Component({
     selector: 'app-news-list',
@@ -12,14 +13,15 @@ export class NewsListComponent implements OnInit {
     constructor(private service: BingNewsService) { }
 
     ngOnInit() {
-
         this.service.get()
             .subscribe(arg => {
                 arg.forEach(element => {
-                    element.url = "";
+                    const start = element.url.indexOf("?r=");
+                    element.url = element.url.substring(start + 3, element.url.length);
+                    element.updatedTime = new Date(element.updatedTime);
+
                 });
                 this.news = arg;
             });
     }
-
 }

@@ -14,7 +14,7 @@ export class BingNewsService {
     constructor(private service: BaseService) { }
 
     get(): Observable<BingNewsListView[]> {
-        let url = "http://api.msdev.cc/api/BingNews/PageList/1";
+        const url = "http://api.msdev.cc/api/BingNews/PageList/1";
         return this.service.get<BingNewsListView[]>(url);
 
     }

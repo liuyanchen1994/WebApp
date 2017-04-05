@@ -1,8 +1,6 @@
 @import "./assets/styles/colors.scss";
 // @import "./assets/styles/grid.scss";
 // @import "./assets/styles/widget.scss";
-@import "./assets/styles/bootstrap.css";
-
 //全局设置
 body,
 html {
@@ -14,13 +12,12 @@ html {
     margin: 0;
 }
 
-* {
-    a,
-    a:hover,
-    a:visited,
-    a:link,
-    a:active {
-        text-decoration: none !important;
-        color:inherit !important;
-    }
+a,
+a:hover,
+a:visited,
+a:link,
+a:active {
+    text-decoration: none !important;
+    color:inherit;
+    
 }

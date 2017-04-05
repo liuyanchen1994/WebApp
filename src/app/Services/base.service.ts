@@ -12,10 +12,10 @@ export class BaseService {
     get<T>(url: string): Observable<T> {
         return this.http.get(url)
             .map((res: Response) => {
-                var re: ResultJson = res.json();
+                let re: ResultJson = res.json();
                 console.log(re);
-                if (re.errorCode == 0) {
-                    return re.data;
+                if (re.errorCode === 0) {
+                    return re.data as T;
                 } else {
                     console.log("failed");
 
@@ -27,7 +27,7 @@ export class BaseService {
 
     post<T>(url: string, param: any): Observable<T> {
         let params = new URLSearchParams();
-        for (var key in param) {
+        for (let key in param) {
             if (param.hasOwnProperty(key)) {
                 params.append(key, param[key]);
             }
@@ -35,8 +35,8 @@ export class BaseService {
         return this.http.post(url, params)
             .map((res: Response) => {
                 var re: ResultJson = res.json();
-                if (re.errorCode == 0) {
-                    return re.data;
+                if (re.errorCode === 0) {
+                    return re.data as T;
                 } else {
                     Toast.Error("加载失败");
                 }
