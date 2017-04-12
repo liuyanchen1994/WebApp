@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import { ResultJson } from "app/Models/Common/ResultJson";
 import { Toast } from "app/Helpers/Toast";
 
-
 @Injectable()
 export class BaseService {
     constructor(private http: Http) {
