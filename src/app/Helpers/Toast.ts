@@ -3,10 +3,6 @@
  */
 import * as $ from 'jquery';
 export class Toast {
-    constructor(parameters) {
-
-    }
-
     static Success(msg: string): void {
         return this.ActionInfo(msg, "success");
     }
@@ -21,7 +17,7 @@ export class Toast {
 
     static ActionInfo(msg: string, type: string = "success"): void {
         $(".toast").hide();
-        var toastTmp: string;
+        let toastTmp: string;
         let divClass: string;
         let msgClass: string;
         switch (type) {
@@ -42,9 +38,12 @@ export class Toast {
                 break;
         }
         toastTmp = `
-        <div class="alert alert-${divClass} toast" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <p class="text-${msgClass}">
+        <div class="alert alert-${divClass} toast" role="alert" 
+            style="position: absolute;right:0;bottom:0;width:200px">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+            <p class="text-${msgClass}">    
             <strong>${type!}</strong>
             </br>
             ${msg}

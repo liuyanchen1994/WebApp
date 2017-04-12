@@ -27,7 +27,7 @@ const appRoutes: Routes = [
   //   redirectTo: '/heroes',
   //   pathMatch: 'full'
   // },
-  { path: '**', component: NotFoundComponent }
+  { path: '**', component: NewsComponent }
 ];
 
 

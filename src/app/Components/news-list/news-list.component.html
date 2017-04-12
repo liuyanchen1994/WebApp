@@ -1,17 +1,20 @@
 <div class="container">
     <div class="row news-list" *ngFor="let item of news">
         <div class="col-12 col-md-auto hidden-sm-down">
-            <img src="{{item.thumbnailUrl}}" alt="">
+            <a href="{{item.url}}" target="_blank">
+                <img src="{{item.thumbnailUrl}}" alt="">
+            </a>
         </div>
         <div class="content col-md-8">
             <div class="news-title">
-                <a href="{{item.url}}">
+                <a href="{{item.url}}" target="_blank">
                     {{item.title}}
                 </a>
             </div>
 
+
             <div class="news-sectitle">
-                {{item.updatedTime}} {{item.provider}}
+                {{item.updatedTime.toLocaleDateString()}} {{item.provider}}
             </div>
             <div class="news-description">
                 {{item.description}}

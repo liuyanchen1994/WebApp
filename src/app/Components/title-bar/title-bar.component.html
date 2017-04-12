@@ -1,35 +1,22 @@
-<div class="container-fluid app-title-bar">
+<nav class="navbar navbar-toggleable-sm navbar-inverse bg-primary">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="container">
-        <div class="row">
-            <div class="col-md-6 text-left">
-                <div class="row">
-                    <div class="col-12 col-md-auto">
-                        <span class="app-title" routerLink="/news">
-                            <strong>MSDev</strong>
-                        </span>
-                    </div>
-                    <div class="app-nav-location col">
-                        <!--导航路径-->
-                        <span>
-                            <a routerLink="/news">资讯</a>
-                        </span>
-                        <span>
-                            <a routerLink="/download">下载</a>
-                        </span>
-                    </div>
-                </div>
+        <a class="navbar-brand app-title" href="#">MSDev</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/news']">资讯</a>
 
-            </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/download']">下载</a>
 
-            <div class="col-md-6 text-right">
-                <span class="title-bar-action">
-                    <!--操作-->
-                </span>
-                <span class="title-bar-user fl-end">
-                    <!--用户信息及操作-->
-                </span>
-            </div>
+                </li>
+            </ul>
         </div>
     </div>
 
-</div>
+</nav>

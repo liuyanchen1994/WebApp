@@ -1,26 +1,23 @@
 @import "./assets/styles/colors.scss";
 // @import "./assets/styles/grid.scss";
 // @import "./assets/styles/widget.scss";
-@import "./assets/styles/bootstrap.css";
-
 //全局设置
 body,
 html {
     background: $th-lighterAlt;
-    font-size: 1rem;
-    line-height: 1rem;
     font-family: 'Segoe UI', 'Microsoft YaHei', '新宋体';
     padding: 0;
     margin: 0;
 }
-
-* {
-    a,
-    a:hover,
-    a:visited,
-    a:link,
-    a:active {
-        text-decoration: none !important;
-        color:inherit !important;
-    }
+*{
+    border-radius: 0 !important;
+}
+a,
+a:hover,
+a:visited,
+a:link,
+a:active {
+    text-decoration: none !important;
+    color:inherit;
+    
 }

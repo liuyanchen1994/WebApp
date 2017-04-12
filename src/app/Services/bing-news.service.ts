@@ -16,6 +16,5 @@ export class BingNewsService {
     get(): Observable<BingNewsListView[]> {
         let url = "http://api.msdev.cc/api/BingNews/PageList";
         return this.service.get<BingNewsListView[]>(url);
-
     }
 }
