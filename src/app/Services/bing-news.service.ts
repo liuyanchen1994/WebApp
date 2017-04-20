@@ -9,13 +9,11 @@ import { BaseService } from "app/Services/base.service";
 
 @Injectable()
 export class BingNewsService {
-
-
     constructor(private service: BaseService) { }
-
     get(): Observable<BingNewsListView[]> {
         const url = "/api/BingNews/PageList";
         return this.service.get<BingNewsListView[]>(url);
 
     }
+
 }
