@@ -14,10 +14,14 @@ import { DownloadComponent } from './Pages/download/download.component';
 import { NotFoundComponent } from './Pages/not-found/not-found.component';
 import { BingNewsService } from './Services/bing-news.service';
 import { BaseService } from "app/Services/base.service";
+import { LoginComponent } from "app/Pages/login/login.component";
+import { LoginService } from "app/Services/login.service";
 
 const appRoutes: Routes = [
   { path: 'news', component: NewsComponent },
   { path: 'download', component: DownloadComponent },
+  { path: 'login', component: LoginComponent },
+
   // {
   //   path: 'heroes',
   //   component: HeroListComponent,
@@ -41,6 +45,7 @@ const appRoutes: Routes = [
     NewsComponent,
     DownloadComponent,
     NotFoundComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +55,8 @@ const appRoutes: Routes = [
   ],
   providers: [
     BaseService,
-    BingNewsService
+    BingNewsService,
+    LoginService
   ],
   bootstrap: [AppComponent]
 })
