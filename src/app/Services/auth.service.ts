@@ -4,9 +4,9 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/switchMap';
-import 'jsrsasign';
-import 'crypto';
+import { createVerify, getHashes } from "crypto-browserify";
 import { ADAL } from "app/Helpers/ADAL";
+import { Buffer } from "buffer";
 
 
 @Injectable()
@@ -48,8 +48,30 @@ export class AuthService {
   /**
    * TODO:验证签名
    */
-  validateSignature(signature, publicKey): boolean {
-    return true;
+  verifySignature(source, signature, publicKey): boolean {
+    let verifier = createVerify('RSA-SHA256');
+    // source = JSON.stringify(source);
+    verifier.update(source);
+    publicKey = this.insert_str(publicKey, '\n\r', 64);
+    publicKey = '-----BEGIN CERTIFICATE-----\n\r' + publicKey + '-----END CERTIFICATE-----';
+    console.log(signature);
+    console.log(source);
+    console.log(publicKey);
+
+
+    let re = verifier.verify(publicKey, signature, 'base64');
+    console.log(re);
+
+    return re;
+  }
+
+  insert_str(str, insert_str, sn) {
+    var newstr = "";
+    for (var i = 0; i < str.length; i += sn) {
+      var tmp = str.substring(i, i + sn);
+      newstr += tmp + insert_str;
+    }
+    return newstr;
   }
   /**
    * 获取jwt openid配置
