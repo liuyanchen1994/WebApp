@@ -15,7 +15,7 @@ import { NotFoundComponent } from './Pages/not-found/not-found.component';
 import { BingNewsService } from './Services/bing-news.service';
 import { BaseService } from "app/Services/base.service";
 import { LoginComponent } from "app/Pages/login/login.component";
-import { LoginService } from "app/Services/login.service";
+import { AuthService } from "app/Services/auth.service";
 
 const appRoutes: Routes = [
   { path: 'news', component: NewsComponent },
@@ -56,7 +56,7 @@ const appRoutes: Routes = [
   providers: [
     BaseService,
     BingNewsService,
-    LoginService
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
