@@ -7,7 +7,9 @@ import { Toast } from "app/Helpers/Toast";
 
 @Injectable()
 export class BaseService {
-    apiUrl = 'https://api.msdev.cc';
+    // apiUrl = 'https://api.msdev.cc';
+    apiUrl = 'http:localhost:5000';
+
     constructor(private http: Http) {
     }
 

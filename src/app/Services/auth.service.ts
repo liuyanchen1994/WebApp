@@ -54,14 +54,8 @@ export class AuthService {
     verifier.update(source);
     publicKey = this.insert_str(publicKey, '\n\r', 64);
     publicKey = '-----BEGIN CERTIFICATE-----\n\r' + publicKey + '-----END CERTIFICATE-----';
-    console.log(signature);
-    console.log(source);
-    console.log(publicKey);
-
-
     let re = verifier.verify(publicKey, signature, 'base64');
     console.log(re);
-
     return re;
   }
 
@@ -90,6 +84,11 @@ export class AuthService {
       });
   }
 
+  getToken() {
+
+    return;
+  }
+
   login() {
     const url = this.oauthUrl
       + '?client_id=' + this.clientId
@@ -106,4 +105,8 @@ export class AuthService {
 
       });
   };
+
+  logout() {
+
+  }
 }

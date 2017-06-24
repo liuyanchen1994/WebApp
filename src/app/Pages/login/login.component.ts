@@ -37,16 +37,10 @@ export class LoginComponent implements OnInit {
       let id_token = params.find(m => m.includes('id_token'));
       let jwt = id_token.split('=')[1];
       this.jwt = jwt;
-      console.log(jwt);
 
       this.jwtHeader = this.parseJwt(jwt, 0);
       this.jwtBody = this.parseJwt(jwt, 1);
       this.signature = jwt.split('.')[2];
-
-      console.log(this.jwtBody);
-      console.log(this.jwtHeader);
-      console.log(this.signature);
-
       this.getOIDC();
     }
   }

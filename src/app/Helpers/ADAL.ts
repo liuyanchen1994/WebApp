@@ -24,4 +24,6 @@ export class ADAL {
       + '&state=MSDev'
       + '&nonce=' + this.nonce;
   }
+
+
 }
