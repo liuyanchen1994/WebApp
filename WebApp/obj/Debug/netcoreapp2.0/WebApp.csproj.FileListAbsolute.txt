@@ -1,0 +1,13 @@
+D:\msdev\WebApp\WebApp\bin\Debug\netcoreapp2.0\x86\e_sqlite3.dll
+D:\msdev\WebApp\WebApp\bin\Debug\netcoreapp2.0\x64\e_sqlite3.dll
+D:\msdev\WebApp\WebApp\bin\Debug\netcoreapp2.0\WebApp.deps.json
+D:\msdev\WebApp\WebApp\bin\Debug\netcoreapp2.0\WebApp.runtimeconfig.json
+D:\msdev\WebApp\WebApp\bin\Debug\netcoreapp2.0\WebApp.runtimeconfig.dev.json
+D:\msdev\WebApp\WebApp\bin\Debug\netcoreapp2.0\WebApp.dll
+D:\msdev\WebApp\WebApp\bin\Debug\netcoreapp2.0\WebApp.pdb
+D:\msdev\WebApp\WebApp\obj\Debug\netcoreapp2.0\WebApp.csproj.CoreCompileInputs.cache
+D:\msdev\WebApp\WebApp\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+D:\msdev\WebApp\WebApp\obj\Debug\netcoreapp2.0\WebApp.AssemblyInfoInputs.cache
+D:\msdev\WebApp\WebApp\obj\Debug\netcoreapp2.0\WebApp.AssemblyInfo.cs
+D:\msdev\WebApp\WebApp\obj\Debug\netcoreapp2.0\WebApp.dll
+D:\msdev\WebApp\WebApp\obj\Debug\netcoreapp2.0\WebApp.pdb
