@@ -11,3 +11,4 @@ D:\msdev\WebApp\WebApp\obj\Debug\netcoreapp2.0\WebApp.AssemblyInfoInputs.cache
 D:\msdev\WebApp\WebApp\obj\Debug\netcoreapp2.0\WebApp.AssemblyInfo.cs
 D:\msdev\WebApp\WebApp\obj\Debug\netcoreapp2.0\WebApp.dll
 D:\msdev\WebApp\WebApp\obj\Debug\netcoreapp2.0\WebApp.pdb
+D:\msdev\WebApp\WebApp\obj\Debug\netcoreapp2.0\WebApp.csprojResolveAssemblyReference.cache

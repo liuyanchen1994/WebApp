@@ -13819,6 +13819,9 @@
   },
   "project": {
     "version": "1.0.0",
+    "restoreSettings": {
+      "hideWarningsAndErrors": true
+    },
     "restore": {
       "projectUniqueName": "D:\\msdev\\WebApp\\WebApp\\WebApp.csproj",
       "projectName": "WebApp",
