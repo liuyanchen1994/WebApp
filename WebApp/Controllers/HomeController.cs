@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -12,20 +12,13 @@ namespace WebApp.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "News");
         }
 
-        public IActionResult About()
+
+        [Route("/404")]
+        public IActionResult Page404()
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 
