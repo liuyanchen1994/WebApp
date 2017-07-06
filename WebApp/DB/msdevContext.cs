@@ -6,6 +6,13 @@ namespace WebApp.DB
 {
     public partial class MSDevContext : DbContext
     {
+
+        public MSDevContext(DbContextOptions<MSDevContext> options):base(options)
+        {
+
+        }
+
+        #region DbSet
         public virtual DbSet<AspNetRoleClaims> AspNetRoleClaims { get; set; }
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
@@ -22,6 +29,7 @@ namespace WebApp.DB
         public virtual DbSet<Resource> Resource { get; set; }
         public virtual DbSet<RssNews> RssNews { get; set; }
         public virtual DbSet<Sources> Sources { get; set; }
+        #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
