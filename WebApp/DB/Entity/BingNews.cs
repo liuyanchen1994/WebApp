@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApp.Models.Entity
+namespace WebApp.DB
 {
     public class BingNews : Model
     {
