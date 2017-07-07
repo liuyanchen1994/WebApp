@@ -19,8 +19,12 @@ namespace WebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddMvc()
+                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
+            //string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            string connectionString = Configuration.GetConnectionString("OnlineConnection");
             services.AddDbContextPool<MSDevContext>(options => options.UseSqlServer(connectionString));
         }
 
