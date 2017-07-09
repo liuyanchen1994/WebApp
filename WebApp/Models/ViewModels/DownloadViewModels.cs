@@ -3,11 +3,8 @@ using WebApp.DB;
 
 namespace WebApp.Models.ViewModels
 {
-    public class NewsViewModels
+    public class DownloadViewModels
     {
-
-        public List<BingNews> BingNewsList { get; set; }
-
-
+        public IEnumerable<CataLog> Catalog { get; set; }
     }
 }
