@@ -1,18 +1,62 @@
+
 @{
     Layout = "_Layout";
+    ViewData["Title"] = "下载-MSDev";
 }
-
 @model WebApp.Models.ViewModels.DownloadViewModels
 
-@{
-    <ul>
-        @foreach (var catalog in Model.Catalog)
-        {
-            <li>
-                @catalog.Name
-            </li>
-        }
+<div class="col-md-3">
+    @{
+        <ul class="nav nav-pills flex-column">
+            @foreach (var catalog in Model.Catalog)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#collapse-@catalog.Value" aria-expanded="true" aria-controls="collapseOne">
+                        @catalog.Name
+                    </a>
+                    <ul class="nav nav-pills flex-column" id="collapse-@catalog.Value" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                        @foreach (var childCatalog in catalog.InverseTopCatalog)
+                        {
+                            <li class="nav-item">
+                                <a href="#" class="nav-link res-menu" data-content="@JsonConvert.SerializeObject(childCatalog.Resource)">@childCatalog.Name</a>
+                            </li>
+                        }
+                    </ul>
 
-    </ul>
+                </li>
+            }
+        </ul>
+    }
+</div>
 
+<div class="col-md-8">
+    <div class="pannel resource-content">
+
+
+    </div>
+
+
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".res-menu").on('click', function (event) {
+                event.preventDefault();
+                let resource = $(this).data("content");
+
+                let resourceHtml = "";
+                for (var item in resource) {
+                    resourceHtml += `
+    ${resource[item].Name}
+    `;
+                }
+                $(".resource-content").html(resourceHtml);
+                console.log(resourceHtml);
+            });
+
+        });
+    </script>
 }
+
+

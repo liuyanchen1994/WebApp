@@ -21,6 +21,7 @@ namespace WebApp.Controllers
             var sources = await _context.CataLog
                 .Where(m => m.Type == "下载" && m.IsTop == 1)
                 .Include(m => m.InverseTopCatalog)
+                    .ThenInclude(catalog => catalog.Resource)
                 .ToArrayAsync();
 
             var downloadList = new DownloadViewModels
