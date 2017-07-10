@@ -5,6 +5,8 @@ using WebApp.DB;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using WebApp.Models.ViewModels;
+using System;
+using System.Collections.Generic;
 
 namespace WebApp.Controllers
 {
@@ -16,17 +18,24 @@ namespace WebApp.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string id)
         {
-            var sources = await _context.CataLog
+            var resource = new List<Resource>();
+            if (!string.IsNullOrEmpty(id))
+            {
+                resource= _context.Resource.Where(m => m.CatalogId.ToString().Equals(id.ToUpper()))
+                    .ToList();
+            }
+
+            var catalog = await _context.CataLog
                 .Where(m => m.Type == "下载" && m.IsTop == 1)
                 .Include(m => m.InverseTopCatalog)
-                    .ThenInclude(catalog => catalog.Resource)
                 .ToArrayAsync();
 
             var downloadList = new DownloadViewModels
             {
-                Catalog = sources
+                Catalog = catalog,
+                Resource = resource
             };
             return View(downloadList);
         }
