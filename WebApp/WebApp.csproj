@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
     <EnableDefaultContentItem>true</EnableDefaultContentItem>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <UserSecretsId>aspnet-WebApp-530EFA2F-3B5E-40F3-8C1B-912A0144C00D</UserSecretsId>
   </PropertyGroup>
