@@ -25,6 +25,7 @@ namespace WebApp
 
             //string connectionString = Configuration.GetConnectionString("DefaultConnection");
             string connectionString = Configuration.GetConnectionString("OnlineConnection");
+            System.Console.WriteLine(connectionString);
             services.AddDbContextPool<MSDevContext>(options => options.UseSqlServer(connectionString));
         }
 
