@@ -1,4 +1,70 @@
+@using System.Web
+@model WebApp.Models.ViewModels.IndexViewModels
 @{
     ViewData["Title"] = "微软中国开发者社区";
+    var newsList = Model.BingNews;
+    var downloadList = Model.Downloads;
 }
+
+<div class="row">
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                最新资讯
+            </div>
+            <div class="card-block p-1">
+                @{
+                    foreach (var bingNews in newsList)
+                    {
+                        var Url = HttpUtility.ParseQueryString(new Uri(bingNews.Url).Query);
+                        <div class="row my-3 mx-1">
+                            <div class="col-md-auto hidden-sm-down">
+                                <a href="@Url["r"]" target="_blank">
+                                    <img class="bingnews-small" src="@bingNews.ThumbnailUrl">
+                                </a>
+                            </div>
+                            <div class="col">
+                                <h5 class="card-title">
+                                    <a href="@Url["r"]" target="_blank" class="text-gray-dark">
+                                        @bingNews.Title
+                                    </a>
+                                </h5>
+                                <h6 class="card-text text-muted">
+                                    @bingNews.UpdatedTime
+                                    <span>
+                                        来源:@bingNews.Provider
+                                    </span>
+
+                                </h6>
+
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-block p-2">
+                <h5>推荐下载</h5>
+                @{ 
+                    foreach (var download in downloadList)
+                    {
+                        <a href="@download.AbsolutePath">
+                            <img src="@download.Imgurl" alt="@download.Name" />
+                        </a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
 
