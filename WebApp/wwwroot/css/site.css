@@ -1,6 +1,8 @@
 body {
     background: rgba(255, 255, 250, 1);
+    font-family: 'Segoe UI', 微软雅黑,Tahoma, Geneva, Verdana, sans-serif
 }
+
 ul, li, a form,
 input,
 select,
@@ -8,10 +10,12 @@ textarea {
     max-width: 280px;
     border-radius: 0;
 }
+
 ul, li {
     list-style-type: none;
-    padding-left:0;
+    padding-left: 0;
 }
+
 .news-list {
     margin: 1rem 0;
 }
@@ -44,15 +48,27 @@ img.bingnews {
     font-size: 0.9rem;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+
+/* Index css */
+.news-list-small {
+    margin: 8px 0;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
+img.bingnews-small {
+    width: 80px;
+    height: 65px;
+}
+
+.news-title-small, .news-title-small > a {
+    color: #232323;
+    
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+.news-sectitle-small {
+    color: rgb(104, 104, 104);
+    margin-bottom: 10px;
+    font-size: 0.9rem;
 }
 
 /* Hide/rearrange for smaller screens */
