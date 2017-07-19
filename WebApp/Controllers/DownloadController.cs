@@ -23,7 +23,14 @@ namespace WebApp.Controllers
             var resource = new List<Resource>();
             if (!string.IsNullOrEmpty(id))
             {
-                resource= _context.Resource.Where(m => m.CatalogId.ToString().Equals(id.ToUpper()))
+                resource = _context.Resource.Where(m => m.CatalogId.ToString().Equals(id.ToUpper()))
+                    .ToList();
+            }
+            else
+            {
+                resource = _context.Resource
+                    .Where(m=>m.Catalog.Type.Equals("下载"))
+                    .Take(10)
                     .ToList();
             }
 
