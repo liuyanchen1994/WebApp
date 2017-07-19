@@ -3,12 +3,16 @@ body {
     font-family: 'Segoe UI', 微软雅黑,Tahoma, Geneva, Verdana, sans-serif
 }
 
+
+* {
+    border-radius:0px !important;
+}
+
+
 ul, li, a form,
-input,
-select,
+input ,select,
 textarea {
     max-width: 280px;
-    border-radius: 0;
 }
 
 ul, li {
@@ -61,10 +65,10 @@ img.bingnews-small {
 
 .news-title-small, .news-title-small > a {
     color: #232323;
-    
     margin-bottom: 10px;
     font-size: 1.1rem;
 }
+
 .news-sectitle-small {
     color: rgb(104, 104, 104);
     margin-bottom: 10px;

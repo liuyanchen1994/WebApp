@@ -45,14 +45,17 @@
     </div>
     <div class="col-md-4">
         <div class="card">
-            <div class="card-block p-2">
-                <h5>推荐下载</h5>
+            <div class="card-block p-0">
+                <h5 class="p-2" style="border-bottom:1px solid #cccccc">推荐下载</h5>
                 @{ 
                     foreach (var download in downloadList)
                     {
-                        <a href="@download.AbsolutePath">
-                            <img src="@download.Imgurl" alt="@download.Name" />
-                        </a>
+                        <div class="p-1">
+                            <a href="@download.AbsolutePath" style="text-decoration:none">
+                                <img src="@download.Imgurl" title="@download.Name" width="36" height="36"  class="m-1"/>
+                                <span>@download.Name</span>
+                            </a>
+                        </div>
                     }
                 }
             </div>
