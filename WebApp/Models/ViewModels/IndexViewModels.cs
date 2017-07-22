@@ -11,6 +11,8 @@ namespace WebApp.Models.ViewModels
         public List<BingNews> BingNews { get; set; }
 
         public List<Resource> Downloads { get; set; }
+        public List<Resource> Documents { get; set; }
+
 
     }
 }

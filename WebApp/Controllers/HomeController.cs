@@ -20,21 +20,36 @@ namespace WebApp.Controllers
         public IActionResult Index()
         {
             var news = _context.BingNews
-                .OrderByDescending(m=>m.CreatedTime).Take(6)
+                .OrderByDescending(m => m.CreatedTime).Take(6)
                 .ToList();
 
             var downloads = _context.Resource
                 .Where(m => m.Catalog.Type.Equals("下载"))
+                .Where(m => m.IsRecommend == true)
                 .ToList();
+
+            var documents = _context.Resource
+                .Where(m => m.Catalog.Type.Equals("文档"))
+                .Where(m => m.IsRecommend == true)
+                .ToList();
+
 
             var data = new IndexViewModels()
             {
                 BingNews = news,
                 Downloads = downloads,
+                Documents = documents
+
             };
             return View(data);
         }
 
+
+        public IActionResult About()
+        {
+
+            return View();
+        }
 
         [Route("/404")]
         public IActionResult Page404()
