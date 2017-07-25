@@ -7,7 +7,9 @@ body {
 * {
     border-radius:0px !important;
 }
-
+p {
+    text-indent: 2em;
+}
 
 ul, li, a form,
 input ,select,
