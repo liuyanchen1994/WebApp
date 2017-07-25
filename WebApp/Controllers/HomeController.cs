@@ -26,11 +26,13 @@ namespace WebApp.Controllers
             var downloads = _context.Resource
                 .Where(m => m.Catalog.Type.Equals("下载"))
                 .Where(m => m.IsRecommend == true)
+                .OrderBy(m => m.UpdatedTime)
                 .ToList();
 
             var documents = _context.Resource
                 .Where(m => m.Catalog.Type.Equals("文档"))
                 .Where(m => m.IsRecommend == true)
+                .OrderBy(m=>m.UpdatedTime)
                 .ToList();
 
 
