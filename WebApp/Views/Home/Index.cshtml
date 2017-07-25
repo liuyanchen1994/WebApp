@@ -55,7 +55,7 @@
                     foreach (var download in downloadList)
                     {
                         <div class="p-1">
-                            <a href="@download.AbsolutePath" style="text-decoration:none">
+                            <a href="@download.AbsolutePath" style="text-decoration:none" target="_blank">
                                 @if (!string.IsNullOrEmpty(download.Imgurl))
                                 {
                                     <img src="@download.Imgurl" title="@download.Name" width="36" height="36" class="m-1" />
@@ -76,7 +76,7 @@
                     foreach (var document in documentList)
                     {
                         <div class="p-1">
-                            <a href="@document.AbsolutePath" style="text-decoration:none">
+                            <a href="@document.AbsolutePath" style="text-decoration:none" target="_blank">
                                 @if (!string.IsNullOrEmpty(document.Imgurl))
                                 {
                                     <img src="@document.Imgurl" title="@document.Name" width="36" height="36" class="m-1" />
