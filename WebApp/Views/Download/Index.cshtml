@@ -77,7 +77,7 @@
                                         @{
                                             if (!string.IsNullOrEmpty(resource.AbsolutePath))
                                             {
-                                                <a href="@resource.AbsolutePath">点击下载</a>
+                                                <a href="@resource.AbsolutePath" target="_blank">点击下载</a>
                                             }
                                         }
                                     </p>
@@ -85,7 +85,7 @@
                                         if (resource.Sources.Count > 0)
                                         {
                                             <span>
-                                                更多下载
+                                                更多链接
                                             </span>
                                             foreach (var item in resource.Sources)
                                             {
