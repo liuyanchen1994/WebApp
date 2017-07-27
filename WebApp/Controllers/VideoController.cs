@@ -18,31 +18,34 @@ namespace WebApp.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index(string id)
+        public async Task<IActionResult> Index(string tech)
         {
-            var resource = new List<Resource>();
-            if (!string.IsNullOrEmpty(id))
+            var mvaVideos = new List<MvaVideos>();
+            if (!string.IsNullOrEmpty(tech))
             {
-                resource = _context.Resource.Where(m => m.CatalogId.ToString().Equals(id.ToUpper()))
+                mvaVideos = _context.MvaVideos.Where(m => m.Technologies.Contains(tech.ToLower()))
+                    .Where(m => m.LanguageCode.Equals("zh-cn"))
+                    .OrderByDescending(m => m.UpdatedTime)
                     .ToList();
             }
             else
             {
-                resource = _context.Resource
-                    .Where(m=>m.Catalog.Type.Equals("文档"))
+                mvaVideos = _context.MvaVideos
+                    .Where(m=>m.LanguageCode.Equals("zh-cn"))
+                    .OrderByDescending(m=>m.UpdatedTime)
                     .Take(10)
                     .ToList();
             }
 
             var catalog = await _context.CataLog
-                .Where(m => m.Type == "文档" && m.IsTop == 1)
+                .Where(m => m.Type == "视频" && m.IsTop == 1)
                 .Include(m => m.InverseTopCatalog)
                 .ToArrayAsync();
 
-            var documentList = new DocumentViewModels
+            var documentList = new VideoViewModels
             {
                 Catalog = catalog,
-                Resource = resource
+                MvaVideos = mvaVideos
             };
             return View(documentList);
         }
