@@ -32,32 +32,45 @@
     <div class="col-9">
         @foreach (var video in Model.MvaVideos)
         {
-            <div class="media my-2">
-                <div class="d-flex align-self-center mr-3">
-                    <img src="@video.CourseImage" width="200" />
-                    <br />
+            var content = StringHelper.ReplaceHtmlTag(video.Description);
+            var shortContent = content.Substring(0, 100) + "...";
+            <div class="card my-2">
+                <div class="card-block p-2">
+                    <div class="media">
+                        <div class="d-flex align-self-center mr-3">
+                            <a href="@video.SourceUrl" target="_blank">
+                                <img src="@video.CourseImage" width="220" />
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h5>
+                                <a href="@video.SourceUrl">
+                                    @video.Title
+                                </a>
+                            </h5>
+                            @if (!string.IsNullOrEmpty(video.Author))
+                            {
+                                <span class="text-muted" style="font-size:0.9rem">
+                                    作者:
+                                    @video.Author
+                                    &nbsp;&nbsp;
+                                    @video.UpdatedTime.ToString("yyyy-MM-dd")
+                                </span>
+                                <br />
+                            }
+
+                            <span class="text-primary" style="font-size:0.9rem">
+                                相关技术：@video.Technologies
+                            </span>
+
+                            <p title="@content">
+                                @shortContent
+                            </p>
+                        </div>
+                    </div>
 
                 </div>
-                <div class="media-body">
-                    <a href="@video.SourceUrl">
-                        @video.Title
-                    </a>
-                    <br />
-                    作者:
-                    @video.Author
-                    <br />
-                    @video.Technologies
-                    <br />
-                    更新时间:@video.CreatedTime
-                    <span title="@Html.Raw(@video.Description)">
-                        @{
-                            var content = Html.Raw(@video.Description).ToString();
-                            content = content.Substring(0, 100) + "...";
-                        }
-                        @content
-                    </span>
-                </div>
             </div>
-                            }
+        }
     </div>
 </div>

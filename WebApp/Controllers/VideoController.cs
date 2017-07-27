@@ -23,16 +23,17 @@ namespace WebApp.Controllers
             var mvaVideos = new List<MvaVideos>();
             if (!string.IsNullOrEmpty(tech))
             {
-                mvaVideos = _context.MvaVideos.Where(m => m.Technologies.Contains(tech.ToLower()))
-                    .Where(m => m.LanguageCode.Equals("zh-cn"))
+                mvaVideos = _context.MvaVideos
                     .OrderByDescending(m => m.UpdatedTime)
+                    .Where(m => m.Technologies.Contains(tech.ToLower()))
+                    .Where(m => m.LanguageCode.Equals("zh-cn"))
                     .ToList();
             }
             else
             {
                 mvaVideos = _context.MvaVideos
+                    .OrderByDescending(m => m.UpdatedTime)
                     .Where(m=>m.LanguageCode.Equals("zh-cn"))
-                    .OrderByDescending(m=>m.UpdatedTime)
                     .Take(10)
                     .ToList();
             }
