@@ -2,105 +2,62 @@
     Layout = "_Layout";
     ViewData["Title"] = "视频-MSDev";
 }
-@model WebApp.Models.ViewModels.DocumentViewModels
+@model WebApp.Models.ViewModels.VideoViewModels
 
 <div class="row">
     <div class="col-md-3">
-        @{
-            @foreach (var catalog in Model.Catalog)
-            {
-                <div class="list-group">
-                    <a class="list-group-item list-group-item-action list-group-item-success" data-toggle="collapse" href="#collapse-@catalog.Value" aria-expanded="true" aria-controls="collapse-@catalog.Value">
-                        @catalog.Name
-                    </a>
-                    <div class="collapse show" id="collapse-@catalog.Value">
-                        @foreach (var childCatalog in catalog.InverseTopCatalog)
+        @foreach (var catalog in Model.Catalog)
+        {
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action list-group-item-success" data-toggle="collapse" href="#collapse-@catalog.Value" aria-expanded="true" aria-controls="collapse-@catalog.Value">
+                    @catalog.Name
+                </a>
+                <div class="collapse show" id="collapse-@catalog.Value">
+                    @foreach (var childCatalog in catalog.InverseTopCatalog)
+                    {
+                        var id = ViewContext.RouteData.Values["id"]?.ToString();
+                        string liClass = "";
+                        if (id == childCatalog.Id.ToString().ToLower())
                         {
-                            var id = ViewContext.RouteData.Values["id"]?.ToString();
-                            string liClass = "";
-                            if (id == childCatalog.Id.ToString().ToLower())
-                            {
-                                liClass = "active";
-                            }
-                            <a asp-route-id="@childCatalog.Id" class="list-group-item list-group-item-action @liClass">@childCatalog.Name</a>
+                            liClass = "active";
                         }
-                    </div>
+                        <a asp-route-id="@childCatalog.Name" class="list-group-item list-group-item-action @liClass">@childCatalog.Name</a>
+                    }
                 </div>
-
-            }
+            </div>
         }
+
     </div>
 
-    <div class="col-8">
-        <div id="accordion" role="tablist">
-            @{
-                if (Model.Resource != null)
-                {
-                    foreach (var resource in Model.Resource)
-                    {
-                        <div class="card" style="margin-bottom:8px">
-                            <div class="card-header p-1" role="tab" id="headingOne">
-                                <h5 class="mb-0">
-                                    @if (!string.IsNullOrEmpty(resource.Imgurl))
-                                    {
-                                        <img src="@resource.Imgurl" title="@resource.Name" width="32" height="32" style="border-radius:1px !important"/>
-                                    }
-                                    <a data-toggle="collapse" href="#@resource.Id" aria-expanded="true" aria-controls="collapseOne">
-                                        @resource.Name
-                                    </a>
-                                </h5>
-                            </div>
+    <div class="col-9">
+        @foreach (var video in Model.MvaVideos)
+        {
+            <div class="media my-2">
+                <div class="d-flex align-self-center mr-3">
+                    <img src="@video.CourseImage" width="200" />
+                    <br />
 
-                            <div id="@resource.Id" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
-                                <div class="card-block">
-                                    <p>
-                                        语言:
-                                        <span class="text-primary">
-                                            @TypeValueHelper.Language[resource.Language]
-                                        </span>
-                                        &nbsp;&nbsp;
-                                        类型:
-                                        <span class="text-primary">
-                                            @TypeValueHelper.ResourceType[resource.Type]
-                                        </span>
-                                    </p>
-                                    <p>
-                                        说明：
-                                        @resource.Description
-                                    </p>
-                                    <p>
-                                        更新时间：
-                                        <span class="text-gray-dark">
-                                            @resource.UpdatedTime.ToString("yyyy-MM-dd")
-                                        </span>
-                                    </p>
-                                    <p>
-                                        @{
-                                            if (!string.IsNullOrEmpty(resource.AbsolutePath))
-                                            {
-                                                <a href="@resource.AbsolutePath" target="_blank">点击查看</a>
-                                            }
-                                        }
-                                    </p>
-                                    @{ 
-                                        if (resource.Sources.Count > 0)
-                                        {
-                                            <span>
-                                                更多链接
-                                            </span>
-                                            foreach (var item in resource.Sources)
-                                            {
-                                                <a href="@item.Url">@item.Name</a>
-                                                <br/>
-                                            }
-                                        }
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    }
-                }
-            }
-        </div>
+                </div>
+                <div class="media-body">
+                    <a href="@video.SourceUrl">
+                        @video.Title
+                    </a>
+                    <br />
+                    作者:
+                    @video.Author
+                    <br />
+                    @video.Technologies
+                    <br />
+                    更新时间:@video.CreatedTime
+                    <span title="@Html.Raw(@video.Description)">
+                        @{
+                            var content = Html.Raw(@video.Description).ToString();
+                            content = content.Substring(0, 100) + "...";
+                        }
+                        @content
+                    </span>
+                </div>
+            </div>
+                            }
     </div>
 </div>
