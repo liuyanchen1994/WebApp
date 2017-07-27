@@ -31,29 +31,28 @@
         }
     </div>
 
-    <div class="col-8">
+    <div class="col-9">
         <div id="accordion" role="tablist">
-            @{
-                if (Model.Resource != null)
-                {
-                    foreach (var resource in Model.Resource)
+            @if (Model.Resource != null)
+            {
+                <div class="row">
+                    @foreach (var resource in Model.Resource)
                     {
-                        <div class="card" style="margin-bottom:8px">
-                            <div class="card-header p-1" role="tab" id="headingOne">
-                                <h5 class="mb-0">
-                                    @if (!string.IsNullOrEmpty(resource.Imgurl))
-                                    {
-                                        <img src="@resource.Imgurl" title="@resource.Name" width="32" height="32" style="border-radius:1px !important"/>
-                                    }
-                                    <a data-toggle="collapse" href="#@resource.Id" aria-expanded="true" aria-controls="collapseOne">
-                                        @resource.Name
-                                    </a>
-                                </h5>
-                            </div>
-
-                            <div id="@resource.Id" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="col-md-6">
+                            <div class="card" style="margin-bottom:8px">
+                                <div class="card-header p-1" role="tab" id="headingOne">
+                                    <h5 class="mb-0">
+                                        @if (!string.IsNullOrEmpty(resource.Imgurl))
+                                        {
+                                            <img src="@resource.Imgurl" title="@resource.Name" width="32" height="32" style="border-radius:1px !important" />
+                                        }
+                                        <a href="@resource.AbsolutePath" target="_blank">
+                                            @resource.Name
+                                        </a>
+                                    </h5>
+                                </div>
                                 <div class="card-block">
-                                    <p>
+                                    <div>
                                         语言:
                                         <span class="text-primary">
                                             @TypeValueHelper.Language[resource.Language]
@@ -63,43 +62,33 @@
                                         <span class="text-primary">
                                             @TypeValueHelper.ResourceType[resource.Type]
                                         </span>
-                                    </p>
-                                    <p>
+                                        <br />
                                         说明：
                                         @resource.Description
-                                    </p>
-                                    <p>
-                                        更新时间：
-                                        <span class="text-gray-dark">
+                                        <br />
+
+                                        <span class="text-muted">
+                                            更新时间：
                                             @resource.UpdatedTime.ToString("yyyy-MM-dd")
                                         </span>
-                                    </p>
-                                    <p>
-                                        @{
-                                            if (!string.IsNullOrEmpty(resource.AbsolutePath))
-                                            {
-                                                <a href="@resource.AbsolutePath" target="_blank">点击查看</a>
-                                            }
-                                        }
-                                    </p>
-                                    @{ 
-                                        if (resource.Sources.Count > 0)
+                                        <br />          
+                                    </div>
+                                    @if (resource.Sources.Count > 0)
+                                    {
+                                        <span>
+                                            更多链接
+                                        </span>
+                                        foreach (var item in resource.Sources)
                                         {
-                                            <span>
-                                                更多链接
-                                            </span>
-                                            foreach (var item in resource.Sources)
-                                            {
-                                                <a href="@item.Url">@item.Name</a>
-                                                <br/>
-                                            }
+                                            <a href="@item.Url">@item.Name</a>
+                                                <br />
                                         }
                                     }
                                 </div>
                             </div>
                         </div>
                     }
-                }
+                </div>
             }
         </div>
     </div>
