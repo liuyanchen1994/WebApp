@@ -39,12 +39,12 @@
                     <div class="media">
                         <div class="d-flex align-self-center mr-3">
                             <a href="@video.SourceUrl" target="_blank">
-                                <img src="@video.CourseImage" width="220" />
+                                <img src="@video.CourseImage" width="220" title="@video.Title"/>
                             </a>
                         </div>
                         <div class="media-body">
                             <h5>
-                                <a href="@video.SourceUrl">
+                                <a href="@video.SourceUrl" target="_blank">
                                     @video.Title
                                 </a>
                             </h5>
@@ -68,7 +68,6 @@
                             </p>
                         </div>
                     </div>
-
                 </div>
             </div>
         }
