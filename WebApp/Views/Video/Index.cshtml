@@ -9,8 +9,8 @@
         @foreach (var catalog in Model.Catalog)
         {
             <div class="list-group">
-                <a class="list-group-item list-group-item-action list-group-item-success" data-toggle="collapse" href="#collapse-@catalog.Value" aria-expanded="true" aria-controls="collapse-@catalog.Value">
-                    @catalog.Name
+                <a class="list-group-item list-group-item-action list-group-item-heading p-2" data-toggle="collapse" href="#collapse-@catalog.Value" aria-expanded="true" aria-controls="collapse-@catalog.Value">
+                    MVA视频分类
                 </a>
                 <div class="collapse show" id="collapse-@catalog.Value">
                     @foreach (var childCatalog in catalog.InverseTopCatalog)
@@ -21,7 +21,7 @@
                         {
                             liClass = "active";
                         }
-                        <a asp-route-tech="@childCatalog.Name" class="list-group-item list-group-item-action @liClass">@childCatalog.Name</a>
+                        <a asp-route-tech="@childCatalog.Name" class="list-group-item p-2 pl-4 @liClass">@childCatalog.Name</a>
                     }
                 </div>
             </div>

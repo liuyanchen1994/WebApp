@@ -32,12 +32,14 @@
                                         @bingNews.Title
                                     </a>
                                 </h5>
-                                <h6 class="card-text text-muted">
-                                    @bingNews.UpdatedTime
+                                <h7 class="card-text text-muted">
                                     <span>
-                                        来源:@bingNews.Provider
+                                        来源：@bingNews.Provider
                                     </span>
-                                </h6>
+                                    @bingNews.UpdatedTime.ToString("yyyy-M-dd")
+
+
+                                </h7>
                             </div>
                         </div>
                     }

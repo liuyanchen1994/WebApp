@@ -10,7 +10,7 @@
             @foreach (var catalog in Model.Catalog)
             {
                 <div class="list-group">
-                    <a class="list-group-item list-group-item-action list-group-item-success" data-toggle="collapse" href="#collapse-@catalog.Value" aria-expanded="true" aria-controls="collapse-@catalog.Value">
+                    <a class="list-group-item list-group-item-action list-group-item-heading p-2" data-toggle="collapse" href="#collapse-@catalog.Value" aria-expanded="true" aria-controls="collapse-@catalog.Value">
                         @catalog.Name
                     </a>
                     <div class="collapse show" id="collapse-@catalog.Value">
@@ -22,7 +22,7 @@
                             {
                                 liClass = "active";
                             }
-                            <a asp-route-id="@childCatalog.Id" class="list-group-item list-group-item-action @liClass">@childCatalog.Name</a>
+                            <a asp-route-id="@childCatalog.Id" class="list-group-item p-2 pl-4 @liClass">@childCatalog.Name</a>
                         }
                     </div>
                 </div>
