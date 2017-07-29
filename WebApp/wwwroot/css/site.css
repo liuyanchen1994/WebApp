@@ -11,12 +11,6 @@ p {
     text-indent: 2em;
 }
 
-ul, li, a form,
-input ,select,
-textarea {
-    max-width: 280px;
-}
-
 ul, li {
     list-style-type: none;
     padding-left: 0;
