@@ -20,7 +20,7 @@ namespace WebApp.Controllers
         public IActionResult Index()
         {
             var news = _context.BingNews
-                .OrderByDescending(m => m.CreatedTime).Take(6)
+                .OrderByDescending(m => m.CreatedTime).Take(8)
                 .ToList();
 
             var downloads = _context.Resource
