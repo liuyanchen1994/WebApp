@@ -3,10 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.DB;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using WebApp.Models.ViewModels;
-using System;
 using System.Collections.Generic;
+using WebApp.Helpers;
 
 namespace WebApp.Controllers
 {
@@ -18,8 +17,13 @@ namespace WebApp.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index(string tech)
+        public async Task<IActionResult> Index(string tech, int p = 1)
         {
+
+            int pageSize = 12;
+            int totalNumber = 1;
+
+
             var mvaVideos = new List<MvaVideos>();
             if (!string.IsNullOrEmpty(tech))
             {
@@ -27,15 +31,30 @@ namespace WebApp.Controllers
                     .OrderByDescending(m => m.UpdatedTime)
                     .Where(m => m.Technologies.Contains(tech.ToLower()))
                     .Where(m => m.LanguageCode.Equals("zh-cn"))
+                    .Skip((p - 1) * pageSize)
+                    .Take(pageSize)
                     .ToList();
+
+                totalNumber = _context.MvaVideos
+                    .OrderByDescending(m => m.UpdatedTime)
+                    .Where(m => m.Technologies.Contains(tech.ToLower()))
+                    .Where(m => m.LanguageCode.Equals("zh-cn"))
+                    .Count();
             }
             else
             {
                 mvaVideos = _context.MvaVideos
                     .OrderByDescending(m => m.UpdatedTime)
-                    .Where(m=>m.LanguageCode.Equals("zh-cn"))
-                    .Take(10)
+                    .Where(m => m.LanguageCode.Equals("zh-cn"))
+                    .Skip((p - 1) * pageSize)
+                    .Take(pageSize)
                     .ToList();
+
+                totalNumber = _context.MvaVideos
+                    .OrderByDescending(m => m.UpdatedTime)
+                    .Where(m => m.LanguageCode.Equals("zh-cn"))
+                    .Count();
+
             }
 
             var catalog = await _context.CataLog
@@ -43,12 +62,22 @@ namespace WebApp.Controllers
                 .Include(m => m.InverseTopCatalog)
                 .ToArrayAsync();
 
-            var documentList = new VideoViewModels
+            var pageOption = new MyPagerOption()
+            {
+                CurrentPage = p,
+                PageSize = pageSize,
+                RouteUrl = "/Video/Index",
+                Total = totalNumber
+            };
+
+            var videoList = new VideoViewModels
             {
                 Catalog = catalog,
-                MvaVideos = mvaVideos
+                MvaVideos = mvaVideos,
+                Pager = pageOption
             };
-            return View(documentList);
+
+            return View(videoList);
         }
 
     }

@@ -33,7 +33,7 @@
         @foreach (var video in Model.MvaVideos)
         {
             var content = StringHelper.ReplaceHtmlTag(video.Description);
-            var shortContent = content.Substring(0, 100) + "...";
+            var shortContent = StringHelper.SubString(content, 100);
             <div class="card my-2">
                 <div class="card-block p-2">
                     <div class="media">
@@ -72,5 +72,6 @@
                 </div>
             </div>
         }
+        <pager pager-option="Model.Pager as MyPagerOption"></pager>
     </div>
 </div>

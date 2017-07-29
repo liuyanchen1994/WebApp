@@ -17,5 +17,14 @@ namespace WebApp.Helpers
 
             return strText;
         }
+
+        public static string SubString(string str,int length)
+        {
+            if (str.Length > length)
+            {
+                return str.Substring(0, length) + "...";
+            }
+            return str;
+        }
     }
 }
