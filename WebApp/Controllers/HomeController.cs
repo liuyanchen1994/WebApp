@@ -20,8 +20,21 @@ namespace WebApp.Controllers
         public IActionResult Index()
         {
             var news = _context.BingNews
-                .OrderByDescending(m => m.CreatedTime).Take(8)
+                .OrderByDescending(m => m.CreatedTime)
+                .Take(8)
                 .ToList();
+
+            var msBlogs = _context.RssNews
+                .OrderByDescending(m => m.LastUpdateTime)
+                .Take(6)
+                .ToList();
+
+            var mvaVideos = _context.MvaVideos
+                 .OrderByDescending(m => m.UpdatedTime)
+                 .Where(m => m.IsRecommend)
+                 .Where(m => m.LanguageCode.Equals("zh-cn"))
+                 .Take(3)
+                 .ToList();
 
             var downloads = _context.Resource
                 .Where(m => m.Catalog.Type.Equals("下载"))
@@ -32,16 +45,17 @@ namespace WebApp.Controllers
             var documents = _context.Resource
                 .Where(m => m.Catalog.Type.Equals("文档"))
                 .Where(m => m.IsRecommend == true)
-                .OrderByDescending(m=>m.UpdatedTime)
+                .OrderByDescending(m => m.UpdatedTime)
                 .ToList();
 
 
             var data = new IndexViewModels()
             {
                 BingNews = news,
+                MsBlogs = msBlogs,
                 Downloads = downloads,
-                Documents = documents
-
+                Documents = documents,
+                MvaVideos = mvaVideos
             };
             return View(data);
         }
