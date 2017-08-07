@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApp.Models.ViewModels;
 using System.Collections.Generic;
 using WebApp.Helpers;
+using System;
 
 namespace WebApp.Controllers
 {
@@ -27,7 +28,7 @@ namespace WebApp.Controllers
             {
                 mvaVideos = _context.MvaVideos
                     .OrderByDescending(m => m.UpdatedTime)
-                    .Where(m => m.Tags.Contains(tech.ToLower())||m.Title.Contains(tech.ToLower()))
+                    .Where(m => m.Tags.Contains(tech.ToLower()) || m.Title.Contains(tech.ToLower()))
                     .Where(m => m.LanguageCode.Equals("zh-cn"))
                     .Skip((p - 1) * pageSize)
                     .Take(pageSize)
@@ -78,5 +79,15 @@ namespace WebApp.Controllers
             return View(videoList);
         }
 
+        [HttpGet]
+        public  IActionResult Detail(string id)
+        {
+            var video = _context.MvaVideos
+                .Include(m=>m.Details)
+                .Where(m=>m.Id==Guid.Parse(id))
+                .FirstOrDefault();
+
+            return Json(video);
+        }
     }
 }
