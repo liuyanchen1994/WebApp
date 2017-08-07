@@ -27,7 +27,7 @@ namespace WebApp.Controllers
             {
                 mvaVideos = _context.MvaVideos
                     .OrderByDescending(m => m.UpdatedTime)
-                    .Where(m => m.Technologies.Contains(tech.ToLower()))
+                    .Where(m => m.Tags.Contains(tech.ToLower())||m.Title.Contains(tech.ToLower()))
                     .Where(m => m.LanguageCode.Equals("zh-cn"))
                     .Skip((p - 1) * pageSize)
                     .Take(pageSize)
