@@ -80,14 +80,18 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
-        public  IActionResult Detail(string id)
+        public IActionResult Detail(string id)
         {
             var video = _context.MvaVideos
-                .Include(m=>m.Details)
-                .Where(m=>m.Id==Guid.Parse(id))
+                .Include(m => m.Details)
+                .Where(m => m.Id == Guid.Parse(id))
                 .FirstOrDefault();
 
-            return Json(video);
+            return View(new VideoDetailModels
+            {
+                MvaVideo = video,
+                Details = video.Details
+            });
         }
     }
 }

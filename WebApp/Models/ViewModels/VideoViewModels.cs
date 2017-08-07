@@ -17,6 +17,7 @@ namespace WebApp.Models.ViewModels
 
     public class VideoDetailModels
     {
-
+        public MvaVideos MvaVideo { get; set; }
+        public List<MvaDetails> Details { get; set; }
     }
 }
