@@ -19,11 +19,9 @@ namespace WebApp.Controllers
         }
         public async Task<IActionResult> Index(string tech, int p = 1)
         {
-
             int pageSize = 12;
             int totalNumber = 1;
-
-
+            if (p < 1) p = 1;
             var mvaVideos = new List<MvaVideos>();
             if (!string.IsNullOrEmpty(tech))
             {
