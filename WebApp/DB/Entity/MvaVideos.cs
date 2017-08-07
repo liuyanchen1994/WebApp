@@ -1,10 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.DB
+
 {
     public partial class MvaVideos
     {
+        public List<MvaDetails> Details { get; set; }
+        [MaxLength(4000)]
+        public string  DetailDescription { get; set; }
         public Guid Id { get; set; }
         public string Author { get; set; }
         public string AuthorCompany { get; set; }
@@ -24,6 +29,7 @@ namespace WebApp.DB
         public string Tags { get; set; }
         public string Technologies { get; set; }
         public string Title { get; set; }
+        public bool IsRecommend { get; set; }
         public DateTime UpdatedTime { get; set; }
     }
 }
