@@ -96,6 +96,7 @@ namespace WebApp.Helpers
 							<script>
 								function gotoPage() {
 									var page = document.getElementById('totalPage').value;
+                                    if(page<1) page = 1;
 									window.location.href = '" + PagerOption.RouteUrl + @"?p='+page;
 								}
 							</script>");
