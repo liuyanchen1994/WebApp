@@ -3,92 +3,198 @@
 @{
     ViewData["Title"] = "微软中国开发者社区";
     var newsList = Model.BingNews;
+    var blogList = Model.MsBlogs;
     var downloadList = Model.Downloads;
     var documentList = Model.Documents;
-
+    var mvaVideoList = Model.MvaVideos;
 }
-
+<!--左边主体内容-->
 <div class="row">
-
     <div class="col-md-8">
-        <div class="card">
-            <div class="card-header">
-                最新资讯
-            </div>
-            <div class="card-block p-1">
-                @{
-                    foreach (var bingNews in newsList)
+        <!--推荐视频 -->
+        <div class="row mb-2">
+            <div class="card col-12 p-0">
+                <div class="card-header p-2 d-flex justify-content-between">
+                    <div class="col">
+                        推荐视频
+                    </div>
+                    <div class="col text-right">
+                        <a asp-action="Index" asp-controller="Video">查看更多</a>
+                    </div>
+                </div>
+                <div class="card-text">
+                    @foreach (var video in mvaVideoList)
                     {
-                        var Url = HttpUtility.ParseQueryString(new Uri(bingNews.Url).Query);
-                        <div class="row my-3 mx-1">
-                            <div class="col-md-auto hidden-sm-down">
-                                <a href="@Url["r"]" target="_blank">
-                                    <img class="bingnews-small" src="@bingNews.ThumbnailUrl">
-                                </a>
-                            </div>
-                            <div class="col">
-                                <h5 class="card-title">
-                                    <a href="@Url["r"]" target="_blank" class="text-gray-dark">
-                                        @bingNews.Title
-                                    </a>
-                                </h5>
-                                <h7 class="card-text text-muted">
-                                    <span>
-                                        来源：@bingNews.Provider
-                                    </span>
-                                    @bingNews.UpdatedTime.ToString("yyyy-M-dd")
+                        var content = StringHelper.ReplaceHtmlTag(video.Description);
+                        var shortContent = StringHelper.SubString(content, 100);
+                        var tags = StringHelper.SubString(video.Tags, 66);
 
-
-                                </h7>
+                        <div class="card mb-2">
+                            <div class="card-block p-0">
+                                <div class="media">
+                                    <div class="d-md-flex align-self-center mr-md-3 d-none">
+                                        <a href="@video.SourceUrl" target="_blank">
+                                            <img src="@video.CourseImage" width="220" title="@video.Title" />
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5>
+                                            <a href="@video.SourceUrl" target="_blank">
+                                                @video.Title
+                                            </a>
+                                        </h5>
+                                        @if (!string.IsNullOrEmpty(video.Author))
+                                        {
+                                            <small>
+                                                <span class="text-muted">
+                                                    作者:
+                                                    <span class="text-primary">
+                                                        @video.Author
+                                                    </span>
+                                                    &nbsp;&nbsp;
+                                                    @video.UpdatedTime.ToString("yyyy-MM-dd")
+                                                </span>
+                                            </small>
+                                            <br />
+                                        }
+                                        <p title="@content">
+                                            <small>
+                                                @shortContent
+                                            </small>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     }
-                }
+                </div>
+            </div>
+        </div>
+        <!--资讯-->
+        <div class="row mb-2">
+            <div class="card col-md-6 p-0">
+                <div class="card-header p-2 d-flex justify-content-between">
+                    <div class="col">
+                        最新资讯
+                    </div>
+                    <div class="col text-right">
+                        <a asp-action="Index" asp-controller="News">查看更多</a>
+                    </div>
+                </div>
+                <div class="card-block p-1">
+                    @{
+                        foreach (var bingNews in newsList)
+                        {
+                            var Url = HttpUtility.ParseQueryString(new Uri(bingNews.Url).Query);
+                            <div class="row my-3 mx-1">
+                                @*<div class="col-md-auto hidden-sm-down">
+                                        <a href="@Url["r"]" target="_blank">
+                                            <img class="bingnews-small" src="@bingNews.ThumbnailUrl">
+                                        </a>
+                                    </div>*@
+                                <div class="col px-1">
+                                    <div class="card-title mb-0">
+                                        <a href="@Url["r"]" target="_blank" class="text-gray-dark">
+                                            @bingNews.Title
+                                        </a>
+                                    </div>
+                                    <div class="card-text text-muted">
+                                        <small>
+                                            <span>
+                                                @bingNews.Provider
+                                            </span>
+                                            @bingNews.UpdatedTime.ToString("yyyy-M-dd")
+                                        </small>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="card col-md-6 p-0">
+                <div class="card-header p-2">
+                    官方博客
+                </div>
+                <div class="card-block p-1">
+                    @foreach (var blog in blogList)
+                    {
+                        <div class="row my-3 mx-1">
+                            @*<div class="col-md-auto hidden-sm-down">
+                                    <a href="@Url["r"]" target="_blank">
+                                        <img class="bingnews-small" src="@bingNews.ThumbnailUrl">
+                                    </a>
+                                </div>*@
+                            <div class="col px-1">
+                                <div class="card-title mb-0">
+                                    <a href="@blog.Link" target="_blank" class="text-gray-dark">
+                                        @blog.Title
+                                    </a>
+                                </div>
+                                <div class="card-text text-muted">
+                                    <small>
+                                        <span class="text-primary">
+                                            @blog.Author
+                                        </span>
+
+                                        @blog.LastUpdateTime.ToString("yyyy-M-dd")
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
     <div class="col-md-4">
         <!--推荐下载-->
 
-        <div class="card">
+        <div class="card mb-1">
             <div class="card-block p-0">
                 <h5 class="p-2" style="border-bottom:1px solid #cccccc">推荐下载</h5>
-                @{
-                    foreach (var download in downloadList)
-                    {
-                        <div class="p-1">
-                            <a href="@download.AbsolutePath" style="text-decoration:none" target="_blank" title="@download.Description">
-                                @if (!string.IsNullOrEmpty(download.Imgurl))
-                                {
-                                    <img src="@download.Imgurl" title="@download.Name" width="36" height="36" class="m-1"/>
+                @foreach (var download in downloadList)
+                {
+                    <div class="p-1">
+                        <a href="@download.AbsolutePath" style="text-decoration:none" target="_blank" title="@download.Description">
+                            @if (!string.IsNullOrEmpty(download.Imgurl))
+                            {
+                                <img src="@download.Imgurl" title="@download.Name" width="36" height="36" class="m-1" />
 
-                                }
-                                <span>@download.Name</span>
-                            </a>
-                        </div>
-                    }
+                            }
+                            <span>@download.Name</span>
+                        </a>
+                    </div>
                 }
             </div>
         </div>
         <!--推荐文档-->
-        <div class="card">
+        <div class="card mb-1">
             <div class="card-block p-0">
                 <h5 class="p-2" style="border-bottom:1px solid #cccccc">快捷文档</h5>
-                @{
-                    foreach (var document in documentList)
-                    {
-                        <div class="p-1">
-                            <a href="@document.AbsolutePath" style="text-decoration:none" target="_blank" title="@document.Description">
-                                @if (!string.IsNullOrEmpty(document.Imgurl))
-                                {
-                                    <img src="@document.Imgurl" title="@document.Name" width="36" height="36" class="m-1" style="border-radius:2px !important"/>
-                                }
+                @foreach (var document in documentList)
+                {
+                    <div class="p-1">
+                        <a href="@document.AbsolutePath" style="text-decoration:none" target="_blank" title="@document.Description">
+                            @if (!string.IsNullOrEmpty(document.Imgurl))
+                            {
+                                <img src="@document.Imgurl" title="@document.Name" width="36" height="36" class="m-1" style="border-radius:2px !important" />
+                            }
 
-                                <span>@document.Name</span>
-                            </a>
-                        </div>
-                    }
+                            <span>@document.Name</span>
+                        </a>
+                    </div>
                 }
+            </div>
+        </div>
+
+        <!--推荐服务-->
+        <div class="card mb-1">
+            <div class="card-block p-0">
+                <h5 class="p-2" style="border-bottom:1px solid #cccccc">推荐服务</h5>
+
+
             </div>
         </div>
     </div>
