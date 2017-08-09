@@ -26,6 +26,8 @@ namespace WebApp.DB
         public virtual DbSet<CataLog> CataLog { get; set; }
         public virtual DbSet<DevBlogs> DevBlogs { get; set; }
         public virtual DbSet<MvaVideos> MvaVideos { get; set; }
+        public virtual DbSet<MvaDetails> MvaDetails { get; set; }
+
         public virtual DbSet<Resource> Resource { get; set; }
         public virtual DbSet<RssNews> RssNews { get; set; }
         public virtual DbSet<Sources> Sources { get; set; }

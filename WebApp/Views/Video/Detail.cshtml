@@ -1,14 +1,14 @@
+@using WebApp.DB
 @model WebApp.Models.ViewModels.VideoDetailModels
 @{
     Layout = "_Layout";
-
     var video = Model.MvaVideo;
     var details = Model.Details;
+    var currentVideo = Model.CurrentDetail;
     ViewData["Title"] = video.Title + "-视频-MSDev";
-
 }
 
-<div class="row">
+<div class="row pt-2">
     @{
         var content = StringHelper.ReplaceHtmlTag(video.Description);
         var shortContent = StringHelper.SubString(content, 300);
@@ -25,33 +25,52 @@
                     &nbsp;&nbsp;
                     @video.UpdatedTime.ToString("yyyy-MM-dd")
                 </span>
-
             }
         </h5>
-        <video controls="controls" width="100%" class="invisible">
-            <source src="" type="video/mp4"/>
+        <video controls="controls" width="100%" class="">
+            <source src="@currentVideo.MidDownloadUrl" type="video/mp4" />
         </video>
+        <h6 class="text-primary">
+            视频介绍:
+        </h6>
+        <p>
+            <small>
+                @content
+            </small>
+        </p>
     </div>
     <div class="col-md-5">
-        <div>
-
-            <span class="text-primary" title="@video.Tags"
-                  style="font-size:0.9rem">
-                Tags：@tags
-            </span>
-
-            <p title="@content">
-                @shortContent
-            </p>
-        </div>
+        <h5>课程列表:</h5>
         @foreach (var detail in details)
         {
-            <a>
+            <a asp-route-detail="@detail.MvaId" asp-route-id="@video.Id">
                 <h6>
-                    @detail.Title
-                    @detail.LowDownloadUrl
+                    <small class="text-muted">
+                        [@detail.Duration.ToString("mm:ss")]
+                        &nbsp;
+                    </small>
+                    @detail.Sequence @detail.Title.Replace("视频：", "")
+                   
                 </h6>
             </a>
         }
+
+        <br />
+        <h5>视频下载：</h5>
+
+        <h6 >
+            <a href="@currentVideo.LowDownloadUrl" class="badge badge-success">
+                普清360p
+            </a>
+            <a href="@currentVideo.MidDownloadUrl" class="badge badge-success">
+                高清540p
+            </a>
+
+            <a href="@currentVideo.HighDownloadUrl" class="badge badge-primary">
+                超清720p
+            </a>
+        </h6>
+
+
     </div>
 </div>

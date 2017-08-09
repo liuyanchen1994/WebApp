@@ -80,17 +80,22 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Detail(string id)
+        public IActionResult Detail(string id, string detail = null)
         {
             var video = _context.MvaVideos
                 .Include(m => m.Details)
                 .Where(m => m.Id == Guid.Parse(id))
                 .FirstOrDefault();
-
+            var currentDetail = video.Details.OrderBy(m => m.Sequence).First();
+            if (!string.IsNullOrEmpty(detail))
+            {
+                currentDetail = _context.MvaDetails.Where(m => m.MvaId.Equals(detail)).FirstOrDefault();
+            }
             return View(new VideoDetailModels
             {
                 MvaVideo = video,
-                Details = video.Details
+                Details = video.Details.OrderBy(m => m.Sequence).ToList(),
+                CurrentDetail = currentDetail
             });
         }
     }
