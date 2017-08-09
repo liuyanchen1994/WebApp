@@ -40,7 +40,7 @@
                 <div class="card-block p-2">
                     <div class="media">
                         <div class="d-md-flex align-self-center mr-md-3 d-none">
-                            <a href="@video.SourceUrl" target="_blank">
+                            <a asp-action="Detail" asp-route-id="@video.Id" target="_blank">
                                 <img src="@video.CourseImage" width="220" title="@video.Title"/>
                             </a>
                         </div>

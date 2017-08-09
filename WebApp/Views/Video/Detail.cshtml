@@ -50,19 +50,17 @@
                         &nbsp;
                     </small>
                     @detail.Sequence @detail.Title.Replace("视频：", "")
-                   
                 </h6>
             </a>
         }
 
         <br />
         <h5>视频下载：</h5>
-
         <h6 >
-            <a href="@currentVideo.LowDownloadUrl" class="badge badge-success">
+            <a href="@currentVideo.LowDownloadUrl" class="badge badge-primary">
                 普清360p
             </a>
-            <a href="@currentVideo.MidDownloadUrl" class="badge badge-success">
+            <a href="@currentVideo.MidDownloadUrl" class="badge badge-primary">
                 高清540p
             </a>
 
@@ -70,7 +68,8 @@
                 超清720p
             </a>
         </h6>
-
-
+        <h6>
+            <a href="@video.SourceUrl" class="badge badge-danger">MVA源地址</a>
+        </h6>
     </div>
 </div>

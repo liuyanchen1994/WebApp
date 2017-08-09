@@ -37,13 +37,13 @@
                                         @*<a  asp-action="Detail" asp-controller="Video" asp-route-id="@video.Id" target="_blank">
                                             <img src="@video.CourseImage" width="220" title="@video.Title" />
                                         </a>*@
-                                        <a href="@video.SourceUrl" target="_blank">
+                                        <a asp-action="Detail" asp-route-id="@video.Id" asp-controller="Video" target="_blank">
                                             <img src="@video.CourseImage" width="220" title="@video.Title" />
                                         </a>
                                     </div>
                                     <div class="media-body">
                                         <h5>
-                                            <a href="@video.SourceUrl" target="_blank">
+                                            <a asp-action="Detail" asp-route-id="@video.Id" asp-controller="Video" target="_blank">
                                                 @video.Title
                                             </a>
                                         </h5>
