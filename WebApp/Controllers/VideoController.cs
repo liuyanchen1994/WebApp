@@ -98,5 +98,18 @@ namespace WebApp.Controllers
                 CurrentDetail = currentDetail
             });
         }
+
+
+        public IActionResult C9Video()
+        {
+            var re = _context.C9videos.Where(m => m.Language.Equals("zh-cn"))
+                .Where(m => m.Duration != null)
+                .Where(m=>m.SeriesTitleUrl.Contains("Event"))
+                .OrderByDescending(m => m.UpdatedTime)
+                .Take(100)
+                .ToList();
+            return Json(re);
+
+        }
     }
 }
