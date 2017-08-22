@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using WebApp.DB;
+using WebApp.Models;
+using WebApp.Services;
 
 namespace WebApp
 {
@@ -19,14 +22,23 @@ namespace WebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
-                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
+
 
             //string connectionString = Configuration.GetConnectionString("DefaultConnection");
             string connectionString = Configuration.GetConnectionString("OnlineConnection");
-            System.Console.WriteLine(connectionString);
-            services.AddDbContextPool<MSDevContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<MSDevContext>(options => options.UseSqlServer(connectionString));
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("UserConnection")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddMvc()
+              .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+          );
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
