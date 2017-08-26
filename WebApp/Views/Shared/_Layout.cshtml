@@ -9,11 +9,11 @@
     <title>@ViewData["Title"]</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -21,7 +21,7 @@
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
-    <nav class="navbar navbar-toggleable-sm navbar-inverse bg-primary">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -29,18 +29,18 @@
         <div class="container">
             <a class="navbar-brand app-title" href="/">MSDev</a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav mr-auto">
                     <li><a class="nav-link" asp-controller="News" asp-action="Index">资讯</a></li>
                     <li><a class="nav-link" asp-controller="Download" asp-action="Index">下载</a></li>
                     <li><a class="nav-link" asp-controller="Document" asp-action="Index">文档</a></li>
                     <li><a class="nav-link" asp-controller="Video" asp-action="Index">视频</a></li>
                     <li><a class="nav-link" asp-controller="Home" asp-action="About">关于</a></li>
-
                 </ul>
+                @Html.Partial("_LoginPartial");
             </div>
+
         </div>
     </nav>
-
     <div class="container">
         @RenderBody()
         <hr />
@@ -61,7 +61,7 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/tether/dist/js/tether.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
@@ -70,7 +70,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.js"></script>
         <script src="https://cdn.bootcss.com/popper.js/1.9.3/umd/popper.min.js"
                 integrity="sha384-knhBOwpf8/28D6ygAjJeb0STNDZqfPbKaWQ8wIz/xgSc0xXwKsKhNype8fmfMka2" crossorigin="anonymous"></script>
-        <script src="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js"
                 integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         <script src="~/js/baidu.js" asp-append-version="true"></script>
