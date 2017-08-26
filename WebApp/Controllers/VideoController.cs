@@ -86,7 +86,12 @@ namespace WebApp.Controllers
                 .Include(m => m.Details)
                 .Where(m => m.Id == Guid.Parse(id))
                 .FirstOrDefault();
-            var currentDetail = video.Details.OrderBy(m => m.Sequence).First();
+            if (video.Details.Count < 1)
+            {
+                return RedirectToAction("Index");
+            }
+            var currentDetail = video.Details.OrderBy(m => m.Sequence).FirstOrDefault();
+
             if (!string.IsNullOrEmpty(detail))
             {
                 currentDetail = _context.MvaDetails.Where(m => m.MvaId.Equals(detail)).FirstOrDefault();
@@ -104,7 +109,7 @@ namespace WebApp.Controllers
         {
             var re = _context.C9videos.Where(m => m.Language.Equals("zh-cn"))
                 .Where(m => m.Duration != null)
-                .Where(m=>m.SeriesTitleUrl.Contains("Event"))
+                .Where(m => m.SeriesTitleUrl.Contains("Event"))
                 .OrderByDescending(m => m.UpdatedTime)
                 .Take(100)
                 .ToList();
