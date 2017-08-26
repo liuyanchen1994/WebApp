@@ -47,7 +47,12 @@ namespace WebApp
 
                 options.User.RequireUniqueEmail = true;
             });
-
+            
+            services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+            {
+                microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
+                microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:Password"];
+            });
 
 
 
