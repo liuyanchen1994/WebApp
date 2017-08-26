@@ -23,18 +23,34 @@ namespace WebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-
-
             //string connectionString = Configuration.GetConnectionString("DefaultConnection");
             string connectionString = Configuration.GetConnectionString("OnlineConnection");
             services.AddDbContext<MSDevContext>(options => options.UseSqlServer(connectionString));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("UserConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("OnlineConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = false;
+
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+
+                options.User.RequireUniqueEmail = true;
+            });
+
+
+
+
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddMvc()
               .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -58,6 +74,8 @@ namespace WebApp
             }
 
             app.UseStaticFiles();
+            app.UseAuthentication();
+
             app.UseStatusCodePagesWithRedirects("/404");
             app.UseMvc(routes =>
             {
