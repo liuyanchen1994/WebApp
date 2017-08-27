@@ -54,8 +54,6 @@ namespace WebApp
                 microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:Password"];
             });
 
-
-
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddMvc()
               .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
