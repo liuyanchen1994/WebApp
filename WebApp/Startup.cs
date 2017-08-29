@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -48,12 +49,26 @@ namespace WebApp
 
                 options.User.RequireUniqueEmail = true;
             });
-            
+
             services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
             {
                 microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
                 microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:Password"];
-                
+
+            }).AddOAuth("github", options =>
+            {
+                options.ClientId = "68c935d49d495e6eb2fe";
+                options.ClientSecret = "41b8ec8fce16a596b0dd183a0b557f9a1b2fc133";
+                options.CallbackPath = "/signin-github";
+                options.SignInScheme = "github";
+                options.AuthorizationEndpoint = "http://github.com/login/oauth/authorize";
+                options.TokenEndpoint = "https://github.com/login/oauth/access_token";
+                options.UserInformationEndpoint = "https://api.github.com/user";
+                options.Scope.Add("user");
+
+                //options.Events = new OAuthEvents
+                //{
+                //};
             });
 
             services.AddTransient<IEmailSender, EmailSender>();
