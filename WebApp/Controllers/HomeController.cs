@@ -26,7 +26,7 @@ namespace WebApp.Controllers
 
             var msBlogs = _context.RssNews
                 .OrderByDescending(m => m.LastUpdateTime)
-                .Take(6)
+                .Take(8)
                 .ToList();
 
             var mvaVideos = _context.MvaVideos

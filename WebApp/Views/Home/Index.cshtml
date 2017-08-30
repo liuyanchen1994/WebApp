@@ -98,13 +98,13 @@
                                     </div>*@
                                 <div class="col px-1">
                                     <div class="card-title mb-0">
-                                        <a href="@Url["r"]" target="_blank" class="text-gray-dark">
+                                        <a href="@Url["r"]" target="_blank" class="text-dark">
                                             @bingNews.Title
                                         </a>
                                     </div>
                                     <div class="card-text text-muted">
                                         <small>
-                                            <span>
+                                            <span class="text-info">
                                                 @bingNews.Provider
                                             </span>
                                             @bingNews.UpdatedTime.ToString("yyyy-M-dd")
@@ -132,13 +132,13 @@
                                 </div>*@
                             <div class="col px-1">
                                 <div class="card-title mb-0">
-                                    <a href="@blog.Link" target="_blank" class="text-gray-dark">
-                                        @blog.Title
+                                    <a asp-controller="News" asp-action="RssNewsDetail" asp-route-id="@blog.Id"  class="text-dark" title="@blog.Title">
+                                        @blog.TitleCn
                                     </a>
                                 </div>
                                 <div class="card-text text-muted">
                                     <small>
-                                        <span class="text-primary">
+                                        <span class="text-info">
                                             @blog.Author
                                         </span>
 
