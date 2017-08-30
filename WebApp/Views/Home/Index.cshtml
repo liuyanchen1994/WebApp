@@ -7,7 +7,41 @@
     var downloadList = Model.Downloads;
     var documentList = Model.Documents;
     var mvaVideoList = Model.MvaVideos;
+    var mvaVideo1 = mvaVideoList[0];
+    var mvaVideo2 = mvaVideoList[1];
+    var mvaVideo3 = mvaVideoList[2];
+
 }
+
+<style>
+    .video-banner {
+        position: relative;
+        width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+        .video-banner > .video-banner-img {
+            display: block;
+            width: 100%;
+            position: inherit;
+        }
+
+            .video-banner > .video-banner-img > img {
+                width: 100%;
+            }
+
+        .video-banner > .video-banner-content {
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            z-index: 9;
+            color: white;
+            opacity: 0.66;
+            background-color: #000000;
+        }
+</style>
 <!--左边主体内容-->
 <div class="row">
     <div class="col-md-8">
@@ -23,54 +57,81 @@
                     </div>
                 </div>
                 <div class="card-text">
-                    @foreach (var video in mvaVideoList)
-                    {
-                        var content = StringHelper.ReplaceHtmlTag(video.Description);
-                        var shortContent = StringHelper.SubString(content, 100);
-                        var tags = StringHelper.SubString(video.Tags, 66);
 
-                        <div class="card my-2" style="border:none;border-bottom:1px solid #cccccc">
-                            <div class="card-block p-0">
-                                <div class="media">
-                                    <div class="d-md-flex align-self-center mr-md-3 d-none">
-                                        @* //TODO:跳转到详情页 *@
-                                        @*<a  asp-action="Detail" asp-controller="Video" asp-route-id="@video.Id" target="_blank">
-                                            <img src="@video.CourseImage" width="220" title="@video.Title" />
-                                        </a>*@
-                                        <a asp-action="Detail" asp-route-id="@video.Id" asp-controller="Video" target="_blank">
-                                            <img src="@video.CourseImage" width="220" title="@video.Title" />
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5>
-                                            <a asp-action="Detail" asp-route-id="@video.Id" asp-controller="Video" target="_blank">
-                                                @video.Title
-                                            </a>
-                                        </h5>
-                                        @if (!string.IsNullOrEmpty(video.Author))
-                                        {
-                                            <small>
-                                                <span class="text-muted">
-                                                    作者:
-                                                    <span class="text-primary">
-                                                        @video.Author
-                                                    </span>
-                                                    &nbsp;&nbsp;
-                                                    @video.UpdatedTime.ToString("yyyy-MM-dd")
+
+                    <div class="row">
+                        <div class="col-md-8 m-0 pr-0">
+                            <div class="video-banner">
+                                <a class="video-banner-img" asp-action="Detail" asp-controller="Video" asp-route-id="@mvaVideo1.Id" target="_blank">
+                                    <img src="@mvaVideo1.CourseImage" />
+                                </a>
+                                <div class="video-banner-content p-1">
+                                    <h5 class="content-title">
+                                        @mvaVideo1.Title
+                                    </h5>
+                                    <div class="content-detail">
+                                        <small>
+                                            <span class="text-light">
+                                                作者:
+                                                <span class="text-light">
+                                                    @mvaVideo1.Author
                                                 </span>
-                                            </small>
-                                            <br />
-                                        }
-                                        <p title="@content">
-                                            <small>
-                                                @shortContent
-                                            </small>
-                                        </p>
+                                                &nbsp;&nbsp;
+                                                @mvaVideo1.UpdatedTime.ToString("yyyy-MM-dd")
+                                            </span>
+                                        </small>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    }
+                        <div class="col-md-4">
+                            <div class="video-banner">
+                                <a class="video-banner-img" asp-action="Detail" asp-controller="Video" asp-route-id="@mvaVideo2.Id" target="_blank">
+                                    <img src="@mvaVideo2.CourseImage" />
+                                </a>
+                                <div class="video-banner-content p-1">
+                                    <h7 class="content-title">
+                                        @mvaVideo2.Title
+                                    </h7>
+                                    <div class="content-detail" hidden>
+                                        <small>
+                                            <span class="text-light">
+                                                作者:
+                                                <span class="text-light">
+                                                    @mvaVideo2.Author
+                                                </span>
+                                                &nbsp;&nbsp;
+                                                @mvaVideo2.UpdatedTime.ToString("yyyy-MM-dd")
+                                            </span>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="video-banner mt-4">
+                                <a class="video-banner-img" asp-action="Detail" asp-controller="Video" asp-route-id="@mvaVideo3.Id" target="_blank">
+                                    <img src="@mvaVideo3.CourseImage" />
+                                </a>
+                                <div class="video-banner-content p-1">
+                                    <h7 class="content-title">
+                                        @mvaVideo3.Title
+                                    </h7>
+                                    <div class="content-detail" hidden>
+                                        <small>
+                                            <span class="text-light">
+                                                作者:
+                                                <span class="text-light">
+                                                    @mvaVideo3.Author
+                                                </span>
+                                                &nbsp;&nbsp;
+                                                @mvaVideo3.UpdatedTime.ToString("yyyy-MM-dd")
+                                            </span>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -132,7 +193,7 @@
                                 </div>*@
                             <div class="col px-1">
                                 <div class="card-title mb-0">
-                                    <a asp-controller="News" asp-action="RssNewsDetail" asp-route-id="@blog.Id"  class="text-dark" title="@blog.Title">
+                                    <a asp-controller="News" asp-action="RssNewsDetail" asp-route-id="@blog.Id" class="text-dark" title="@blog.Title">
                                         @blog.TitleCn
                                     </a>
                                 </div>
@@ -198,7 +259,7 @@
             <div class="card-block p-0 text-center">
                 <h5 class="p-2 text-left" style="border-bottom:1px solid #cccccc">推荐服务</h5>
                 <a href="http://www.qcloud.com/redirect.php?redirect=1001&cps_key=8451e9a1ec4d14dec1cd821e079065c1" target="_blank">
-                    <img src="https://saledazuredisks145.blob.core.windows.net/source/txcloud.jpg" title="腾讯云主机"/>
+                    <img src="https://saledazuredisks145.blob.core.windows.net/source/txcloud.jpg" title="腾讯云主机" />
                 </a>
             </div>
         </div>

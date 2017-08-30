@@ -2,7 +2,9 @@ body {
     background: rgba(255, 255, 250, 1);
     font-family: 'Segoe UI', 微软雅黑,Tahoma, Geneva, Verdana, sans-serif
 }
-
+button{
+    cursor:pointer !important;
+}
 
 h7{
     font-size:0.9rem;
