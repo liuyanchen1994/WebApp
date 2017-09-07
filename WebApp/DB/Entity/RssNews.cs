@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.DB
 {
@@ -17,5 +18,13 @@ namespace WebApp.DB
         public int Status { get; set; }
         public string Title { get; set; }
         public int Type { get; set; }
+        /// <summary>
+        /// 中文标题
+        /// </summary>
+        public string TitleCn { get; set; }
+        /// <summary>
+        /// 中文内容
+        /// </summary>
+        public string Content { get; set; }
     }
 }

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using WebApp.Models;
 using WebApp.Models.AccountViewModels;
 using WebApp.Services;
+using Newtonsoft.Json;
 
 namespace WebApp.Controllers
 {
@@ -270,6 +271,7 @@ namespace WebApp.Controllers
                 return RedirectToAction(nameof(Login));
             }
             var info = await _signInManager.GetExternalLoginInfoAsync();
+            Console.WriteLine(info.LoginProvider);
             if (info == null)
             {
                 return RedirectToAction(nameof(Login));

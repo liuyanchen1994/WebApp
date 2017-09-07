@@ -13,7 +13,12 @@ namespace WebApp.Controllers
 {
     public class NewsController : Controller
     {
-        public async Task<IActionResult> Index ()
+        readonly MSDevContext _context;
+        public NewsController(MSDevContext context)
+        {
+            _context = context;
+        }
+        public async Task<IActionResult> Index()
         {
 
             HttpClient client = new HttpClient
@@ -31,5 +36,18 @@ namespace WebApp.Controllers
             return View(data);
         }
 
+
+
+        [HttpGet]
+        public IActionResult RssNewsDetail(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var news = _context.RssNews.Find(id);
+            
+            return View(news);
+        }
     }
 }
