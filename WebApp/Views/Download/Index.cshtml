@@ -10,7 +10,8 @@
             @foreach (var catalog in Model.Catalog)
             {
                 <div class="list-group">
-                    <a class="list-group-item list-group-item-action list-group-item-heading p-2" data-toggle="collapse" href="#collapse-@catalog.Value" aria-expanded="true" aria-controls="collapse-@catalog.Value">
+                    <a class="list-group-item list-group-item-action list-group-item-heading p-2" 
+                       data-toggle="collapse" href="#collapse-@catalog.Value" aria-expanded="true" aria-controls="collapse-@catalog.Value">
                         @catalog.Name
                     </a>
                     <div class="collapse show" id="collapse-@catalog.Value">
@@ -26,7 +27,6 @@
                         }
                     </div>
                 </div>
-
             }
         }
     </div>
@@ -38,44 +38,45 @@
                 <div class="row">
                     @foreach (var resource in Model.Resource)
                     {
-                        <div class="col-md-4">
-                            <div class="card border-0 my-2" style="background-color:transparent">
-                                <div class="card-block p-2 pb-1" style="border:1px solid #cccccc">
+                        <div class="col-md-6 my-1 p-1 px-2">
+                            <div class="media p-1" style="border:1px solid #ccc;">
+
+                                <div class="d-flex align-self-center mr-3">
                                     <a href="@resource.AbsolutePath" target="_blank">
-                                        <img class="card-img-top mx-auto d-block" src="@resource.Imgurl" title="@resource.Name" height="100" width="110" />
+                                        <img src="@resource.Imgurl" title="@resource.Name" style="width:64px;height:64px;" />
                                     </a>
-                                    <div class="card-body mt-2">
-                                        <h5 class="card-title p-0">
-                                            <a href="@resource.AbsolutePath" target="_blank">@resource.Name</a>
-                                        </h5>
-                                        <span class="badge badge-info">
-                                            @TypeValueHelper.Language[resource.Language]
+                                </div>
+
+                                <div class="media-body">
+                                    <h5 class="mt-0">
+                                        <a href="@resource.AbsolutePath" target="_blank">@resource.Name</a>
+                                    </h5>
+
+                                    <span class="badge badge-info">
+                                        @TypeValueHelper.Language[resource.Language]
+                                    </span>
+                                    <span class="badge badge-primary">
+                                        @TypeValueHelper.ResourceType[resource.Type]
+                                    </span>
+                                    <span class="text-muted">
+                                        <small>
+                                            更新:
+                                            @resource.UpdatedTime.ToString("yyyy-MM-dd")
+                                        </small>
+                                    </span>
+                                    <br />
+                                    @resource.Description
+                                    @if (resource.Sources.Count > 0)
+                                    {
+                                        <span>
+                                            更多链接
                                         </span>
-                                        <span class="badge badge-primary">
-                                            @TypeValueHelper.ResourceType[resource.Type]
-                                        </span>
-                                        <span class="text-muted">
-                                            <small>
-                                                更新:
-                                                @resource.UpdatedTime.ToString("yyyy-MM-dd")
-                                            </small>
-                                        </span>
-                                        <br />
-                                        <p>
-                                            @resource.Description
-                                        </p>
-                                        @if (resource.Sources.Count > 0)
+                                        foreach (var item in resource.Sources)
                                         {
-                                            <span>
-                                                更多链接
-                                            </span>
-                                            foreach (var item in resource.Sources)
-                                            {
-                                                <a href="@item.Url">@item.Name</a>
-                                                <br />
-                                            }
+                                            <a href="@item.Url">@item.Name</a>
+                                            <br />
                                         }
-                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>

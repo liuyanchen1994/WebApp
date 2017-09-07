@@ -49,14 +49,18 @@
                         [@detail.Duration.ToString("mm:ss")]
                         &nbsp;
                     </small>
-                    @detail.Sequence @detail.Title.Replace("视频：", "")
+                    @if (!detail.Title.Contains("|"))
+                    {
+                        @detail.Sequence
+                    }
+                    @detail.Title.Replace("视频：", "")
                 </h6>
             </a>
         }
 
         <br />
         <h5>视频下载：</h5>
-        <h6 >
+        <h6>
             <a href="@currentVideo.LowDownloadUrl" class="badge badge-primary">
                 普清360p
             </a>

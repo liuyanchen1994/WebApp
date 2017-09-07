@@ -38,34 +38,30 @@
                 <div class="row">
                     @foreach (var resource in Model.Resource)
                     {
-                        <div class="col-md-6">
-                            <div class="card" style="margin-bottom:8px">
-                                <div class="card-block p-2">
-                                    <div class="media">
-                                        <div class="d-flex align-self-center mr-3">
-                                            @if (!string.IsNullOrEmpty(resource.Imgurl))
-                                            {
-                                                <img src="@resource.Imgurl" title="@resource.Name" width="64" height="64" style="border-radius:1px !important" />
-                                            }
-                                        </div>
-                                        <div class="media-body">
-                                            <h5>
-                                                <a href="@resource.AbsolutePath" target="_blank">
-                                                    @resource.Name
-                                                </a>
-                                                <small>
-                                                    <span class="badge badge-default">
-                                                        @TypeValueHelper.Language[resource.Language]
-                                                    </span>
-                                                </small>
-                                            </h5>
-                                            @resource.Description
-                                        </div>
-
-                                    </div>
-
+                        <div class="col-md-6 my-1 p-1 px-2">
+                            <div class="media p-1" style="border:1px solid #ccc">
+                                <div class="d-flex align-self-center mr-3">
+                                    @if (!string.IsNullOrEmpty(resource.Imgurl))
+                                    {
+                                        <img src="@resource.Imgurl" title="@resource.Name" width="64" height="64" style="border-radius:1px !important" />
+                                    }
                                 </div>
+                                <div class="media-body">
+                                    <h5>
+                                        <a href="@resource.AbsolutePath" target="_blank">
+                                            @resource.Name
+                                        </a>
+                                        <small>
+                                            <span class="badge badge-default">
+                                                @TypeValueHelper.Language[resource.Language]
+                                            </span>
+                                        </small>
+                                    </h5>
+                                    @resource.Description
+                                </div>
+
                             </div>
+
                         </div>
                     }
                 </div>

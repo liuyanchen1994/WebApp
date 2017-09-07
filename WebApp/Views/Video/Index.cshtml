@@ -34,43 +34,39 @@
         {
             var content = StringHelper.ReplaceHtmlTag(video.Description);
             var shortContent = StringHelper.SubString(content, 100);
-            var tags= StringHelper.SubString(video.Tags,66);
+            var tags = StringHelper.SubString(video.Tags, 66);
 
-            <div class="card my-2">
-                <div class="card-block p-2">
-                    <div class="media">
-                        <div class="d-md-flex align-self-center mr-md-3 d-none">
-                            <a asp-action="Detail" asp-route-id="@video.Id" target="_blank">
-                                <img src="@video.CourseImage" width="220" title="@video.Title"/>
-                            </a>
-                        </div>
-                        <div class="media-body">
-                            <h5>
-                                <a target="_blank" asp-action="Detail" asp-route-id="@video.Id">
-                                    @video.Title
-                                </a>
-                            </h5>
-                            @if (!string.IsNullOrEmpty(video.Author))
-                            {
-                                <span class="text-muted" style="font-size:0.9rem">
-                                    作者:
-                                    @video.Author
-                                    &nbsp;&nbsp;
-                                    @video.UpdatedTime.ToString("yyyy-MM-dd")
-                                </span>
-                                <br />
-                            }
+            <div class="media my-2 py-1" style="border:1px solid #ccc">
+                <div class="d-md-flex align-self-center mr-md-3 d-none">
+                    <a asp-action="Detail" asp-route-id="@video.Id" target="_blank">
+                        <img src="@video.CourseImage" width="220" title="@video.Title" />
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h5>
+                        <a target="_blank" asp-action="Detail" asp-route-id="@video.Id">
+                            @video.Title
+                        </a>
+                    </h5>
+                    @if (!string.IsNullOrEmpty(video.Author))
+                    {
+                        <span class="text-muted" style="font-size:0.9rem">
+                            作者:
+                            @video.Author
+                            &nbsp;&nbsp;
+                            @video.UpdatedTime.ToString("yyyy-MM-dd")
+                        </span>
+                        <br />
+                    }
 
-                            <span class="text-primary" title="@video.Tags"
-                                  style="font-size:0.9rem">
-                                Tags：@tags
-                            </span>
-
-                            <p title="@content">
-                                @shortContent
-                            </p>
-                        </div>
-                    </div>
+                    <span class="text-primary" title="@video.Tags"
+                          style="font-size:0.9rem">
+                        Tags：@tags
+                    </span>
+                    <br />
+                    <span title="@content">
+                        @shortContent
+                    </span>
                 </div>
             </div>
         }

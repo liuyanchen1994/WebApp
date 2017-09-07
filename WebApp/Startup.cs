@@ -1,12 +1,19 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Claims;
 using WebApp.DB;
 using WebApp.Models;
 using WebApp.Services;
@@ -54,15 +61,40 @@ namespace WebApp
                 microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
                 microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:Password"];
 
-            }).AddOAuth("github", options =>
+
+            }).AddOAuth("GitHub", "GitHub", o =>
             {
-                options.ClientId = "68c935d49d495e6eb2fe";
-                options.ClientSecret = "41b8ec8fce16a596b0dd183a0b557f9a1b2fc133";
-                options.AuthorizationEndpoint = "http://github.com/login/oauth/authorize";
-                options.TokenEndpoint = "https://github.com/login/oauth/access_token";
-                options.CallbackPath = "/signin-github";
-                options.UserInformationEndpoint = "https://api.github.com/user";
-                options.SaveTokens = true;
+                o.ClientId = Configuration["Authentication:Github:ClientId"];
+                o.ClientSecret = Configuration["Authentication:Github:ClientSecret"];
+                o.CallbackPath = new PathString("/signin-github");
+                o.AuthorizationEndpoint = "https://github.com/login/oauth/authorize";
+                o.TokenEndpoint = "https://github.com/login/oauth/access_token";
+                o.UserInformationEndpoint = "https://api.github.com/user";
+                o.ClaimsIssuer = "OAuth2-Github";
+                o.SaveTokens = true;
+                // Retrieving user information is unique to each provider.
+                o.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
+                o.ClaimActions.MapJsonKey(ClaimTypes.Name, "login");
+                o.ClaimActions.MapJsonKey("urn:github:name", "name");
+                o.ClaimActions.MapJsonKey(ClaimTypes.Email, "email", ClaimValueTypes.Email);
+                o.ClaimActions.MapJsonKey("urn:github:url", "url");
+                o.Events = new OAuthEvents
+                {
+                    OnCreatingTicket = async context =>
+                    {
+                        // Get the GitHub user
+                        var request = new HttpRequestMessage(HttpMethod.Get, context.Options.UserInformationEndpoint);
+                        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
+                        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                        var response = await context.Backchannel.SendAsync(request, context.HttpContext.RequestAborted);
+                        response.EnsureSuccessStatusCode();
+
+                        var user = JObject.Parse(await response.Content.ReadAsStringAsync());
+
+                        context.RunClaimActions(user);
+                    }
+                };
             });
 
             services.AddTransient<IEmailSender, EmailSender>();

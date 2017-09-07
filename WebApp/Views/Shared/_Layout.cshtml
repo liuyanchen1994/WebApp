@@ -9,7 +9,7 @@
     <title>@ViewData["Title"]</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
@@ -45,23 +45,32 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>
-                2017 - MSDev
-                <span>
-                    使用.Net Core技术构建 
-                </span>
-                <span>
-                    云服务：
-                    Azure
-                </span>
-            </p>
+            <div class="row justify-content-between">
+                <div class="col-md-6">
+                    &copy;
+                    2017 - MSDev.cc
+                    &nbsp;&nbsp;
+                </div>
+                <div col-md-6>
+                    <span>
+                        <a href="https://www.microsoft.com/net/core" target="_blank">.Net Core</a>
+                         生态驱动
+                    </span>
+                    &nbsp;&nbsp;
+                    <span>
+                        <a href="https://azure.microsoft.com/zh-cn/" target="_blank">Azure</a>
+                        云服务支持
+                    </span>
+                </div>
+            </div>
         </footer>
     </div>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/tether/dist/js/tether.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>*@
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
