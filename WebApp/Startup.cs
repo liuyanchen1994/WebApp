@@ -61,6 +61,7 @@ namespace WebApp
                 microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
                 microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:Password"];
 
+
             }).AddOAuth("GitHub", "GitHub", o =>
             {
                 o.ClientId = Configuration["Authentication:Github:ClientId"];
