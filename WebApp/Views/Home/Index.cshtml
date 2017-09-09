@@ -7,6 +7,7 @@
     var downloadList = Model.Downloads;
     var documentList = Model.Documents;
     var mvaVideoList = Model.MvaVideos;
+    var c9VideoList = Model.C9Videos;
     var mvaVideo1 = mvaVideoList[0];
     var mvaVideo2 = mvaVideoList[1];
     var mvaVideo3 = mvaVideoList[2];
@@ -57,9 +58,9 @@
                 </div>
                 <div class="card-text">
 
-
+                    <!--MVA视频-->
                     <div class="row">
-                        <div class="col-md-8 m-0 pr-0">
+                        <div class="col-md-8 m-0">
                             <div class="video-banner">
                                 <a class="video-banner-img" asp-action="Detail" asp-controller="Video" asp-route-id="@mvaVideo1.Id" target="_blank">
                                     <img src="@mvaVideo1.CourseImage" />
@@ -106,7 +107,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="video-banner mt-4">
+                            <div class="video-banner mt-3">
                                 <a class="video-banner-img" asp-action="Detail" asp-controller="Video" asp-route-id="@mvaVideo3.Id" target="_blank">
                                     <img src="@mvaVideo3.CourseImage" />
                                 </a>
@@ -130,6 +131,41 @@
                             </div>
 
                         </div>
+                    </div>
+
+                    <!--c9视频-->
+                    <div class="row mt-3">
+                        @foreach (var video in c9VideoList)
+                        {
+                            video.SourceUrl= "https://channel9.msdn.com" + video.SourceUrl;
+                            <div class="col-md-4">
+                                <div class="video-banner">
+                                    <a class="video-banner-img" href="@video.SourceUrl" target="_blank">
+                                        <img src="@video.ThumbnailUrl" />
+                                    </a>
+                                    <div class="video-banner-content p-1">
+                                        <h7 class="content-title">
+                                            @Html.Raw(@video.Title)
+                                            
+                                        </h7>
+                                        <div class="content-detail" hidden>
+                                            <small>
+                                                <span class="text-light">
+                                                    作者:
+                                                    <span class="text-light">
+                                                        @video.Author
+                                                    </span>
+                                                    &nbsp;&nbsp;
+                                                    @video.UpdatedTime.ToString("yyyy-MM-dd")
+                                                </span>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          
+                        }
+                       
                     </div>
                 </div>
             </div>

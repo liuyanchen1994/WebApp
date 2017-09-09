@@ -36,6 +36,12 @@ namespace WebApp.Controllers
                  .Take(3)
                  .ToList();
 
+            var c9Videos = _context.C9videos
+                 .OrderByDescending(m => m.UpdatedTime)
+                 .Where(m=>m.Language.Equals("zh-tw") || m.Language.Equals("zh-cn"))
+                 .Take(3)
+                 .ToList();
+
             var downloads = _context.Resource
                 .Where(m => m.Catalog.Type.Equals("下载"))
                 .Where(m => m.IsRecommend == true)
@@ -55,7 +61,8 @@ namespace WebApp.Controllers
                 MsBlogs = msBlogs,
                 Downloads = downloads,
                 Documents = documents,
-                MvaVideos = mvaVideos
+                MvaVideos = mvaVideos,
+                C9Videos=c9Videos
             };
             return View(data);
         }
