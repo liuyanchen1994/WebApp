@@ -104,7 +104,15 @@ namespace WebApp.Controllers
             });
         }
 
+        [HttpGet]
+        public IActionResult C9Detail(string id)
+        {
+            var video = _context.C9videos
+                .Where(m => m.Id == Guid.Parse(id))
+                .FirstOrDefault();
 
+            return View(video);
+        }
         public IActionResult C9Video()
         {
             var re = _context.C9videos.Where(m => m.Language.Equals("zh-cn"))

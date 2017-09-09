@@ -1,0 +1,60 @@
+@using WebApp.DB
+@using System.Net
+@model WebApp.DB.C9videos
+@{
+    Layout = "_Layout";
+    Model.SourceUrl = "https://channel9.msdn.com" + Model.SourceUrl;
+    ViewData["Title"] = WebUtility.HtmlDecode(Model.Title) + "-视频-MSDev";
+}
+<div class="row pt-2">
+    <div class="col-md-7">
+        <h5>
+           
+            @Html.Raw(Model.Title)
+            <small class="text-muted">
+                [@Model.Duration]
+            </small>
+            @if (!string.IsNullOrEmpty(Model.Author))
+            {
+                <span class="text-muted" style="font-size:0.9rem">
+                    作者:
+                    @Model.Author
+                    &nbsp;&nbsp;
+                    @Model.UpdatedTime.ToString("yyyy-MM-dd")
+                </span>
+            }
+        </h5>
+        <video controls="controls" width="100%" class="">
+            <source src="@Model.Mp4MidUrl" type="video/mp4" />
+        </video>
+        <h6 class="text-primary">
+            视频介绍:
+        </h6>
+        <p>
+            <small>
+                @Html.Raw(Model.Description)
+            </small>
+        </p>
+    </div>
+    <div class="col-md-5">
+
+        <h5>视频下载：</h5>
+        <h6>
+            <a href="@Model.Mp3Url" class="badge badge-primary">
+                Mp3Url
+            </a>
+            <a href="@Model.Mp4LowUrl" class="badge badge-primary">
+                普清
+            </a>
+            <a href="@Model.Mp4MidUrl" class="badge badge-primary">
+                高清
+            </a>
+            <a href="@Model.Mp4HigUrl" class="badge badge-primary">
+                超清
+            </a>
+        </h6>
+        <h6>
+            <a href="@Model.SourceUrl" class="badge badge-danger" target="_blank">channel9源地址</a>
+        </h6>
+    </div>
+</div>
