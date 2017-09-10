@@ -5,12 +5,26 @@
 @model WebApp.Models.ViewModels.VideoViewModels
 
 <div class="row">
+
+    <!--视频导航分类-->
     <div class="col-md-3">
         @foreach (var catalog in Model.Catalog)
         {
+            var displayCatalog = "";
             <div class="list-group">
                 <a class="list-group-item list-group-item-action list-group-item-heading p-2" data-toggle="collapse" href="#collapse-@catalog.Value" aria-expanded="true" aria-controls="collapse-@catalog.Value">
-                    MVA视频分类
+                    @switch (catalog.Value)
+                    {
+                        case "mva":
+                            displayCatalog = "MVA视频";
+                            break;
+                        case "c9":
+                            displayCatalog = "Channel9视频";
+                            break;
+                        default:
+                            break;
+                    }
+                    @displayCatalog
                 </a>
                 <div class="collapse show" id="collapse-@catalog.Value">
                     @foreach (var childCatalog in catalog.InverseTopCatalog)
@@ -21,7 +35,7 @@
                         {
                             liClass = "active";
                         }
-                        <a asp-route-tech="@childCatalog.Name" class="list-group-item p-2 pl-4 @liClass">@childCatalog.Name</a>
+                        <a asp-route-tech="@childCatalog.Name" asp-route-type="@catalog.Value" class="list-group-item p-2 pl-4 @liClass">@childCatalog.Name</a>
                     }
                 </div>
             </div>
@@ -29,46 +43,89 @@
 
     </div>
 
-    <div class="col-md-9">
-        @foreach (var video in Model.MvaVideos)
-        {
-            var content = StringHelper.ReplaceHtmlTag(video.Description);
-            var shortContent = StringHelper.SubString(content, 100);
-            var tags = StringHelper.SubString(video.Tags, 66);
 
-            <div class="media my-2 py-1" style="border:1px solid #ccc">
-                <div class="d-md-flex align-self-center mr-md-3 d-none">
-                    <a asp-action="Detail" asp-route-id="@video.Id" target="_blank">
-                        <img src="@video.CourseImage" width="220" title="@video.Title" />
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h5>
-                        <a target="_blank" asp-action="Detail" asp-route-id="@video.Id">
-                            @video.Title
+
+    <div class="col-md-9">
+        <!--mva视频显示-->
+        @if (Model.MvaVideos.Count() > 0)
+        {
+            foreach (var video in Model.MvaVideos)
+            {
+                var content = StringHelper.ReplaceHtmlTag(video.Description);
+                var shortContent = StringHelper.SubString(content, 100);
+                var tags = StringHelper.SubString(video.Tags, 66);
+
+                <div class="media my-2 py-1" style="border:1px solid #ccc">
+                    <div class="d-md-flex align-self-center mr-md-3 d-none">
+                        <a asp-action="Detail" asp-route-id="@video.Id" target="_blank">
+                            <img src="@video.CourseImage" width="220" title="@video.Title" />
                         </a>
-                    </h5>
-                    @if (!string.IsNullOrEmpty(video.Author))
+                    </div>
+                    <div class="media-body">
+                        <h5>
+                            <a target="_blank" asp-action="Detail" asp-route-id="@video.Id">
+                                @video.Title
+                            </a>
+                        </h5>
+                        @if (!string.IsNullOrEmpty(video.Author))
                     {
-                        <span class="text-muted" style="font-size:0.9rem">
-                            作者:
-                            @video.Author
-                            &nbsp;&nbsp;
-                            @video.UpdatedTime.ToString("yyyy-MM-dd")
+                            <span class="text-muted" style="font-size:0.9rem">
+                                作者:
+                                @video.Author
+                                &nbsp;&nbsp;
+                                @video.UpdatedTime.ToString("yyyy-MM-dd")
+                            </span>
+                            <br />
+                        }
+
+                        <span class="text-primary" title="@video.Tags"
+                              style="font-size:0.9rem">
+                            Tags：@tags
                         </span>
                         <br />
-                    }
-
-                    <span class="text-primary" title="@video.Tags"
-                          style="font-size:0.9rem">
-                        Tags：@tags
-                    </span>
-                    <br />
-                    <span title="@content">
-                        @shortContent
-                    </span>
+                        <span title="@content">
+                            @shortContent
+                        </span>
+                    </div>
                 </div>
-            </div>
+            }
+        }
+
+        <!--c9视频显示-->
+        @if (Model.C9Videos.Count() > 0)
+        {
+            foreach (var video in Model.C9Videos)
+            {
+                var content = StringHelper.ReplaceHtmlTag(video.Description);
+                var shortContent = StringHelper.SubString(content, 100);
+                <div class="media my-2 py-1" style="border:1px solid #ccc">
+                    <div class="d-md-flex align-self-center mr-md-3 d-none">
+                        <a asp-action="C9Detail" asp-route-id="@video.Id" target="_blank">
+                            <img src="@video.ThumbnailUrl" width="220" title="@video.Title" />
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h5>
+                            <a target="_blank" asp-action="C9Detail" asp-route-id="@video.Id">
+                                @Html.Raw(video.Title)
+                            </a>
+                        </h5>
+                        @if (!string.IsNullOrEmpty(video.Author))
+                        {
+                            <span class="text-muted" style="font-size:0.9rem">
+                                作者:
+                                @video.Author
+                                &nbsp;&nbsp;
+                                @video.UpdatedTime.ToString("yyyy-MM-dd")
+                            </span>
+                            <br />
+                        }
+                        <span title="@content">
+                            @shortContent
+                        </span>
+                    </div>
+                </div>
+            }
         }
         <pager pager-option="Model.Pager as MyPagerOption"></pager>
     </div>

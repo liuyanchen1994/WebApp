@@ -9,7 +9,7 @@
 <div class="row pt-2">
     <div class="col-md-7">
         <h5>
-           
+
             @Html.Raw(Model.Title)
             <small class="text-muted">
                 [@Model.Duration]
@@ -40,18 +40,30 @@
 
         <h5>视频下载：</h5>
         <h6>
-            <a href="@Model.Mp3Url" class="badge badge-primary">
-                Mp3Url
-            </a>
-            <a href="@Model.Mp4LowUrl" class="badge badge-primary">
-                普清
-            </a>
-            <a href="@Model.Mp4MidUrl" class="badge badge-primary">
-                高清
-            </a>
-            <a href="@Model.Mp4HigUrl" class="badge badge-primary">
-                超清
-            </a>
+            @if (!string.IsNullOrEmpty(@Model.Mp3Url))
+            {
+                <a href="@Model.Mp3Url" class="badge badge-primary">
+                    Mp3音频
+                </a>
+            }
+            @if (!string.IsNullOrEmpty(@Model.Mp4LowUrl))
+            {
+                <a href="@Model.Mp4LowUrl" class="badge badge-primary">
+                    普清
+                </a>
+            }
+            @if (!string.IsNullOrEmpty(@Model.Mp4MidUrl))
+            {
+                <a href="@Model.Mp4MidUrl" class="badge badge-primary">
+                    高清
+                </a>
+            }
+            @if (!string.IsNullOrEmpty(@Model.Mp4HigUrl))
+            {
+                <a href="@Model.Mp4HigUrl" class="badge badge-primary">
+                    超清
+                </a>
+            }
         </h6>
         <h6>
             <a href="@Model.SourceUrl" class="badge badge-danger" target="_blank">channel9源地址</a>

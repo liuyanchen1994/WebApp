@@ -7,6 +7,7 @@ using WebApp.Models.ViewModels;
 using System.Collections.Generic;
 using WebApp.Helpers;
 using System;
+using System.Net;
 
 namespace WebApp.Controllers
 {
@@ -18,42 +19,83 @@ namespace WebApp.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index(string tech, int p = 1)
+        public async Task<IActionResult> Index(string tech, string type = "mva", int p = 1)
         {
-            int pageSize = 12;
+            int pageSize = 6;
             int totalNumber = 1;
             if (p < 1) p = 1;
             var mvaVideos = new List<MvaVideos>();
-            if (!string.IsNullOrEmpty(tech))
-            {
-                mvaVideos = _context.MvaVideos
-                    .OrderByDescending(m => m.UpdatedTime)
-                    .Where(m => m.Tags.Contains(tech.ToLower()) || m.Title.Contains(tech.ToLower()))
-                    .Where(m => m.LanguageCode.Equals("zh-cn"))
-                    .Skip((p - 1) * pageSize)
-                    .Take(pageSize)
-                    .ToList();
+            var c9Videos = new List<C9videos>();
 
-                totalNumber = _context.MvaVideos
-                    .OrderByDescending(m => m.UpdatedTime)
-                    .Where(m => m.Technologies.Contains(tech.ToLower()))
-                    .Where(m => m.LanguageCode.Equals("zh-cn"))
-                    .Count();
+            //判断视频类型
+            if (type.Equals("mva"))
+            {
+                if (!string.IsNullOrEmpty(tech))
+                {
+                    mvaVideos = _context.MvaVideos
+                        .OrderByDescending(m => m.UpdatedTime)
+                        .Where(m => m.Tags.Contains(tech.ToLower()) || m.Title.Contains(tech.ToLower()))
+                        .Where(m => m.LanguageCode.Equals("zh-cn"))
+                        .Skip((p - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+
+                    totalNumber = _context.MvaVideos
+                        .OrderByDescending(m => m.UpdatedTime)
+                        .Where(m => m.Tags.Contains(tech.ToLower()) || m.Title.Contains(tech.ToLower()))
+                        .Where(m => m.LanguageCode.Equals("zh-cn"))
+                        .Count();
+                }
+                else
+                {
+                    mvaVideos = _context.MvaVideos
+                        .OrderByDescending(m => m.UpdatedTime)
+                        .Where(m => m.LanguageCode.Equals("zh-cn"))
+                        .Skip((p - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+
+                    totalNumber = _context.MvaVideos
+                        .OrderByDescending(m => m.UpdatedTime)
+                        .Where(m => m.LanguageCode.Equals("zh-cn"))
+                        .Count();
+
+                }
+
             }
-            else
+            else if (type.Equals("c9"))
             {
-                mvaVideos = _context.MvaVideos
-                    .OrderByDescending(m => m.UpdatedTime)
-                    .Where(m => m.LanguageCode.Equals("zh-cn"))
-                    .Skip((p - 1) * pageSize)
-                    .Take(pageSize)
-                    .ToList();
+                if (!string.IsNullOrEmpty(tech))
+                {
+                    c9Videos = _context.C9videos
+                        .OrderByDescending(m => m.UpdatedTime)
+                        .Where(m => m.Tags.Contains(tech.ToLower()) || m.Title.Contains(tech.ToLower()))
+                        .Where(m => m.Language.Equals("zh-cn"))
+                        .Skip((p - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
 
-                totalNumber = _context.MvaVideos
-                    .OrderByDescending(m => m.UpdatedTime)
-                    .Where(m => m.LanguageCode.Equals("zh-cn"))
-                    .Count();
+                    totalNumber = _context.C9videos
+                        .OrderByDescending(m => m.UpdatedTime)
+                        .Where(m => m.Tags.Contains(tech.ToLower()) || m.Title.Contains(tech.ToLower()))
+                        .Where(m => m.Language.Equals("zh-cn"))
+                        .Count();
+                }
+                else
+                {
+                    c9Videos = _context.C9videos
+                        .OrderByDescending(m => m.UpdatedTime)
+                        .Where(m => m.Language.Equals("zh-cn"))
+                        .Skip((p - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
 
+                    totalNumber = _context.C9videos
+                        .OrderByDescending(m => m.UpdatedTime)
+                        .Where(m => m.Language.Equals("zh-cn"))
+                        .Count();
+
+                }
             }
 
             var catalog = await _context.CataLog
@@ -65,7 +107,7 @@ namespace WebApp.Controllers
             {
                 CurrentPage = p,
                 PageSize = pageSize,
-                RouteUrl = "/Video/Index",
+                RouteUrl = "/Video/Index" + "?tech=" + WebUtility.UrlEncode(tech) + "&type=" + WebUtility.UrlEncode(type),
                 Total = totalNumber
             };
 
@@ -73,9 +115,9 @@ namespace WebApp.Controllers
             {
                 Catalog = catalog,
                 MvaVideos = mvaVideos,
+                C9Videos = c9Videos,
                 Pager = pageOption
             };
-
             return View(videoList);
         }
 
