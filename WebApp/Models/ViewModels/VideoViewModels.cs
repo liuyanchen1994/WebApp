@@ -13,6 +13,8 @@ namespace WebApp.Models.ViewModels
         public IEnumerable<Resource> Resource { get; set; }
 
         public IEnumerable<MvaVideos> MvaVideos { get; set; }
+        public IEnumerable<C9videos> C9Videos { get; set; }
+
     }
 
     public class VideoDetailModels
