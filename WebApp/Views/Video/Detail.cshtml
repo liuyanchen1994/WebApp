@@ -28,7 +28,7 @@
             }
         </h5>
         <video controls="controls" width="100%" class="">
-            <source src="@currentVideo.MidDownloadUrl" type="video/mp4" />
+            <source src="@currentVideo?.MidDownloadUrl" type="video/mp4" />
         </video>
         <h6 class="text-primary">
             视频介绍:
@@ -41,34 +41,36 @@
     </div>
     <div class="col-md-5">
         <h5>课程列表:</h5>
-        @foreach (var detail in details)
+        @if (details != null)
         {
-            <a asp-route-detail="@detail.MvaId" asp-route-id="@video.Id">
-                <h6>
-                    <small class="text-muted">
-                        [@detail.Duration.ToString("mm:ss")]
-                        &nbsp;
-                    </small>
-                    @if (!detail.Title.Contains("|"))
+            foreach (var detail in details)
+            {
+                <a asp-route-detail="@detail.MvaId" asp-route-id="@video.Id">
+                    <h6>
+                        <small class="text-muted">
+                            [@detail.Duration.ToString("mm:ss")]
+                            &nbsp;
+                        </small>
+                        @if (!detail.Title.Contains("|"))
                     {
-                        @detail.Sequence
-                    }
-                    @detail.Title.Replace("视频：", "")
-                </h6>
-            </a>
+                            @detail.Sequence
+                        }
+                        @detail.Title.Replace("视频：", "")
+                    </h6>
+                </a>
+            }
         }
 
         <br />
         <h5>视频下载：</h5>
         <h6>
-            <a href="@currentVideo.LowDownloadUrl" class="badge badge-primary">
+            <a href="@currentVideo?.LowDownloadUrl" class="badge badge-primary">
                 普清360p
             </a>
-            <a href="@currentVideo.MidDownloadUrl" class="badge badge-primary">
+            <a href="@currentVideo?.MidDownloadUrl" class="badge badge-primary">
                 高清540p
             </a>
-
-            <a href="@currentVideo.HighDownloadUrl" class="badge badge-primary">
+            <a href="@currentVideo?.HighDownloadUrl" class="badge badge-primary">
                 超清720p
             </a>
         </h6>
