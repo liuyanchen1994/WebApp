@@ -2,16 +2,19 @@ body {
     background: rgba(255, 255, 250, 1);
     font-family: 'Segoe UI', 微软雅黑,Tahoma, Geneva, Verdana, sans-serif
 }
-button{
-    cursor:pointer !important;
+
+button {
+    cursor: pointer !important;
 }
 
-h7{
-    font-size:0.9rem;
+h7 {
+    font-size: 0.9rem;
 }
+
 * {
-    border-radius:0px !important;
+    border-radius: 0px !important;
 }
+
 p {
     text-indent: 2em;
 }
@@ -75,6 +78,35 @@ img.bingnews-small {
     margin-bottom: 10px;
     font-size: 0.9rem;
 }
+
+.nav-search {
+    background-color: #464949 !important;
+    color: #eee !important;
+}
+
+/*搜索结果 */
+.scrst-block {
+    margin:4px 0px;
+    padding:8px;
+    background-color:white;
+    border:1px solid #e2e1d7
+}
+
+.scrst-title {
+    color:dodgerblue;
+}
+
+.scrst-content {
+    padding-left:1rem;
+}
+
+.scrst-content-row {
+    margin-bottom:4px;
+    padding:2px 0;
+}
+    .scrst-content-row > a {
+        color: darkblue !important;
+    }
 
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
