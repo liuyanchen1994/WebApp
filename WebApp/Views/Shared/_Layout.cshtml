@@ -1,4 +1,4 @@
-﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,6 +36,9 @@
                     <li><a class="nav-link" asp-controller="Video" asp-action="Index">视频</a></li>
                     <li><a class="nav-link" asp-controller="Home" asp-action="About">关于</a></li>
                 </ul>
+                <div>
+                    <input class="form-control mr-sm-2 nav-search" type="text" placeholder="搜索" aria-label="Search" id="search-input">
+                </div>
                 @Html.Partial("_LoginPartial");
             </div>
 
@@ -54,7 +57,7 @@
                 <div col-md-6>
                     <span>
                         <a href="https://www.microsoft.com/net/core" target="_blank">.Net Core</a>
-                         生态驱动
+                        生态驱动
                     </span>
                     &nbsp;&nbsp;
                     <span>
@@ -88,3 +91,15 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        $("#search-input").keyup(function (event) {
+            var keyword = $(this).val();
+            if (event.keyCode == 13) {
+                if (keyword.length > 2) {
+                    location.href = "/Home/Search?keyword=" + keyword;
+                }
+            }
+        });
+    });
+</script>
