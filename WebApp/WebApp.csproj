@@ -2,17 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
     <EnableDefaultContentItem>true</EnableDefaultContentItem>
     <PreserveCompilationContext>true</PreserveCompilationContext>
-    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <UserSecretsId>aspnet-WebApp-530EFA2F-3B5E-40F3-8C1B-912A0144C00D</UserSecretsId>
-    <ApplicationInsightsResourceId>/subscriptions/2d79448b-8cde-4a9c-b34d-e6b92736c69d/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/WebApp</ApplicationInsightsResourceId>
-    <ApplicationInsightsAnnotationResourceId>/subscriptions/2d79448b-8cde-4a9c-b34d-e6b92736c69d/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/WebApp</ApplicationInsightsAnnotationResourceId>
+
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
