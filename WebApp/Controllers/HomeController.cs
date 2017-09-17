@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 using WebApp.DB;
 using WebApp.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Controllers
 {
@@ -38,7 +39,7 @@ namespace WebApp.Controllers
 
             var c9Videos = _context.C9videos
                  .OrderByDescending(m => m.UpdatedTime)
-                 .Where(m=>m.Language.Equals("zh-tw") || m.Language.Equals("zh-cn"))
+                 .Where(m => m.Language.Equals("zh-tw") || m.Language.Equals("zh-cn"))
                  .Take(3)
                  .ToList();
 
@@ -62,11 +63,54 @@ namespace WebApp.Controllers
                 Downloads = downloads,
                 Documents = documents,
                 MvaVideos = mvaVideos,
-                C9Videos=c9Videos
+                C9Videos = c9Videos
             };
             return View(data);
         }
 
+
+        [HttpGet]
+        /// <summary>
+        /// 搜索页内容
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
+        public IActionResult Search(string keyword)
+        {
+
+            if (string.IsNullOrWhiteSpace(keyword) || keyword.Length<3)
+            {
+                return RedirectToAction("Index");
+            }
+            //搜索资源 (文档、下载)
+            var resource = _context.Resource
+                .OrderByDescending(m => m.CreatedTime)
+                .Where(m => m.Tag.Contains(keyword) || m.Name.Contains(keyword))
+                .Take(20)
+                .Include(m => m.Catalog)
+                  .ThenInclude(m => m.TopCatalog)
+                .ToList();
+            //搜索视频 
+            var c9videos = _context.C9videos
+                .OrderByDescending(m => m.CreatedTime)
+                .Where(m => m.Title.Contains(keyword))
+                .Take(10)
+                .ToList();
+
+            var mvaVideos = _context.MvaVideos
+                .OrderByDescending(m => m.CreatedTime)
+                .Where(m => m.Title.Contains(keyword))
+                .Take(6)
+                .ToList();
+
+            return View(
+                new SearchViewModel
+                {
+                    ResourceList = resource,
+                    C9VideoList = c9videos,
+                    MvaVideoList = mvaVideos
+                });
+        }
 
         public IActionResult About()
         {

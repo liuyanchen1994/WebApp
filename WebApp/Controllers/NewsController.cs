@@ -18,24 +18,16 @@ namespace WebApp.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-
-            HttpClient client = new HttpClient
+            var data = new NewsViewModels
             {
-                BaseAddress = new Uri("https://api.msdev.cc/")
+                BingNewsList = _context.BingNews.OrderByDescending(m => m.CreatedTime)
+                   .Take(20)
+                   .ToList()
             };
-            var re = await client.GetStringAsync("api/BingNews/PageList");
-            var jsonRe = JsonConvert.DeserializeObject<ReturnJson<IEnumerable<BingNews>>>(re);
-
-            var data = new NewsViewModels();
-            if (jsonRe.ErrorCode == 0)
-            {
-                data.BingNewsList = jsonRe.Data.ToList();
-            }
             return View(data);
         }
-
 
 
         [HttpGet]
@@ -46,7 +38,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
             var news = _context.RssNews.Find(id);
-            
+
             return View(news);
         }
     }

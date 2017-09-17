@@ -130,7 +130,8 @@ namespace WebApp.Controllers
                 .FirstOrDefault();
             if (video.Details.Count < 1)
             {
-                return RedirectToAction("Index");
+                //重新获取详细内容
+                return NotFound();
             }
             var currentDetail = video.Details.OrderBy(m => m.Sequence).FirstOrDefault();
 
@@ -141,8 +142,8 @@ namespace WebApp.Controllers
             return View(new VideoDetailModels
             {
                 MvaVideo = video,
-                Details = video.Details.OrderBy(m => m.Sequence).ToList(),
-                CurrentDetail = currentDetail
+                Details = video.Details.OrderBy(m => m.Sequence).ToList() ?? default,
+                CurrentDetail = currentDetail ?? default
             });
         }
 
