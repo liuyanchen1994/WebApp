@@ -29,8 +29,14 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav mr-auto">
                     <li><a class="nav-link" asp-controller="News" asp-action="Index">资讯</a></li>
-                    <li><a class="nav-link" asp-controller="Download" asp-action="Index">下载</a></li>
-                    <li><a class="nav-link" asp-controller="Document" asp-action="Index">文档</a></li>
+                    <li class="dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="dorpdownResource">资源</a>
+                        <div class="dropdown-menu" aria-labelledby="dorpdownResource">
+                            <a class="dropdown-item" asp-controller="Download" asp-action="Index">下载</a>
+                            <a class="dropdown-item" asp-controller="Document" asp-action="Index">文档</a>
+                        </div>
+                    </li>
+
                     <li><a class="nav-link" asp-controller="Video" asp-action="Index">视频</a></li>
                     <li><a class="nav-link" asp-controller="Home" asp-action="About">关于</a></li>
                 </ul>
@@ -45,12 +51,16 @@
     <div class="container">
         @RenderBody()
         <hr />
-        <footer>
+        <footer class="mb-2">
             <div class="row justify-content-between">
                 <div class="col-md-6">
                     &copy;
                     2017 - MSDev.cc
                     &nbsp;&nbsp;
+                    <a class="" target="_blank"
+                       href="//shang.qq.com/wpa/qunwpa?idkey=ebbb97aa70518e014b2539f45005e1c67f8d8f893794968ec4245b96516a079e">
+                        <img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="MSDev社区" title="加入MSDev社区群">
+                    </a>
                 </div>
                 <div col-md-6>
                     <span>
@@ -68,10 +78,12 @@
     </div>
 
     <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/tether/dist/js/tether.js"></script>
-        <script src="~/lib/popper.js/dist/popper.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.js"></script>
+        <script src="https://cdn.bootcss.com/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">

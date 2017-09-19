@@ -3,7 +3,7 @@ body {
     font-family: 'Segoe UI', 微软雅黑,Tahoma, Geneva, Verdana, sans-serif
 }
 
-button {
+button, a {
     cursor: pointer !important;
 }
 
@@ -86,24 +86,25 @@ img.bingnews-small {
 
 /*搜索结果 */
 .scrst-block {
-    margin:4px 0px;
-    padding:8px;
-    background-color:white;
-    border:1px solid #e2e1d7
+    margin: 4px 0px;
+    padding: 8px;
+    background-color: white;
+    border: 1px solid #e2e1d7
 }
 
 .scrst-title {
-    color:dodgerblue;
+    color: dodgerblue;
 }
 
 .scrst-content {
-    padding-left:1rem;
+    padding-left: 1rem;
 }
 
 .scrst-content-row {
-    margin-bottom:4px;
-    padding:2px 0;
+    margin-bottom: 4px;
+    padding: 2px 0;
 }
+
     .scrst-content-row > a {
         color: darkblue !important;
     }
