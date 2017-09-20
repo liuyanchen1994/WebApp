@@ -38,30 +38,23 @@
                 <div class="row">
                     @foreach (var resource in Model.Resource)
                     {
-                        <div class="col-md-6 my-1 p-1 px-2">
-                            <div class="media p-1" style="border:1px solid #ccc">
-                                <div class="d-flex align-self-center mr-3">
+                        <div class="col-md-4">
+                            <div class="card document-card my-2 text-center" style="border:1px solid #dbdbdb;box-shadow: 0px 2px 5px #e8e8e8;">
+                                <a href="@resource.AbsolutePath" target="_blank" class="py-3" style="text-decoration:none">
                                     @if (!string.IsNullOrEmpty(resource.Imgurl))
                                     {
-                                        <img src="@resource.Imgurl" title="@resource.Name" width="64" height="64" style="border-radius:1px !important" />
+                                        <img src="@resource.Imgurl" title="@resource.Name" width="36px" style="border-radius:50% !important"/>
                                     }
-                                </div>
-                                <div class="media-body">
-                                    <h5>
-                                        <a href="@resource.AbsolutePath" target="_blank">
-                                            @resource.Name
-                                        </a>
+                                    <span>
+                                        @resource.Name
                                         <small>
-                                            <span class="badge badge-default">
+                                            <span class="badge badge-light">
                                                 @TypeValueHelper.Language[resource.Language]
                                             </span>
                                         </small>
-                                    </h5>
-                                    @resource.Description
-                                </div>
-
+                                    </span>
+                                </a>
                             </div>
-
                         </div>
                     }
                 </div>

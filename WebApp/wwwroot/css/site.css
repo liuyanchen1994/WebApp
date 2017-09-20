@@ -109,6 +109,23 @@ img.bingnews-small {
         color: darkblue !important;
     }
 
+
+
+/*文档*/
+
+.document-card {
+    font-size: 1.1rem;
+}
+
+    .document-card:hover, .document-card:hover > a{
+        color: white !important;
+        background-color: dodgerblue;
+    }
+        .document-card:hover > a span.badge-light{
+            color: white !important;
+            background-color: dodgerblue;
+        }
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */
