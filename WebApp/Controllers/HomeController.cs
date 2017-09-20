@@ -39,7 +39,6 @@ namespace WebApp.Controllers
 
             var c9Videos = _context.C9videos
                  .OrderByDescending(m => m.UpdatedTime)
-                 .Where(m => m.Language.Equals("zh-tw") || m.Language.Equals("zh-cn"))
                  .Take(3)
                  .ToList();
 
@@ -54,7 +53,6 @@ namespace WebApp.Controllers
                 .Where(m => m.IsRecommend == true)
                 .OrderByDescending(m => m.UpdatedTime)
                 .ToList();
-
 
             var data = new IndexViewModels()
             {
