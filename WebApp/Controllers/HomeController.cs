@@ -21,6 +21,7 @@ namespace WebApp.Controllers
         public IActionResult Index()
         {
             var news = _context.BingNews
+                .Where(m=>m.Tags.Equals("微软"))
                 .OrderByDescending(m => m.CreatedTime)
                 .Take(8)
                 .ToList();
