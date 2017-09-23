@@ -30,9 +30,11 @@
                     <a asp-route-tech="" asp-route-type="@catalog.Value" class="list-group-item p-2 pl-4 ">全部</a>
                     @foreach (var childCatalog in catalog.InverseTopCatalog)
                     {
-                        var id = ViewContext.RouteData.Values["id"]?.ToString();
+                        var techQuery = Context.Request.Query["tech"];
+                        var typeQuery = Context.Request.Query["type"];
+
                         string liClass = "";
-                        if (id == childCatalog.Id.ToString().ToLower())
+                        if (childCatalog.Name.Equals(techQuery) && catalog.Value.Equals(typeQuery))
                         {
                             liClass = "active";
                         }

@@ -18,13 +18,26 @@ namespace WebApp.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(string tag)
         {
+
+            var query = _context.BingNews.OrderByDescending(m => m.CreatedTime)
+                .AsQueryable();
+
+            var tags = _context.BingNews.Select(m => m.Tags)
+                .Distinct()
+                .ToList();
+            if (!string.IsNullOrWhiteSpace(tag))
+            {
+                query = query.Where(m => m.Tags.Equals(tag));
+            }
+
             var data = new NewsViewModels
             {
-                BingNewsList = _context.BingNews.OrderByDescending(m => m.CreatedTime)
+                BingNewsList = query
                    .Take(20)
-                   .ToList()
+                   .ToList(),
+                Tags = tags
             };
             return View(data);
         }

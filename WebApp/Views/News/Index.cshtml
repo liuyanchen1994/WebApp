@@ -3,36 +3,59 @@
     ViewData["Title"] = "资讯-微软中国开发者社区";
 }
 @model WebApp.Models.ViewModels.NewsViewModels
-@{ 
+@{
     var bingNewsList = Model.BingNewsList;
+    var tags = Model.Tags;
 }
 
-@{
-    foreach (var bingNews in bingNewsList)
-    {
-        var Url = HttpUtility.ParseQueryString(new Uri(bingNews.Url).Query);
-        <div class="row news-list">
-            <div class="col-12 col-md-auto hidden-sm-down">
-                <a href="@Url["r"]" target="_blank">
-                    <img class="bingnews" src="@bingNews.ThumbnailUrl" alt="">
+<div class="row">
+    <div class="col-md-2">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist">
+            @foreach (var tag in tags)
+            {
+                string liclass = "";
+                var tagQuery = Context.Request.Query["tag"];
+                
+                if (tag.Equals(tagQuery))
+                {
+                    liclass = "active";
+                }
+                <a class="nav-link @liclass" asp-action="Index" asp-route-tag="@tag" role="tab">
+                    @tag 
                 </a>
-            </div>
-            <div class="content col-md-8">
-                <div class="news-title">
+            }
+        </div>
+    </div>
+    <div class="col-md-10">
+        @foreach (var bingNews in bingNewsList)
+        {
+            var Url = HttpUtility.ParseQueryString(new Uri(bingNews.Url).Query);
+            <div class="row news-list">
+                <div class="col-md-auto d-md-flex d-none">
                     <a href="@Url["r"]" target="_blank">
-                        @bingNews.Title
+                        <img class="bingnews" src="@bingNews.ThumbnailUrl" alt="">
                     </a>
                 </div>
+                <div class="content col-md-8">
+                    <div class="news-title">
+                        <a href="@Url["r"]" target="_blank">
+                            @bingNews.Title
+                        </a>
+                    </div>
 
 
-                <div class="news-sectitle">
-                    @bingNews.UpdatedTime @bingNews.Provider
-                </div>
-                <div class="news-description">
-                    @bingNews.Description
+                    <div class="news-sectitle">
+                        @bingNews.UpdatedTime @bingNews.Provider
+                    </div>
+                    <div class="news-description">
+                        @bingNews.Description
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-}
+        }
+    </div>
+</div>
+
+
+
 
