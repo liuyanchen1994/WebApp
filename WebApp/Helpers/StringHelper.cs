@@ -9,6 +9,10 @@ namespace WebApp.Helpers
     {
         public static string ReplaceHtmlTag(string html, int length = 0)
         {
+            if (string.IsNullOrWhiteSpace(html))
+            {
+                return default;
+            }
             string strText = System.Text.RegularExpressions.Regex.Replace(html, "<[^>]+>", "");
             strText = System.Text.RegularExpressions.Regex.Replace(strText, "&[^;]+;", "");
 
@@ -20,6 +24,7 @@ namespace WebApp.Helpers
 
         public static string SubString(string str,int length)
         {
+            if (string.IsNullOrWhiteSpace(str)) return default;
             if (str.Length > length)
             {
                 return str.Substring(0, length) + "...";
