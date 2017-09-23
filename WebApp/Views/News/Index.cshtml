@@ -10,7 +10,7 @@
 
 <div class="row">
     <div class="col-md-2">
-        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist">
+        <ul class="nav flex-column nav-pills" role="tablist">
             @foreach (var tag in tags)
             {
                 string liclass = "";
@@ -20,11 +20,14 @@
                 {
                     liclass = "active";
                 }
-                <a class="nav-link @liclass" asp-action="Index" asp-route-tag="@tag" role="tab">
-                    @tag 
-                </a>
+                <li class="nav nav-item">
+                    <a class="nav-link @liclass" asp-action="Index" asp-route-tag="@tag" role="tab">
+                        @tag
+                    </a>
+                </li>
+                
             }
-        </div>
+        </ul>
     </div>
     <div class="col-md-10">
         @foreach (var bingNews in bingNewsList)
