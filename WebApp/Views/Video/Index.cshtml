@@ -12,7 +12,7 @@
         {
             var displayCatalog = "";
             <div class="list-group">
-                <a class="list-group-item list-group-item-action list-group-item-heading p-2" data-toggle="collapse" href="#collapse-@catalog.Value" aria-expanded="true" aria-controls="collapse-@catalog.Value">
+                <a class="list-group-item list-group-item-action list-group-item-heading p-2" data-toggle="collapse" href="#collapse-@catalog.Value" aria-expanded="false" aria-controls="collapse-@catalog.Value">
                     @switch (catalog.Value)
                     {
                         case "mva":
@@ -26,7 +26,8 @@
                     }
                     @displayCatalog
                 </a>
-                <div class="collapse show" id="collapse-@catalog.Value">
+                <div class="collapse" id="collapse-@catalog.Value">
+                    <a asp-route-tech="" asp-route-type="@catalog.Value" class="list-group-item p-2 pl-4 ">全部</a>
                     @foreach (var childCatalog in catalog.InverseTopCatalog)
                     {
                         var id = ViewContext.RouteData.Values["id"]?.ToString();
@@ -40,7 +41,11 @@
                 </div>
             </div>
         }
-
+        语言筛选:
+        <br />
+        <a asp-action="SetLanguage" asp-route-language="all">全部</a>
+        <br />
+        <a asp-action="SetLanguage" asp-route-language="zh-cn">仅显示中文</a>
     </div>
 
 
@@ -68,7 +73,7 @@
                             </a>
                         </h5>
                         @if (!string.IsNullOrEmpty(video.Author))
-                    {
+                        {
                             <span class="text-muted" style="font-size:0.9rem">
                                 作者:
                                 @video.Author
@@ -84,7 +89,9 @@
                         </span>
                         <br />
                         <span title="@content">
-                            @shortContent
+                            <small>
+                                @shortContent
+                            </small>
                         </span>
                     </div>
                 </div>

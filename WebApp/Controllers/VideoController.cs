@@ -27,75 +27,54 @@ namespace WebApp.Controllers
             var mvaVideos = new List<MvaVideos>();
             var c9Videos = new List<C9videos>();
 
+            var language = TempData["language"] ?? "";
+            TempData.Keep();
+
             //判断视频类型
             if (type.Equals("mva"))
             {
+                var query = _context.MvaVideos
+                    .OrderByDescending(m => m.UpdatedTime)
+                    .AsQueryable();
                 if (!string.IsNullOrEmpty(tech))
                 {
-                    mvaVideos = _context.MvaVideos
-                        .OrderByDescending(m => m.UpdatedTime)
-                        .Where(m => m.Tags.Contains(tech.ToLower()) || m.Title.Contains(tech.ToLower()))
-                        .Where(m => m.LanguageCode.Equals("zh-cn"))
-                        .Skip((p - 1) * pageSize)
-                        .Take(pageSize)
-                        .ToList();
-
-                    totalNumber = _context.MvaVideos
-                        .OrderByDescending(m => m.UpdatedTime)
-                        .Where(m => m.Tags.Contains(tech.ToLower()) || m.Title.Contains(tech.ToLower()))
-                        .Where(m => m.LanguageCode.Equals("zh-cn"))
-                        .Count();
+                    query = query.Where(m => m.Tags.Contains(tech.ToLower()) || m.Title.Contains(tech.ToLower()));
                 }
-                else
+
+                if (language.Equals("zh-cn"))
                 {
-                    mvaVideos = _context.MvaVideos
-                        .OrderByDescending(m => m.UpdatedTime)
-                        .Where(m => m.LanguageCode.Equals("zh-cn"))
-                        .Skip((p - 1) * pageSize)
-                        .Take(pageSize)
-                        .ToList();
-
-                    totalNumber = _context.MvaVideos
-                        .OrderByDescending(m => m.UpdatedTime)
-                        .Where(m => m.LanguageCode.Equals("zh-cn"))
-                        .Count();
-
+                    query = query.Where(m => m.LanguageCode.Equals("zh-cn"));
                 }
+                mvaVideos = query
+                  .Skip((p - 1) * pageSize)
+                  .Take(pageSize)
+                  .ToList();
+
+                totalNumber = query
+                    .Count();
 
             }
             else if (type.Equals("c9"))
             {
+                var query = _context.MvaVideos
+                    .OrderByDescending(m => m.UpdatedTime)
+                    .AsQueryable();
                 if (!string.IsNullOrEmpty(tech))
                 {
-                    c9Videos = _context.C9videos
-                        .OrderByDescending(m => m.UpdatedTime)
-                        .Where(m => m.Tags.Contains(tech.ToLower()) || m.Title.Contains(tech.ToLower()))
-                        .Where(m => m.Language.Equals("zh-cn"))
-                        .Skip((p - 1) * pageSize)
-                        .Take(pageSize)
-                        .ToList();
-
-                    totalNumber = _context.C9videos
-                        .OrderByDescending(m => m.UpdatedTime)
-                        .Where(m => m.Tags.Contains(tech.ToLower()) || m.Title.Contains(tech.ToLower()))
-                        .Where(m => m.Language.Equals("zh-cn"))
-                        .Count();
+                    query = query.Where(m => m.Tags.Contains(tech.ToLower()) || m.Title.Contains(tech.ToLower()));
                 }
-                else
+
+                if (language.Equals("zh-cn"))
                 {
-                    c9Videos = _context.C9videos
-                        .OrderByDescending(m => m.UpdatedTime)
-                        .Where(m => m.Language.Equals("zh-cn"))
-                        .Skip((p - 1) * pageSize)
-                        .Take(pageSize)
-                        .ToList();
-
-                    totalNumber = _context.C9videos
-                        .OrderByDescending(m => m.UpdatedTime)
-                        .Where(m => m.Language.Equals("zh-cn"))
-                        .Count();
-
+                    query = query.Where(m => m.LanguageCode.Equals("zh-cn"));
                 }
+                mvaVideos = query
+                  .Skip((p - 1) * pageSize)
+                  .Take(pageSize)
+                  .ToList();
+
+                totalNumber = query
+                    .Count();
             }
 
             var catalog = await _context.CataLog
@@ -156,6 +135,15 @@ namespace WebApp.Controllers
 
             return View(video);
         }
+
+
+        [HttpGet]
+        public IActionResult SetLanguage(string language)
+        {
+            TempData["language"] = language;
+            return RedirectToAction(nameof(Index));
+        }
+
         public IActionResult C9Video()
         {
             var re = _context.C9videos.Where(m => m.Language.Equals("zh-cn"))
@@ -167,5 +155,8 @@ namespace WebApp.Controllers
             return Json(re);
 
         }
+
+
+
     }
 }
