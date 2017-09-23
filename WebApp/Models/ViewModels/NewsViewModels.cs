@@ -7,7 +7,7 @@ namespace WebApp.Models.ViewModels
     {
 
         public List<BingNews> BingNewsList { get; set; }
-
+        public List<string> Tags { get; set; }
 
     }
 }
