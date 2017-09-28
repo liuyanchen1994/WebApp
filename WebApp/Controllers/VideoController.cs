@@ -56,7 +56,7 @@ namespace WebApp.Controllers
             }
             else if (type.Equals("c9"))
             {
-                var query = _context.MvaVideos
+                var query = _context.C9videos
                     .OrderByDescending(m => m.UpdatedTime)
                     .AsQueryable();
                 if (!string.IsNullOrEmpty(tech))
@@ -66,9 +66,9 @@ namespace WebApp.Controllers
 
                 if (language.Equals("zh-cn"))
                 {
-                    query = query.Where(m => m.LanguageCode.Equals("zh-cn"));
+                    query = query.Where(m => m.Language.Equals("zh-cn"));
                 }
-                mvaVideos = query
+                c9Videos = query
                   .Skip((p - 1) * pageSize)
                   .Take(pageSize)
                   .ToList();
