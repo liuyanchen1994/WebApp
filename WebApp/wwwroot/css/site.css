@@ -40,13 +40,13 @@ img.bingnews {
 
 .news-title {
     color: rgb(21,21,21);
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     font-size: 1.2rem;
 }
 
 .news-sectitle {
     color: rgb(19,122,171);
-    margin-bottom: 10px;
+    margin-bottom: 3px;
     font-size: 0.9rem;
 }
 
@@ -109,10 +109,13 @@ img.bingnews-small {
         color: darkblue !important;
     }
 
-
-
+/*文章详情*/
+.article-content {
+    background: #fafaf1;
+    overflow-wrap: normal;
+    overflow: auto;
+}
 /*文档*/
-
 .document-card {
     font-size: 1.1rem;
 }

@@ -1,0 +1,55 @@
+@using System.Web;
+@{
+    ViewData["Title"] = "文章-微软中国开发者社区";
+}
+@model WebApp.Models.ViewModels.ArticleViewModels
+@{
+    var articleList = Model.ArticleList;
+    var catalogs = Model.CatalogList;
+}
+
+<div class="row">
+    <div class="col-md-2">
+        <ul class="nav flex-column nav-pills" role="tablist">
+            @foreach (var catalog in catalogs)
+            {
+                string liclass = "";
+                var tagQuery = Context.Request.Query["catalog"];
+                if (catalog.Equals(tagQuery))
+                {
+                    liclass = "active";
+                }
+                <li class="nav nav-item">
+                    <a class="nav-link @liclass" asp-action="Index" asp-route-catalog="@catalog.Value" role="tab">
+                        @catalog.Name
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="col-md-10">
+        @foreach (var article in articleList)
+        {
+            <div class="row news-list">
+                <div class="content col-md-8">
+                    <div class="news-title">
+                        <a asp-action="Detail" asp-route-id="@article.Id" target="_blank">
+                            @article.Title
+                        </a>
+                    </div>
+                    <div class="news-sectitle">
+                        @article.UpdateTime.ToString("yyyy-M-dd H:m")
+                        作者:@article.AuthorName
+                    </div>
+                    <div class="news-description">
+                        @article.Description
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
