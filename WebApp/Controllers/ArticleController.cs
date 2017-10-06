@@ -51,6 +51,9 @@ namespace WebApp.Controllers
             var article = _context.Blog.Find(Guid.Parse(id));
             if (article == null) return NotFound();
 
+            article.Views++;
+            _context.Update(article);
+            _context.SaveChanges();
             return View(article);
         }
     }

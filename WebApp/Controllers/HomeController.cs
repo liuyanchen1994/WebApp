@@ -20,8 +20,15 @@ namespace WebApp.Controllers
         }
         public IActionResult Index()
         {
+            //获取站内新闻 
+            var selfNews = _context.Blog
+                .Where(m => m.Catalog.Value.Equals("articleSelfNews"))
+                .OrderByDescending(m => m.UpdateTime)
+                .Take(4)
+                .ToList();
+
             var news = _context.BingNews
-                .Where(m=>m.Tags.Equals("微软"))
+                .Where(m => m.Tags.Equals("微软"))
                 .OrderByDescending(m => m.CreatedTime)
                 .Take(8)
                 .ToList();
@@ -62,7 +69,8 @@ namespace WebApp.Controllers
                 Downloads = downloads,
                 Documents = documents,
                 MvaVideos = mvaVideos,
-                C9Videos = c9Videos
+                C9Videos = c9Videos,
+                SelfNews = selfNews
             };
             return View(data);
         }
@@ -77,7 +85,7 @@ namespace WebApp.Controllers
         public IActionResult Search(string keyword)
         {
 
-            if (string.IsNullOrWhiteSpace(keyword) || keyword.Length<3)
+            if (string.IsNullOrWhiteSpace(keyword) || keyword.Length < 3)
             {
                 return RedirectToAction("Index");
             }
