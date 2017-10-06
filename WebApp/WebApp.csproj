@@ -32,5 +32,10 @@
     <ItemGroup>
         <WCFMetadata Include="Connected Services" />
     </ItemGroup>
+    <ItemGroup>
+      <None Update=".bowerrc">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
 </Project>
         
