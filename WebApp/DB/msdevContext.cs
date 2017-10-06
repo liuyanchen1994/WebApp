@@ -7,7 +7,7 @@ namespace WebApp.DB
     public partial class MSDevContext : DbContext
     {
 
-        public MSDevContext(DbContextOptions<MSDevContext> options):base(options)
+        public MSDevContext(DbContextOptions<MSDevContext> options) : base(options)
         {
 
         }
@@ -27,7 +27,7 @@ namespace WebApp.DB
         public virtual DbSet<DevBlogs> DevBlogs { get; set; }
         public virtual DbSet<MvaVideos> MvaVideos { get; set; }
         public virtual DbSet<MvaDetails> MvaDetails { get; set; }
-
+        public virtual DbSet<Blog> Blog { get; set; }
         public virtual DbSet<Resource> Resource { get; set; }
         public virtual DbSet<RssNews> RssNews { get; set; }
         public virtual DbSet<Sources> Sources { get; set; }

@@ -2,33 +2,35 @@
 @{
     ViewData["Title"] = @Model.Title + "-MSDev";
 }
+<div class="row">
+    <div class="col-md-10">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            以下内容使用Azure Translator服务翻译，如果影响您的阅读，可选择
+            <a class="alert-link" href="@Model.Link" target="_blank">查看原文</a>！
+        </div>
 
-<div class="col-md-10">
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        以下内容使用Azure Translator服务翻译，如果影响您的阅读，可选择
-        <a class="alert-link" href="@Model.Link" target="_blank">查看原文</a>！
+        <section name="article" class="article-content p-2">
+            <h4 class="text-center my-2">
+                @Model.TitleCn
+            </h4>
+            <div>
+                <span class="text-info">
+                    作者:@Model.Author
+                </span>
+                <span class="text-muted">
+                    @Model.CreateTime
+                </span>
+            </div>
+
+            <div class="my-2">
+                @Html.Raw(Model.Content)
+            </div>
+        </section>
+
     </div>
-
-    <section name="article" class="p-2" style="box-shadow:#666 0px 0px 3px 1px;overflow-wrap:normal;overflow:auto;">
-        <h4 class="text-center my-2">
-            @Model.TitleCn
-        </h4>
-        <div>
-            <span class="text-info">
-                作者:@Model.Author
-            </span>
-            <span class="text-muted">
-                @Model.CreateTime
-            </span>
-        </div>
-
-        <div class="my-2">
-            @Html.Raw(Model.Content)
-        </div>
-    </section>
 
 </div>
 
