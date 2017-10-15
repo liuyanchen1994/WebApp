@@ -271,10 +271,16 @@
     </div>
     <div class="col-md-4">
         <!--推荐下载-->
-
         <div class="card mb-1">
             <div class="card-block p-0">
-                <h5 class="p-2" style="border-bottom:1px solid #cccccc">推荐下载</h5>
+                <div class="p-2 d-flex justify-content-between" style="border-bottom:1px solid #cccccc">
+                    <div class="col">
+                        推荐下载
+                    </div>
+                    <div class="col text-right">
+                        <a asp-controller="Download" asp-action="">更多</a>
+                    </div>
+                </div>
                 @foreach (var download in downloadList)
                 {
                     <div class="p-1">
@@ -293,7 +299,14 @@
         <!--推荐文档-->
         <div class="card mb-1">
             <div class="card-block p-0">
-                <h5 class="p-2" style="border-bottom:1px solid #cccccc">快捷文档</h5>
+                <div class="p-2 d-flex justify-content-between" style="border-bottom:1px solid #cccccc">
+                    <div class="col">
+                        快捷文档
+                    </div>
+                    <div class="col text-right">
+                        <a asp-controller="Document" asp-action="">更多</a>
+                    </div>
+                </div>
                 @foreach (var document in documentList)
                 {
                     <div class="p-1">
