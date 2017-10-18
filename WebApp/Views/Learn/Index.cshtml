@@ -1,0 +1,54 @@
+@using WebApp.Models.ViewModels
+@model LearnViewModels
+@{
+    Layout = "_Layout";
+}
+<style>
+    ul.learn-nav {
+        margin-top:4px;
+        margin-bottom:0;
+        padding: 0 12px;
+        padding-left: 0;
+        box-shadow: 0px 1px 2px 1px #ccc;
+        border-left: 4px solid dodgerblue;
+        background-color: white;
+    }
+
+        ul.learn-nav li {
+            padding: 4px 12px;
+        }
+            ul.learn-nav li.nav-title {
+                color: dodgerblue;
+            }
+
+            ul.learn-nav li a {
+                color: #333;
+            }
+</style>
+<div class="row">
+    <ul class="learn-nav col-12 d-flex">
+        <li class="nav-title">视频</li>
+        @foreach (var item in Model.VideoCatalogs)
+        {
+            <li><a asp-route-id="@item.Id">@item.Name</a></li>
+        }
+    </ul>
+</div>
+<div class="row">
+    <ul class="learn-nav d-flex col-12">
+        <li class="nav-title">博客</li>
+        @foreach (var item in Model.ArticleCatalogs)
+        {
+            <li><a asp-route-id="@item.Id">@item.Name</a></li>
+        }
+    </ul>
+</div>
+@*<div class="row">
+    <ul class="learn-nav d-flex">
+        <li class="nav-title">练习</li>
+        @foreach (var item in Model.ArticleCatalogs)
+        {
+            <li><a asp-route-id="@item.Id">@item.Name</a></li>
+        }
+    </ul>
+</div>*@
