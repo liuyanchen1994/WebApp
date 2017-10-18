@@ -19,85 +19,16 @@ namespace WebApp.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index(string tech, string type = "mva", int p = 1)
+        public async Task<IActionResult> Index()
         {
-            int pageSize = 6;
-            int totalNumber = 1;
-            if (p < 1) p = 1;
-            var mvaVideos = new List<MvaVideos>();
-            var c9Videos = new List<C9videos>();
+            var videoCatalogs = _context.CataLog.Where(m => m.Type.Equals("视频") && m.IsTop == 1).ToList();
+            var articleCatalogs = _context.CataLog.Where(m => m.Type.Equals("文章") && m.IsTop == 1).ToList();
 
-            var language = TempData["language"] ?? "";
-            TempData.Keep();
-
-            //判断视频类型
-            if (type.Equals("mva"))
+            return View(new LearnViewModels
             {
-                var query = _context.MvaVideos
-                    .OrderByDescending(m => m.UpdatedTime)
-                    .AsQueryable();
-                if (!string.IsNullOrEmpty(tech))
-                {
-                    query = query.Where(m => m.Tags.Contains(tech.ToLower()) || m.Title.Contains(tech.ToLower()));
-                }
-
-                if (language.Equals("zh-cn"))
-                {
-                    query = query.Where(m => m.LanguageCode.Equals("zh-cn"));
-                }
-                mvaVideos = query
-                  .Skip((p - 1) * pageSize)
-                  .Take(pageSize)
-                  .ToList();
-
-                totalNumber = query
-                    .Count();
-
-            }
-            else if (type.Equals("c9"))
-            {
-                var query = _context.C9videos
-                    .OrderByDescending(m => m.UpdatedTime)
-                    .AsQueryable();
-                if (!string.IsNullOrEmpty(tech))
-                {
-                    query = query.Where(m => m.Tags.Contains(tech.ToLower()) || m.Title.Contains(tech.ToLower()));
-                }
-
-                if (language.Equals("zh-cn"))
-                {
-                    query = query.Where(m => m.Language.Equals("zh-cn"));
-                }
-                c9Videos = query
-                  .Skip((p - 1) * pageSize)
-                  .Take(pageSize)
-                  .ToList();
-
-                totalNumber = query
-                    .Count();
-            }
-
-            var catalog = await _context.CataLog
-                .Where(m => m.Type == "视频" && m.IsTop == 1)
-                .Include(m => m.InverseTopCatalog)
-                .ToArrayAsync();
-
-            var pageOption = new MyPagerOption()
-            {
-                CurrentPage = p,
-                PageSize = pageSize,
-                RouteUrl = "/Video/Index" + "?tech=" + WebUtility.UrlEncode(tech) + "&type=" + WebUtility.UrlEncode(type),
-                Total = totalNumber
-            };
-
-            var videoList = new VideoViewModels
-            {
-                Catalog = catalog,
-                MvaVideos = mvaVideos,
-                C9Videos = c9Videos,
-                Pager = pageOption
-            };
-            return View(videoList);
+                VideoCatalogs = videoCatalogs,
+                ArticleCatalogs = articleCatalogs
+            });
         }
 
         [HttpGet]
