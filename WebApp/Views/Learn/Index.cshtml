@@ -4,31 +4,8 @@
     Layout = "_Layout";
 }
 <style>
-    ul.learn-nav {
-        margin-top: 4px;
-        margin-bottom: 0;
-        padding: 0 12px;
-        padding-left: 0;
-        box-shadow: 0px 1px 2px 1px #ccc;
-        border-left: 4px solid dodgerblue;
-        background-color: white;
-    }
 
-        ul.learn-nav li {
-            padding: 4px 12px;
-        }
 
-            ul.learn-nav li.nav-title {
-                color: dodgerblue;
-            }
-
-            ul.learn-nav li a {
-                color: #333;
-            }
-
-    .learn-container {
-        padding: 8px 0;
-    }
 </style>
 
 <!--导航部分-->
@@ -63,7 +40,7 @@
 <!--内容-->
 <div class="row mt-3 learn-container">
     <!--左侧二级导航-->
-    <div class="col col-auto bg-white p-2">
+    <div class="col col-md-auto bg-white p-2">
         <ul class="nav flex-column nav-pills">
             @foreach (var navs in Model.SecondaryNavs)
             {
@@ -74,24 +51,46 @@
 
         </ul>
     </div>
-    <div class="col col-md-auto">
+    <div class="col col-md-10" style="border:1px solid gray">
         @*<div class="row">
                 搜索
             </div>*@
-        <div class="row">
-            <section name="videos">
-                @if (Model.VideoList.Count > 0)
+        <section name="videos" class="row">
+            @if (Model.VideoList.Count > 0)
+            {
+                foreach (var item in Model.VideoList)
                 {
-                    foreach (var item in Model.VideoList)
-                    {
-                        <p>@item.Name</p>
-                    }
-                }
-            </section>
-            <section name="blogs"></section>
+                    <div class="col-md-4">
+                        <div class="video-banner">
+                            <a class="video-banner-img" asp-action="C9Detail" asp-controller="Video" asp-route-id="@item.Id" target="_blank">
+                                <img src="@item.ThumbnailUrl"/>
+                            </a>
+                            <div class="video-banner-content p-1">
+                                <h7 class="content-title">
+                                    @Html.Raw(@item.Name)
 
-            <section name="practices"></section>
-        </div>
+                                </h7>
+                                <div class="content-detail" hidden>
+                                    <small>
+                                        <span class="text-light">
+                                            作者:
+                                            <span class="text-light">
+                                                @item.Author
+                                            </span>
+                                            &nbsp;&nbsp;
+                                            @item.UpdatedTime.ToString("yyyy-MM-dd")
+                                        </span>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </section>
+        <section name="blogs"></section>
+
+        <section name="practices"></section>
 
     </div>
 </div>
