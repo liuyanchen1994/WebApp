@@ -8,7 +8,7 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            以下内容使用Azure Translator服务翻译，如果影响您的阅读，可选择
+            以下内容使用Bing neural translator 翻译，如果影响您的阅读，可选择
             <a class="alert-link" href="@Model.Link" target="_blank">查看原文</a>！
         </div>
 
@@ -39,7 +39,7 @@
         $("document").ready(function () {
             $("img").attr("height", "");
             //处理内容中图片的显示宽度
-            $("img").attr("width", "96%");
+            $("img").attr("max-width", "96%");
             //其他图片宽度单独处理
             $("#qq_group").attr("width", "");
         });

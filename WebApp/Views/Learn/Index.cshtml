@@ -1,0 +1,96 @@
+@using WebApp.Models.ViewModels
+@model LearnViewModels
+@{
+    Layout = "_Layout";
+}
+<style>
+
+
+</style>
+
+<!--导航部分-->
+<div class="row">
+    <ul class="learn-nav col-12 d-flex">
+        <li class="nav-title">视频</li>
+        @foreach (var item in Model.VideoCatalogs)
+        {
+            <li><a asp-route-topCatalogId="@item.Id">@item.Name</a></li>
+        }
+    </ul>
+</div>
+<div class="row">
+    <ul class="learn-nav d-flex col-12">
+        <li class="nav-title">博客</li>
+        @foreach (var item in Model.ArticleCatalogs)
+        {
+            <li><a asp-route-topCatalogId="@item.Id">@item.Name</a></li>
+        }
+    </ul>
+</div>
+@*<div class="row">
+        <ul class="learn-nav d-flex">
+            <li class="nav-title">练习</li>
+            @foreach (var item in Model.ArticleCatalogs)
+            {
+                <li><a asp-route-id="@item.Id">@item.Name</a></li>
+            }
+        </ul>
+    </div>*@
+
+<!--内容-->
+<div class="row mt-3 learn-container">
+    <!--左侧二级导航-->
+    <div class="col col-md-auto bg-white p-2">
+        <ul class="nav flex-column nav-pills">
+            @foreach (var navs in Model.SecondaryNavs)
+            {
+                <li>
+                    <a asp-route-navId="@navs.Id" asp-route-topCatalogId="@Context.Request.Query["topCatalogId"]" class="nav-link">@navs.Name</a>
+                </li>
+            }
+
+        </ul>
+    </div>
+    <div class="col col-md-10" style="border:1px solid gray">
+        @*<div class="row">
+                搜索
+            </div>*@
+        <section name="videos" class="row">
+            @if (Model.VideoList.Count > 0)
+            {
+                foreach (var item in Model.VideoList)
+                {
+                    <div class="col-md-4">
+                        <div class="video-banner">
+                            <a class="video-banner-img" asp-action="C9Detail" asp-controller="Video" asp-route-id="@item.Id" target="_blank">
+                                <img src="@item.ThumbnailUrl"/>
+                            </a>
+                            <div class="video-banner-content p-1">
+                                <h7 class="content-title">
+                                    @Html.Raw(@item.Name)
+
+                                </h7>
+                                <div class="content-detail" hidden>
+                                    <small>
+                                        <span class="text-light">
+                                            作者:
+                                            <span class="text-light">
+                                                @item.Author
+                                            </span>
+                                            &nbsp;&nbsp;
+                                            @item.UpdatedTime.ToString("yyyy-MM-dd")
+                                        </span>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </section>
+        <section name="blogs"></section>
+
+        <section name="practices"></section>
+
+    </div>
+</div>
