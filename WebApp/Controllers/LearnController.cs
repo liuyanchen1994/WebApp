@@ -19,15 +19,108 @@ namespace WebApp.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string topCatalogId = "", string navId = "", int page = 1)
         {
+            int pageSize = 12;
             var videoCatalogs = _context.CataLog.Where(m => m.Type.Equals("视频") && m.IsTop == 1).ToList();
             var articleCatalogs = _context.CataLog.Where(m => m.Type.Equals("文章") && m.IsTop == 1).ToList();
+
+            var secondaryNav = new List<CataLog>();
+            var blogList = new List<Blog>();
+            var videoList = new List<Video>();
+            //默认主页显示内容
+            if (String.IsNullOrWhiteSpace(topCatalogId))
+            {
+                videoList = _context.Video.Skip((page - 1) * pageSize)
+                   .Take(pageSize)
+                   .ToList();
+                secondaryNav = _context.CataLog.Where(m => m.IsTop == 1 && m.Name.Equals("视频教程"))
+                    .Include(m => m.InverseTopCatalog)
+                    .FirstOrDefault()
+                    .InverseTopCatalog
+                    .ToList();
+            }
+            else
+            {
+                secondaryNav = _context.CataLog.Where(m => m.Id == Guid.Parse(topCatalogId))
+                    .Include(m => m.InverseTopCatalog)
+                    .FirstOrDefault()
+                    .InverseTopCatalog
+                    .ToList();
+            }
+            if (!string.IsNullOrWhiteSpace(navId))
+            {
+                //判断分类类型
+                var catalog = _context.CataLog
+                    .Where(m => m.Id == Guid.Parse(navId))
+                    .Include(m => m.TopCatalog)
+                    .FirstOrDefault();
+                if (catalog.Type.Equals("视频"))
+                {
+                    switch (catalog.TopCatalog.Value)
+                    {
+                        case "mva":
+                            videoList = _context.MvaVideos.Where(m => m.Title.Contains(catalog.Name))
+                                .Skip((page - 1) * pageSize)
+                                .Take(pageSize)
+                                .Select(s =>
+                                new Video
+                                {
+                                    Id = s.Id,
+                                    Description = s.Description,
+                                    Author = s.Author,
+                                    CreatedTime = s.CreatedTime,
+                                    Duration = s.CourseDuration,
+                                    IsRecommend = s.IsRecommend,
+                                    Name = s.Title,
+                                    Tags = s.Tags,
+                                    ThumbnailUrl = s.CourseImage,
+                                    Url = s.SourceUrl,
+                                    Views = s.Views
+                                }).ToList();
+
+                            break;
+                        case "c9":
+                            videoList = _context.C9videos.Where(m => m.Title.Contains(catalog.Name))
+                                .Skip((page - 1) * pageSize)
+                                .Take(pageSize)
+                                .Select(s =>
+                                new Video
+                                {
+                                    Id = s.Id,
+                                    Description = s.Description,
+                                    Author = s.Author,
+                                    CreatedTime = s.CreatedTime,
+                                    Duration = s.Duration,
+                                    IsRecommend = false,
+                                    Name = s.Title,
+                                    Tags = s.Tags,
+                                    ThumbnailUrl = s.ThumbnailUrl,
+                                    Url = s.SourceUrl,
+                                    Views = s.Views
+                                }).ToList();
+                            break;
+                        default:
+                            videoList = _context.Video.Where(m => m.Catalog == catalog)
+                                .Skip((page - 1) * pageSize)
+                                .Take(pageSize)
+                                .ToList();
+                            break;
+                    }
+                }
+                else if (catalog.Type.Equals("文章"))
+                {
+                    blogList = _context.Blog.Where(m => m.Catalog == catalog).ToList();
+                }
+            }
 
             return View(new LearnViewModels
             {
                 VideoCatalogs = videoCatalogs,
-                ArticleCatalogs = articleCatalogs
+                ArticleCatalogs = articleCatalogs,
+                SecondaryNavs = secondaryNav,
+                BlogList = blogList,
+                VideoList = videoList
             });
         }
 

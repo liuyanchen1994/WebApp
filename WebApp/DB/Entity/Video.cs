@@ -3,23 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApp.DB;
 
-namespace WebApp.Models.ViewModels
+namespace WebApp.DB
 {
-    public class LearnViewModels
-    {
-        public List<CataLog> VideoCatalogs { get; set; }
-        public List<CataLog> ArticleCatalogs { get; set; }
-        public List<CataLog> PracticeCatalogs { get; set; }
-
-        public List<CataLog> SecondaryNavs { get; set; }
-
-        public List<Video> VideoList { get; set; }
-        public List<Blog> BlogList { get; set; }
-    }
-
-    public class VideoItem
+    /// <summary>
+    /// 本站视频
+    /// </summary>
+    public class Video
     {
         public Guid Id { get; set; }
         [MaxLength(64)]
