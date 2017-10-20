@@ -47,6 +47,10 @@ namespace WebApp.Controllers
                     .FirstOrDefault()
                     .InverseTopCatalog
                     .ToList();
+                if (String.IsNullOrEmpty(navId))
+                {
+                    navId = secondaryNav.FirstOrDefault()?.Id.ToString();
+                }
             }
             if (!string.IsNullOrWhiteSpace(navId))
             {
@@ -60,7 +64,9 @@ namespace WebApp.Controllers
                     switch (catalog.TopCatalog.Value)
                     {
                         case "mva":
+                            TempData["DetailPage"] = "MvaDetail";
                             videoList = _context.MvaVideos.Where(m => m.Title.Contains(catalog.Name))
+                                .OrderByDescending(m => m.CreatedTime)
                                 .Skip((page - 1) * pageSize)
                                 .Take(pageSize)
                                 .Select(s =>
@@ -81,7 +87,9 @@ namespace WebApp.Controllers
 
                             break;
                         case "c9":
+                            TempData["DetailPage"] = "C9Detail";
                             videoList = _context.C9videos.Where(m => m.Title.Contains(catalog.Name))
+                                .OrderByDescending(m => m.CreatedTime)
                                 .Skip((page - 1) * pageSize)
                                 .Take(pageSize)
                                 .Select(s =>
@@ -101,7 +109,9 @@ namespace WebApp.Controllers
                                 }).ToList();
                             break;
                         default:
+                            TempData["DetailPage"] = "Detail";
                             videoList = _context.Video.Where(m => m.Catalog == catalog)
+                                .OrderByDescending(m => m.CreatedTime)
                                 .Skip((page - 1) * pageSize)
                                 .Take(pageSize)
                                 .ToList();

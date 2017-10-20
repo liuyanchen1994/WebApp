@@ -101,10 +101,8 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Detail(string id, string detail = null)
+        public IActionResult MvaDetail(string id, string detail = null)
         {
-
-
             var video = _context.MvaVideos
                 .Include(m => m.Details)
                 .Where(m => m.Id == Guid.Parse(id))
