@@ -3,11 +3,6 @@
 @{
     Layout = "_Layout";
 }
-<style>
-
-
-</style>
-
 <!--导航部分-->
 <div class="row">
     <ul class="learn-nav col-12 d-flex">
@@ -40,47 +35,63 @@
 <!--内容-->
 <div class="row mt-3 learn-container">
     <!--左侧二级导航-->
-    <div class="col col-md-auto bg-white p-2">
+    <div class="col col-md-auto p-2 bg-light mr-2">
         <ul class="nav flex-column nav-pills">
             @foreach (var navs in Model.SecondaryNavs)
             {
-                <li>
+                <li class="">
                     <a asp-route-navId="@navs.Id" asp-route-topCatalogId="@Context.Request.Query["topCatalogId"]" class="nav-link">@navs.Name</a>
                 </li>
             }
 
         </ul>
     </div>
-    <div class="col col-md-10" style="border:1px solid gray">
-        @*<div class="row">
-                搜索
-            </div>*@
+    <div class="col col-md-10 bg-light">
+        <form method="post" class="row justify-content-between form-inline text-dark py-1" style="border-bottom:1px solid #ddd">
+            <div class="col-md-6">
+                语言:
+                全部
+                中文
+                筛选
+            </div>
+            <div class="col-md-6 text-right">
+                <input type="search" name="name" value="" class="form-control form-control-sm" />
+                <button class="btn btn-primary btn-sm" type="submit">搜索</button>
+            </div>
+        </form>
         <section name="videos" class="row">
             @if (Model.VideoList.Count > 0)
             {
                 foreach (var item in Model.VideoList)
                 {
-                    <div class="col-md-4">
-                        <div class="video-banner">
-                            <a class="video-banner-img" asp-action="C9Detail" asp-controller="Video" asp-route-id="@item.Id" target="_blank">
-                                <img src="@item.ThumbnailUrl"/>
+                    //处理作者
+                    var author = StringHelper.SubString(item.Author, 25);
+                    author = string.IsNullOrWhiteSpace(author) ? "未知" : author;
+                    <div class="col-md-4 px-2 my-2">
+                        <div class="card border-0" style="box-shadow:1px 1px 3px 1px #ccc">
+                            <a class="card-img-top" asp-action="@TempData["DetailPage"]" asp-controller="Video" asp-route-id="@item.Id" target="_blank">
+                                <img src="@item.ThumbnailUrl" style="max-height:200px;width:100%" />
                             </a>
-                            <div class="video-banner-content p-1">
-                                <h7 class="content-title">
-                                    @Html.Raw(@item.Name)
-
-                                </h7>
-                                <div class="content-detail" hidden>
-                                    <small>
-                                        <span class="text-light">
+                            <div class="card-body p-1">
+                                <h6 class="card-title mb-0">
+                                    <a href="#" class="text-dark">
+                                        @Html.Raw(@item.Name)
+                                    </a>
+                                </h6>
+                                <div class="card-text justify-content-between d-flex">
+                                    <div class="text-info">
+                                        <small>
                                             作者:
-                                            <span class="text-light">
-                                                @item.Author
+                                            <span class="" title="@item.Author">
+                                                @author
                                             </span>
-                                            &nbsp;&nbsp;
-                                            @item.UpdatedTime.ToString("yyyy-MM-dd")
-                                        </span>
-                                    </small>
+                                        </small>
+                                    </div>
+                                    <div class="text-muted">
+                                        <small>
+                                            @item.CreatedTime.ToString("yyyy-MM-dd")
+                                        </small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -89,8 +100,6 @@
             }
         </section>
         <section name="blogs"></section>
-
         <section name="practices"></section>
-
     </div>
 </div>
