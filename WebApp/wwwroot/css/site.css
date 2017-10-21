@@ -167,7 +167,7 @@ ul.learn-nav {
     margin-bottom: 0;
     padding: 0 12px;
     padding-left: 0;
-    box-shadow: 0px 1px 2px 1px #ccc;
+    border:1px solid #eee;
     border-left: 4px solid dodgerblue;
     background-color: white;
 }
@@ -185,7 +185,7 @@ ul.learn-nav {
         }
 
 .learn-container {
-    padding: 8px 0;
+    padding: 4px 0;
 }
 
 /* Hide/rearrange for smaller screens */
