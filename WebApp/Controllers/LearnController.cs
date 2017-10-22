@@ -19,13 +19,18 @@ namespace WebApp.Controllers
         {
             _context = context;
         }
+        [HttpGet]
         public async Task<IActionResult> Index(string topCatalogId = "", string navId = "", int page = 1)
         {
+            var language = TempData["language"].ToString() ?? "";
+            TempData.Keep();
             int pageSize = 12;
+            //博客一级目录
             var videoCatalogs = _context.CataLog.Where(m => m.Type.Equals("视频") && m.IsTop == 1).ToList();
+            //视频一级目录
             var articleCatalogs = _context.CataLog.Where(m => m.Type.Equals("文章") && m.IsTop == 1).ToList();
 
-            var secondaryNav = new List<CataLog>();
+            var secondaryNav = new List<CataLog>(); //左侧二级目录
             var blogList = new List<Blog>();
             var videoList = new List<Video>();
             //默认主页显示内容
@@ -132,6 +137,19 @@ namespace WebApp.Controllers
                 BlogList = blogList,
                 VideoList = videoList
             });
+        }
+
+        /// <summary>
+        /// 筛选
+        /// </summary>
+        /// <param name="language">语言</param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult SetFilter(string language)
+        {
+            TempData["language"] = language;
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]

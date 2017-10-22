@@ -47,25 +47,29 @@
         </ul>
     </div>
     <div class="col col-md-10 bg-light">
-        <form method="post" class="row justify-content-between form-inline text-dark py-1" style="border-bottom:1px solid #ddd">
+        <form asp-action="SetFilter" class="row justify-content-between form-inline text-dark py-1" style="border-bottom:1px solid #ddd">
             <div class="col-md-6">
-                语言:
-                全部
-                中文
-                筛选
+                <select name="language" class="form-control form-control-sm">
+                    <option value="">选择语言</option>
+                    <option value="all">全部</option>
+                    <option value="chinese">中文</option>
+                </select>
+                <button class="btn btn-sm btn-dark" type="submit">筛选</button>
+                @TempData["language"]
             </div>
             <div class="col-md-6 text-right">
-                <input type="search" name="name" value="" class="form-control form-control-sm" />
-                <button class="btn btn-primary btn-sm" type="submit">搜索</button>
+                @*<input type="search" name="name" value="" class="form-control form-control-sm" />
+                <button class="btn btn-primary btn-sm" type="submit">搜索</button>*@
             </div>
         </form>
+
         <section name="videos" class="row">
             @if (Model.VideoList.Count > 0)
             {
                 foreach (var item in Model.VideoList)
                 {
                     //处理作者
-                    var author = StringHelper.SubString(item.Author, 25);
+                    var author = StringHelper.SubString(item.Author, 20);
                     author = string.IsNullOrWhiteSpace(author) ? "未知" : author;
                     <div class="col-md-4 px-2 my-2">
                         <div class="card border-0" style="box-shadow:1px 1px 3px 1px #ccc">
