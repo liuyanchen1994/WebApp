@@ -22,7 +22,7 @@ namespace WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string topCatalogId = "", string navId = "", int page = 1)
         {
-            var language = TempData["language"].ToString() ?? "";
+            var language = TempData["language"]?.ToString() ?? "all";
             TempData.Keep();
             int pageSize = 12;
             //博客一级目录
@@ -66,11 +66,22 @@ namespace WebApp.Controllers
                     .FirstOrDefault();
                 if (catalog.Type.Equals("视频"))
                 {
+
+                    bool isLanguage(string origin, string current)
+                    {
+                        if (string.IsNullOrWhiteSpace(current))
+                        {
+                            return true;
+                        }
+                        return origin == current;
+                    }
+
                     switch (catalog.TopCatalog.Value)
                     {
                         case "mva":
                             TempData["DetailPage"] = "MvaDetail";
                             videoList = _context.MvaVideos.Where(m => m.Title.Contains(catalog.Name))
+                                .Where(m => language.Equals("all") || m.LanguageCode.Equals(language))
                                 .OrderByDescending(m => m.CreatedTime)
                                 .Skip((page - 1) * pageSize)
                                 .Take(pageSize)
@@ -94,6 +105,7 @@ namespace WebApp.Controllers
                         case "c9":
                             TempData["DetailPage"] = "C9Detail";
                             videoList = _context.C9videos.Where(m => m.Title.Contains(catalog.Name))
+                                .Where(m => language.Equals("all") || m.Language.Equals(language))
                                 .OrderByDescending(m => m.CreatedTime)
                                 .Skip((page - 1) * pageSize)
                                 .Take(pageSize)
