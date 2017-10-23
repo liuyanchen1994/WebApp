@@ -101,6 +101,16 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
+        public IActionResult Detail(string id)
+        {
+            var video = _context.Video.Find(Guid.Parse(id));
+            video.Views++;
+            _context.Update(video);
+            _context.SaveChanges();
+            return View(video);
+        }
+
+        [HttpGet]
         public IActionResult MvaDetail(string id, string detail = null)
         {
             var video = _context.MvaVideos

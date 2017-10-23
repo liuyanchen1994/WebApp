@@ -52,10 +52,11 @@ namespace WebApp.Controllers
                     .FirstOrDefault()
                     .InverseTopCatalog
                     .ToList();
-                if (String.IsNullOrEmpty(navId))
-                {
-                    navId = secondaryNav.FirstOrDefault()?.Id.ToString();
-                }
+            }
+            //默认的navId，根据当前catalogId获取
+            if (String.IsNullOrEmpty(navId))
+            {
+                navId = secondaryNav.FirstOrDefault()?.Id.ToString();
             }
             if (!string.IsNullOrWhiteSpace(navId))
             {
@@ -66,16 +67,6 @@ namespace WebApp.Controllers
                     .FirstOrDefault();
                 if (catalog.Type.Equals("视频"))
                 {
-
-                    bool isLanguage(string origin, string current)
-                    {
-                        if (string.IsNullOrWhiteSpace(current))
-                        {
-                            return true;
-                        }
-                        return origin == current;
-                    }
-
                     switch (catalog.TopCatalog.Value)
                     {
                         case "mva":

@@ -1,0 +1,44 @@
+@using System.Net
+@model WebApp.DB.Video
+@{
+    ViewData["Title"] = WebUtility.HtmlDecode(Model.Name) + "-视频";
+}
+<div class="row m-0 p-0">
+    <div class="col-md-8 py-3 bg-light text-dark">
+        <h5>
+            @Html.Raw(Model.Name)
+            <small class="text-muted">
+                @*[@Model.Duration]*@
+            </small>
+            @if (!string.IsNullOrEmpty(Model.Author))
+            {
+                <span class="text-info" style="font-size:0.9rem">
+                    作者:
+                    @Model.Author
+                    &nbsp;&nbsp;
+                    @Model.UpdatedTime.ToString("yyyy-MM-dd")
+                </span>
+            }
+        </h5>
+        <video controls="controls" width="100%" class="my-2">
+            <source src="@Model.Url" type="video/mp4" />
+        </video>
+        <div class="row">
+            <div class="col-md-12">
+                <a href="@Model.Url" class="btn btn-sm btn-outline-dark">视频下载</a>
+                @*<a href="@Model.Url" class="btn btn-sm btn-outline-dark">关联文章</a>
+                <a href="@Model.Url" class="btn btn-sm btn-outline-dark">关联练习</a>*@
+            </div>
+
+
+        </div>
+    </div>
+    <div class="col-md-4 py-3 bg-light" style="border-left:1px solid #ddd">
+        <h6 class="text-primary">
+            视频介绍:
+        </h6>
+        <p>
+            @Html.Raw(Model.Description)
+        </p>
+    </div>
+</div>
