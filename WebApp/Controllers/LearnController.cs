@@ -20,11 +20,27 @@ namespace WebApp.Controllers
             _context = context;
         }
         [HttpGet]
-        public async Task<IActionResult> Index(string topCatalogId = "", string navId = "", int page = 1)
+        public async Task<IActionResult> Index(string topCatalogId = "", string navId = "", string type = "", int p = 1)
         {
             var language = TempData["language"]?.ToString() ?? "all";
+            if (!string.IsNullOrEmpty(type))
+            {
+                TempData["learnType"] = type;
+            }
+            else
+            {
+                type = "Video";
+            }
             TempData.Keep();
+
+
             int pageSize = 12;
+            var pageOption = new MyPagerOption
+            {
+                CurrentPage = p,
+                PageSize = pageSize,
+                RouteUrl = Request.Path + $"?navId={navId}&type={type}&topCatalogId={topCatalogId}"
+            };
             //博客一级目录
             var videoCatalogs = _context.CataLog.Where(m => m.Type.Equals("视频") && m.IsTop == 1).ToList();
             //视频一级目录
@@ -33,104 +49,156 @@ namespace WebApp.Controllers
             var secondaryNav = new List<CataLog>(); //左侧二级目录
             var blogList = new List<Blog>();
             var videoList = new List<Video>();
-            //默认主页显示内容
-            if (String.IsNullOrWhiteSpace(topCatalogId))
+            #region 查询视频内容
+            if (type.Equals("Video"))
             {
-                videoList = _context.Video.Skip((page - 1) * pageSize)
-                   .Take(pageSize)
-                   .ToList();
-                secondaryNav = _context.CataLog.Where(m => m.IsTop == 1 && m.Name.Equals("视频教程"))
-                    .Include(m => m.InverseTopCatalog)
-                    .FirstOrDefault()
-                    .InverseTopCatalog
-                    .ToList();
-            }
-            else
-            {
-                secondaryNav = _context.CataLog.Where(m => m.Id == Guid.Parse(topCatalogId))
-                    .Include(m => m.InverseTopCatalog)
-                    .FirstOrDefault()
-                    .InverseTopCatalog
-                    .ToList();
-            }
-            //默认的navId，根据当前catalogId获取
-            if (String.IsNullOrEmpty(navId))
-            {
-                navId = secondaryNav.FirstOrDefault()?.Id.ToString();
-            }
-            if (!string.IsNullOrWhiteSpace(navId))
-            {
-                //判断分类类型
-                var catalog = _context.CataLog
-                    .Where(m => m.Id == Guid.Parse(navId))
-                    .Include(m => m.TopCatalog)
-                    .FirstOrDefault();
-                if (catalog.Type.Equals("视频"))
+                //默认主页显示内容
+                if (String.IsNullOrWhiteSpace(topCatalogId))
                 {
-                    switch (catalog.TopCatalog.Value)
+                    //videoList = _context.Video.Skip((page - 1) * pageSize)
+                    //   .Take(pageSize)
+                    //   .ToList();
+                    //secondaryNav = _context.CataLog.Where(m => m.IsTop == 1 && m.Name.Equals("视频教程"))
+                    //    .Include(m => m.InverseTopCatalog)
+                    //    .FirstOrDefault()
+                    //    .InverseTopCatalog
+                    //    .ToList();
+                    TempData["DetailPage"] = "MvaDetail";
+                    videoList = _context.MvaVideos
+                        .Where(m => language.Equals("all") || m.LanguageCode.Equals(language))
+                        .OrderByDescending(m => m.CreatedTime)
+                        .Skip((p - 1) * pageSize)
+                        .Take(pageSize)
+                        .Select(s =>
+                        new Video
+                        {
+                            Id = s.Id,
+                            Description = s.Description,
+                            Author = s.Author,
+                            CreatedTime = s.CreatedTime,
+                            Duration = s.CourseDuration,
+                            IsRecommend = s.IsRecommend,
+                            Name = s.Title,
+                            Tags = s.Tags,
+                            ThumbnailUrl = s.CourseImage,
+                            Url = s.SourceUrl,
+                            Views = s.Views
+                        }).ToList();
+                    secondaryNav = _context.CataLog.Where(m => m.IsTop == 1 && m.Name.Equals("MVA"))
+                        .Include(m => m.InverseTopCatalog)
+                        .FirstOrDefault()
+                        .InverseTopCatalog
+                        .ToList();
+                    //总数量
+                    pageOption.Total = _context.MvaVideos
+                        .Where(m => language.Equals("all") || m.LanguageCode.Equals(language)).Count();
+                }
+                else
+                {
+                    secondaryNav = _context.CataLog.Where(m => m.Id == Guid.Parse(topCatalogId))
+                        .Include(m => m.InverseTopCatalog)
+                        .FirstOrDefault()
+                        .InverseTopCatalog
+                        .ToList();
+                }
+                //默认的navId，根据当前catalogId获取
+                if (String.IsNullOrEmpty(navId))
+                {
+                    navId = secondaryNav.FirstOrDefault()?.Id.ToString();
+                }
+                if (!string.IsNullOrWhiteSpace(navId))
+                {
+                    //判断分类类型
+                    var catalog = _context.CataLog
+                        .Where(m => m.Id == Guid.Parse(navId))
+                        .Include(m => m.TopCatalog)
+                        .FirstOrDefault();
+                    if (catalog.Type.Equals("视频"))
                     {
-                        case "mva":
-                            TempData["DetailPage"] = "MvaDetail";
-                            videoList = _context.MvaVideos.Where(m => m.Title.Contains(catalog.Name))
-                                .Where(m => language.Equals("all") || m.LanguageCode.Equals(language))
-                                .OrderByDescending(m => m.CreatedTime)
-                                .Skip((page - 1) * pageSize)
-                                .Take(pageSize)
-                                .Select(s =>
-                                new Video
-                                {
-                                    Id = s.Id,
-                                    Description = s.Description,
-                                    Author = s.Author,
-                                    CreatedTime = s.CreatedTime,
-                                    Duration = s.CourseDuration,
-                                    IsRecommend = s.IsRecommend,
-                                    Name = s.Title,
-                                    Tags = s.Tags,
-                                    ThumbnailUrl = s.CourseImage,
-                                    Url = s.SourceUrl,
-                                    Views = s.Views
-                                }).ToList();
+                        switch (catalog.TopCatalog.Value)
+                        {
+                            case "mva":
+                                TempData["DetailPage"] = "MvaDetail";
+                                videoList = _context.MvaVideos.Where(m => m.Title.Contains(catalog.Name))
+                                    .Where(m => language.Equals("all") || m.LanguageCode.Equals(language))
+                                    .OrderByDescending(m => m.CreatedTime)
+                                    .Skip((p - 1) * pageSize)
+                                    .Take(pageSize)
+                                    .Select(s =>
+                                    new Video
+                                    {
+                                        Id = s.Id,
+                                        Description = s.Description,
+                                        Author = s.Author,
+                                        CreatedTime = s.CreatedTime,
+                                        Duration = s.CourseDuration,
+                                        IsRecommend = s.IsRecommend,
+                                        Name = s.Title,
+                                        Tags = s.Tags,
+                                        ThumbnailUrl = s.CourseImage,
+                                        Url = s.SourceUrl,
+                                        Views = s.Views
+                                    }).ToList();
 
-                            break;
-                        case "c9":
-                            TempData["DetailPage"] = "C9Detail";
-                            videoList = _context.C9videos.Where(m => m.Title.Contains(catalog.Name))
-                                .Where(m => language.Equals("all") || m.Language.Equals(language))
-                                .OrderByDescending(m => m.CreatedTime)
-                                .Skip((page - 1) * pageSize)
-                                .Take(pageSize)
-                                .Select(s =>
-                                new Video
-                                {
-                                    Id = s.Id,
-                                    Description = s.Description,
-                                    Author = s.Author,
-                                    CreatedTime = s.CreatedTime,
-                                    Duration = s.Duration,
-                                    IsRecommend = false,
-                                    Name = s.Title,
-                                    Tags = s.Tags,
-                                    ThumbnailUrl = s.ThumbnailUrl,
-                                    Url = s.SourceUrl,
-                                    Views = s.Views
-                                }).ToList();
-                            break;
-                        default:
-                            TempData["DetailPage"] = "Detail";
-                            videoList = _context.Video.Where(m => m.Catalog == catalog)
-                                .OrderByDescending(m => m.CreatedTime)
-                                .Skip((page - 1) * pageSize)
-                                .Take(pageSize)
-                                .ToList();
-                            break;
+                                pageOption.Total = _context.MvaVideos.Where(m => m.Title.Contains(catalog.Name))
+                                    .Where(m => language.Equals("all") || m.LanguageCode.Equals(language))
+                                    .Count();
+                                break;
+                            case "c9":
+                                TempData["DetailPage"] = "C9Detail";
+                                videoList = _context.C9videos.Where(m => m.Title.Contains(catalog.Name))
+                                    .Where(m => language.Equals("all") || m.Language.Equals(language))
+                                    .OrderByDescending(m => m.CreatedTime)
+                                    .Skip((p - 1) * pageSize)
+                                    .Take(pageSize)
+                                    .Select(s =>
+                                    new Video
+                                    {
+                                        Id = s.Id,
+                                        Description = s.Description,
+                                        Author = s.Author,
+                                        CreatedTime = s.CreatedTime,
+                                        Duration = s.Duration,
+                                        IsRecommend = false,
+                                        Name = s.Title,
+                                        Tags = s.Tags,
+                                        ThumbnailUrl = s.ThumbnailUrl,
+                                        Url = s.SourceUrl,
+                                        Views = s.Views
+                                    }).ToList();
+
+                                pageOption.Total = _context.C9videos.Where(m => m.Title.Contains(catalog.Name))
+                                    .Where(m => language.Equals("all") || m.Language.Equals(language))
+                                    .Count();
+                                break;
+                            default:
+                                TempData["DetailPage"] = "Detail";
+                                videoList = _context.Video.Where(m => m.Catalog == catalog)
+                                    .OrderByDescending(m => m.CreatedTime)
+                                    .Skip((p - 1) * pageSize)
+                                    .Take(pageSize)
+                                    .ToList();
+
+                                pageOption.Total = _context.Video.Where(m => m.Catalog == catalog)
+                                    .Count();
+                                break;
+                        }
+                    }
+                    else if (catalog.Type.Equals("文章"))
+                    {
+                        blogList = _context.Blog.Where(m => m.Catalog == catalog).ToList();
                     }
                 }
-                else if (catalog.Type.Equals("文章"))
-                {
-                    blogList = _context.Blog.Where(m => m.Catalog == catalog).ToList();
-                }
             }
+            #endregion
+
+            #region 查询博客内容
+            if (type.Equals("Blog"))
+            {
+                pageOption.Total = blogList.Count();
+
+            }
+            #endregion
 
             return View(new LearnViewModels
             {
@@ -138,7 +206,8 @@ namespace WebApp.Controllers
                 ArticleCatalogs = articleCatalogs,
                 SecondaryNavs = secondaryNav,
                 BlogList = blogList,
-                VideoList = videoList
+                VideoList = videoList,
+                Pager = pageOption
             });
         }
 
