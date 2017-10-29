@@ -9,7 +9,11 @@
         <li class="nav-title">视频</li>
         @foreach (var item in Model.VideoCatalogs)
         {
-            <li><a asp-route-topCatalogId="@item.Id">@item.Name</a></li>
+            <li>
+                <a asp-route-topCatalogId="@item.Id" asp-route-type="Video">
+                    @item.Name
+                </a>
+            </li>
         }
     </ul>
 </div>
@@ -18,7 +22,11 @@
         <li class="nav-title">博客</li>
         @foreach (var item in Model.ArticleCatalogs)
         {
-            <li><a asp-route-topCatalogId="@item.Id">@item.Name</a></li>
+            <li>
+                <a asp-route-topCatalogId="@item.Id" asp-route-type="Blog">
+                    @item.Name
+                </a>
+            </li>
         }
     </ul>
 </div>
@@ -40,7 +48,7 @@
             @foreach (var navs in Model.SecondaryNavs)
             {
                 <li class="">
-                    <a asp-route-navId="@navs.Id" asp-route-topCatalogId="@Context.Request.Query["topCatalogId"]" class="nav-link">@navs.Name</a>
+                    <a asp-route-navId="@navs.Id" asp-route-type="@TempData["learnType"]" asp-route-topCatalogId="@Context.Request.Query["topCatalogId"]" class="nav-link">@navs.Name</a>
                 </li>
             }
 
@@ -58,7 +66,7 @@
             </div>
             <div class="col-md-6 text-right">
                 @*<input type="search" name="name" value="" class="form-control form-control-sm" />
-                <button class="btn btn-primary btn-sm" type="submit">搜索</button>*@
+                    <button class="btn btn-primary btn-sm" type="submit">搜索</button>*@
             </div>
         </form>
 
@@ -100,6 +108,7 @@
                         </div>
                     </div>
                 }
+                <pager pager-option="Model.Pager as MyPagerOption"></pager>
             }
         </section>
         <section name="blogs"></section>

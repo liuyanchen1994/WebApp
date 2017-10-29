@@ -60,7 +60,6 @@ namespace WebApp.Helpers
                                 startPage - maxPage <= 0 ? 1 : startPage - maxPage);
 
                             // 构造页数
-
                             for (int i = startPage; i < endPage; i++)
                             {
 
@@ -75,7 +74,7 @@ namespace WebApp.Helpers
                             // 后一页
                             sbPage.AppendFormat("         <a class=\"page-link\" href=\"{0}" + pageParam + "{1}\" aria-label=\"Next\">",
                                 PagerOption.RouteUrl,
-                                endPage + maxPage > totalPage ? PagerOption.CurrentPage : endPage + maxPage);
+                                endPage + maxPage > totalPage ? PagerOption.CurrentPage : endPage);
                             sbPage.Append("               <span aria-hidden=\"true\">&raquo;</span>");
                             sbPage.Append("         </a>");
                             sbPage.Append("       </li>");

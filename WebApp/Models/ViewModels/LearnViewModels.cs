@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApp.DB;
+using WebApp.Helpers;
 
 namespace WebApp.Models.ViewModels
 {
@@ -17,6 +18,8 @@ namespace WebApp.Models.ViewModels
 
         public List<Video> VideoList { get; set; }
         public List<Blog> BlogList { get; set; }
+
+        public MyPagerOption Pager{ get; set; }
     }
 
     public class VideoItem
