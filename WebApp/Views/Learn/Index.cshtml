@@ -18,18 +18,18 @@
     </ul>
 </div>
 @*<div class="row">
-    <ul class="learn-nav d-flex col-12">
-        <li class="nav-title">博客</li>
-        @foreach (var item in Model.ArticleCatalogs)
-        {
-            <li>
-                <a asp-route-topCatalogId="@item.Id" asp-route-type="Blog">
-                    @item.Name
-                </a>
-            </li>
-        }
-    </ul>
-</div>*@
+        <ul class="learn-nav d-flex col-12">
+            <li class="nav-title">博客</li>
+            @foreach (var item in Model.ArticleCatalogs)
+            {
+                <li>
+                    <a asp-route-topCatalogId="@item.Id" asp-route-type="Blog">
+                        @item.Name
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>*@
 @*<div class="row">
         <ul class="learn-nav d-flex">
             <li class="nav-title">练习</li>
@@ -43,7 +43,7 @@
 <!--内容-->
 <div class="row mt-2 learn-container">
     <!--左侧二级导航-->
-    <div class="col col-md-auto p-2 bg-light mr-2">
+    <div class="col col-md-auto p-2 bg-light mr-2 d-none d-sm-inline-block">
         <ul class="nav flex-column nav-pills">
             @foreach (var navs in Model.SecondaryNavs)
             {
@@ -54,6 +54,18 @@
 
         </ul>
     </div>
+    <div class="col-md-12 p-2 bg-light d-sm-none">
+        <select class="form-control custom-select" name="SecondaryNavs">
+            @foreach (var navs in Model.SecondaryNavs)
+            {
+                <option value="@navs.Id">
+                    @navs.Name 
+                </option>
+            }
+
+        </select>
+    </div>
+
     <div class="col col-md-10 bg-light">
         <form asp-action="SetFilter" class="row justify-content-between form-inline text-dark py-1" style="border-bottom:1px solid #ddd">
             <div class="col-md-6">
@@ -62,7 +74,7 @@
                     <option value="en">英文</option>
                     <option value="zh-cn">中文</option>
                 </select>
-                <button class="btn btn-sm btn-dark" type="submit">筛选</button>
+                <button class="btn btn-sm btn-dark form-control" type="submit">筛选</button>
             </div>
             <div class="col-md-6 text-right">
                 @*<input type="search" name="name" value="" class="form-control form-control-sm" />
@@ -115,3 +127,20 @@
         <section name="practices"></section>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            $("select[name='SecondaryNavs'] option[value='@Context.Request.Query["navId"]']").attr("selected","selected");
+
+            $("select[name='SecondaryNavs']").change(function () {
+                var navId = $(this).val();
+                location.href = `/Learn?navId=${navId}&topCatalogId=@Context.Request.Query["topCatalogId"]&type=@TempData["learnType"]`;
+
+            });
+        });
+
+    </script>
+
+}
