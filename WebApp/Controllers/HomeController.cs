@@ -8,6 +8,7 @@ using WebApp.Models;
 using WebApp.DB;
 using WebApp.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using WebApp.Helpers;
 
 namespace WebApp.Controllers
 {
@@ -23,6 +24,7 @@ namespace WebApp.Controllers
             //获取站内新闻 
             var selfNews = _context.Blog
                 .Where(m => m.Catalog.Value.Equals("articleSelfNews"))
+                .Where(m=>m.Status.Equals(StatusType.Publish))
                 .OrderByDescending(m => m.UpdateTime)
                 .Take(4)
                 .ToList();
