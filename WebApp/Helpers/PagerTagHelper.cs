@@ -52,8 +52,8 @@ namespace WebApp.Helpers
                                 pageParam = "&p=";
                             }
 
-                            sbPage.Append("<nav class='row ml-0'>");
-                            sbPage.Append("  <ul class=\"pagination col col-md-auto pr-0\">");
+                            sbPage.Append("<nav class='d-md-flex d-sm-block ml-0'>");
+                            sbPage.Append("  <ul class=\"pagination col-sm-12 col-md-auto pr-0\">");
                             // 前一页
                             sbPage.AppendFormat("       <li class=\"page-item\"><a class=\"page-link\" href=\"{0}" + pageParam + "{1}\" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>",
                                 PagerOption.RouteUrl,
@@ -80,7 +80,7 @@ namespace WebApp.Helpers
                             sbPage.Append("       </li>");
                             sbPage.Append("</ul>");
 
-                            sbPage.Append("<ul class='d-flex col-md-auto pl-0' >");
+                            sbPage.Append("<ul class='d-flex col-md-auto col-sm-12 pl-0' >");
                             sbPage.Append("<li class=\"page-item page-link\"><span>");
                             sbPage.Append("<input type='number' id='totalPage' class='col-sm-12' style='width:50px;padding:0;margin:-2px 4px;'/>");
                             sbPage.Append("<a href='javascript:gotoPage()' id='gotoPage' onclick='gotoPage'>跳转</a>");
