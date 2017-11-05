@@ -11,8 +11,8 @@ namespace WebApp.Services
     {
         public static Task SendEmailConfirmationAsync(this IEmailSender emailSender, string email, string link)
         {
-            return emailSender.SendEmailAsync(email, "Confirm your email",
-                $"Please confirm your account by clicking this link: <a href='{HtmlEncoder.Default.Encode(link)}'>link</a>");
+            return emailSender.SendEmailAsync(email, "邮箱验证",
+                $"欢迎注册成为微软中国开发者用户，<br/>请点击以下链接验证您的邮箱: <a href='{HtmlEncoder.Default.Encode(link)}'>点此验证</a>");
         }
     }
 }

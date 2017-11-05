@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = "注册成功";
+}
+
+<h3>@ViewData["Title"]!</h3>
+<div>
+    <p>
+        恭喜您注册成为微软开发者社区用户！
+    </p>
+    <p>请登录您的注册邮箱：
+        @Context.Request.Query["Email"]，查看验证邮件。邮箱验证后便可进行登录！
+    </p>
+    <p class="text-danger">
+        如果在收件箱中没有验证邮件，请查看您的垃圾箱！
+    </p>
+</div>
