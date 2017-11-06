@@ -68,6 +68,9 @@
 
     <div class="col col-md-10 bg-light">
         <form asp-action="SetFilter" class="row justify-content-between form-inline text-dark py-1" style="border-bottom:1px solid #ddd">
+            <input type="hidden" name="topCatalogId" value="@Context.Request.Query["topCatalogId"]" />
+            <input type="hidden" name="navId" value="@Context.Request.Query["navId"]" />
+            <input type="hidden" name="learnType" value="@TempData["learnType"]" />
             <div class="col-md-6">
                 <select name="language" class="form-control form-control-sm">
                     <option value="all">全部</option>
@@ -79,9 +82,9 @@
             <div class="col-md-6 text-right">
                 @*<input type="search" name="name" value="" class="form-control form-control-sm" />
                     <button class="btn btn-primary btn-sm" type="submit">搜索</button>*@
+           
             </div>
         </form>
-
         <section name="videos" class="row">
             @if (Model.VideoList.Count > 0)
             {

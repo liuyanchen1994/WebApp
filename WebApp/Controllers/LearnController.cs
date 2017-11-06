@@ -20,7 +20,7 @@ namespace WebApp.Controllers
             _context = context;
         }
         [HttpGet]
-        public async Task<IActionResult> Index(string topCatalogId = "", string navId = "", string type = "", int p = 1)
+        public IActionResult Index(string topCatalogId = "", string navId = "", string type = "", int p = 1)
         {
             var language = TempData["language"]?.ToString() ?? "all";
             if (!string.IsNullOrEmpty(type))
@@ -217,11 +217,16 @@ namespace WebApp.Controllers
         /// <param name="language">语言</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult SetFilter(string language)
+        public IActionResult SetFilter(string language, string topCatalogId, string navId, string learnType)
         {
             TempData["language"] = language;
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new
+            {
+                topCatalogId = topCatalogId,
+                navId = navId,
+                type = learnType
+            });
         }
 
         [HttpGet]
