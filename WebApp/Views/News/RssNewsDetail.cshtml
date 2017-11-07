@@ -33,15 +33,40 @@
     </div>
 
 </div>
+<div class="modal" id="imgModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog text-center" style="max-width:90%;">
+        <div class="modal-content" style="display: inline-block; width: auto;">
+            <div class="modal-header flex-row-reverse">
+                <button type="button" class="pull-right close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="imgInModalID">
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts{
     <script>
         $("document").ready(function () {
             $("img").attr("height", "");
             //处理内容中图片的显示宽度
-            $("img").attr("max-width", "96%");
+            $("img").css("max-width", "96%");
             //其他图片宽度单独处理
             $("#qq_group").attr("width", "");
+            $("#imgInModalID").css("max-width", "90%");
+
+            //点击查看大图
+            $("img").click(function (event) {
+                var src = $(this).attr("src");
+
+                console.log(src);
+                $("#imgInModalID").attr("src", src);
+                $("#imgModal").modal("show");
+            });
+            
         });
     </script>
 }
