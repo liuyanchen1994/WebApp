@@ -9,22 +9,27 @@ using WebApp.DB;
 using WebApp.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Helpers;
+using WebApp.Services;
+using Microsoft.Extensions.Options;
 
 namespace WebApp.Controllers
 {
     public class HomeController : Controller
     {
         readonly MSDevContext _context;
-        public HomeController(MSDevContext context)
+        readonly IOptions<CognitiveOptions> CognitveOptions;
+        public HomeController(MSDevContext context,
+            IOptions<CognitiveOptions> options)
         {
             _context = context;
+            CognitveOptions = options;
         }
         public IActionResult Index()
         {
             //获取站内新闻 
             var selfNews = _context.Blog
                 .Where(m => m.Catalog.Value.Equals("articleSelfNews"))
-                .Where(m=>m.Status.Equals(StatusType.Publish))
+                .Where(m => m.Status.Equals(StatusType.Publish))
                 .OrderByDescending(m => m.UpdateTime)
                 .Take(4)
                 .ToList();
@@ -136,6 +141,14 @@ namespace WebApp.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+        public IActionResult Test()
+        {
+            var search = new BingCustomSearchServices(CognitveOptions);
+            ViewBag.Result= search.SearchQuestion("vs2017 代码风格");
+            return View();
         }
     }
 }
