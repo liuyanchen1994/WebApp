@@ -54,6 +54,8 @@ namespace WebApp.Services
                     var httpResponseMessage = client.GetAsync(url).Result;
                     var responseContent = httpResponseMessage.Content.ReadAsStringAsync().Result;
                     BingCustomSearchResponse response = JsonConvert.DeserializeObject<BingCustomSearchResponse>(responseContent);
+
+                    Console.WriteLine(JsonConvert.SerializeObject(response));
                     return response.WebPages.Value;
                 }
                 catch (Exception e)
@@ -73,7 +75,7 @@ namespace WebApp.Services
     public class WebPages
     {
         public string WebSearchUrl { get; set; }
-        public int TotalEstimatedMatches { get; set; }
+        public int? TotalEstimatedMatches { get; set; }
         public List<BingSearchWebPage> Value { get; set; }
     }
 
