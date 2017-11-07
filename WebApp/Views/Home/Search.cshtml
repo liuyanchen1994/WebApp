@@ -2,16 +2,15 @@
 @{
     Layout = "_Layout";
     ViewData["Title"] = "搜索-MSDev";
-
+    ViewData["Container"] = "container-fluid";
     var resources = Model.ResourceList.GroupBy(m => m.Catalog.Type).ToList();
-    var c9Videos = Model.C9VideoList ?? default;
-    var mvaVideos = Model.MvaVideoList ?? default;
+    var videos = Model.VideoList ?? default;
+    var answers = Model.AnswerList ?? default;
 }
 <div class="row">
     <div class="col-md-12">
-        <h3 class="mt-3">搜索结果:</h3>
         <div class="row mt-3">
-            <div class="col-md-auto px-1">
+            <div class="col-md-2 px-1">
                 @foreach (var gorup in resources)
                 {
                     var Type = gorup.First().Catalog.Type;
@@ -30,7 +29,6 @@
                                     </div>
                                 }
                             </div>
-
                         </section>
                     }
                     if (Type.Equals("下载"))
@@ -53,40 +51,50 @@
                     }
                 }
             </div>
-            <div class="col-md-auto px-1">
-                <section class="scrst-block">
-                    <h4 class="scrst-title">视频</h4>
-                    <div class="scrst-content">
-                        <h5 class="text-info">MVA视频</h5>
-                        @foreach (var video in mvaVideos)
-                        {
-                            <div class="scrst-content-row">
-                                <a asp-controller="Video" asp-action="Detail" asp-route-id="@video.Id">
-                                    @video.Title
+            <section class="col-md-7">
+                @foreach (var item in answers)
+                {
+                    <div class="row my-3">
+                        <div class="col-md-11 pl-5" style="line-height:14px">
+                            <h5 class="mb-1">
+                                <a href="@item.Url">
+                                    @item.Name
                                 </a>
+                            </h5>
+                            <small>
+                                <span class="text-muted">
+                                    @item.Snippet
+                                </span>
                                 <br />
-                                <small class="text-muted">
-                                    @video.Author  @video.UpdatedTime.ToString("yyyy-MM-dd")
-                                </small>
-                            </div>
-                        }
-                        <hr />
-                        <h5 class="text-info">Channel9视频</h5>
-                        @foreach (var video in c9Videos)
-                        {
-                            <div class="scrst-content-row">
-                                <a asp-controller="Video" asp-action="C9Detail" asp-route-id="@video.Id">
-                                    @Html.Raw(video.Title)
-                                </a>
-                                <br />
-                                <small class="text-muted">
-                                    [@video.Duration]  @video.UpdatedTime.ToString("yyyy-MM-dd")
-                                </small>
-                            </div>
-                        }
+                                <span class="text-info">
+                                    @item.DisplayUrl
+                                </span>
+                            </small>
+                        </div>
                     </div>
-                </section>
-            </div>
+                }
+            </section>
+            <section class="video col-md-2 px-1">
+                <h4 class="scrst-title">视频</h4>
+                @foreach (var item in videos)
+                {
+                    <div class="row my-3 justify-content-md-center" data-cacheUrl="@item.CachedPageUrl">
+                        <div class="col-md-12">
+                            <a class="card-img-top" href="@item.Url" target="_blank">
+                                <img src="@item.OpenGraphImage?.ContentUrl" style="max-height:160px;width:100%" />
+                            </a>
+                            <div class="card-body p-1">
+                                <h6 class="card-title mb-0">
+                                    <a class="text-dark" href="@item.Url" target="_blank">
+                                        @item.Name
+                                    </a>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </section>
         </div>
 
     </div>

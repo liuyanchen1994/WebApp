@@ -91,7 +91,6 @@ namespace WebApp.Controllers
         /// <returns></returns>
         public IActionResult Search(string keyword)
         {
-
             if (string.IsNullOrWhiteSpace(keyword) || keyword.Length < 3)
             {
                 return RedirectToAction("Index");
@@ -105,24 +104,20 @@ namespace WebApp.Controllers
                   .ThenInclude(m => m.TopCatalog)
                 .ToList();
             //搜索视频 
-            var c9videos = _context.C9videos
-                .OrderByDescending(m => m.CreatedTime)
-                .Where(m => m.Title.Contains(keyword))
+            var search = new BingCustomSearchServices(CognitveOptions);
+
+            var videos = search.SearchVideo(keyword)
+                .Where(v => v.OpenGraphImage != null)
                 .Take(10)
                 .ToList();
 
-            var mvaVideos = _context.MvaVideos
-                .OrderByDescending(m => m.CreatedTime)
-                .Where(m => m.Title.Contains(keyword))
-                .Take(6)
-                .ToList();
-
+            var answers = search.SearchQuestion(keyword);
             return View(
                 new SearchViewModel
                 {
                     ResourceList = resource,
-                    C9VideoList = c9videos,
-                    MvaVideoList = mvaVideos
+                    VideoList = videos,
+                    AnswerList = answers
                 });
         }
 
@@ -147,7 +142,7 @@ namespace WebApp.Controllers
         public IActionResult Test()
         {
             var search = new BingCustomSearchServices(CognitveOptions);
-            ViewBag.Result= search.SearchQuestion("vs2017 代码风格");
+            ViewBag.Result = search.SearchQuestion("vs2017 代码风格");
             return View();
         }
     }

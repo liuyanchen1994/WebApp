@@ -26,12 +26,12 @@ namespace WebApp.Services
 
         public List<BingSearchWebPage> SearchQuestion(string query, string mkt = "en-US", int offset = 0, int count = 30)
         {
-            return Search(query, mkt, TechQuestionConfigId);
+            return Search(query, mkt, TechQuestionConfigId, offset, count);
         }
 
-        public List<BingSearchWebPage> SearchVideo(string query, string mkt = "zh-CN", int offset = 0, int count = 30)
+        public List<BingSearchWebPage> SearchVideo(string query, string mkt = "en-US", int offset = 0, int count = 30)
         {
-            return Search(query, mkt, VideoConfigId);
+            return Search(query, mkt, VideoConfigId, offset, count);
         }
 
         public List<BingSearchWebPage> Search(string query, string mkt, int? configId = 0, int offset = 0, int count = 12)
