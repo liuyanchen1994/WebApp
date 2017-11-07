@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApp.Helpers;
 using WebApp.Services;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace WebApp.Controllers
 {
@@ -95,6 +96,8 @@ namespace WebApp.Controllers
             {
                 return RedirectToAction("Index");
             }
+
+            Console.WriteLine(keyword);
             //搜索资源 (文档、下载)
             var resource = _context.Resource
                 .OrderByDescending(m => m.CreatedTime)
@@ -103,15 +106,15 @@ namespace WebApp.Controllers
                 .Include(m => m.Catalog)
                   .ThenInclude(m => m.TopCatalog)
                 .ToList();
+
             //搜索视频 
             var search = new BingCustomSearchServices(CognitveOptions);
-
-            var videos = search.SearchVideo(keyword)
+            var videos = search.SearchVideo(keyword,count:20)?
                 .Where(v => v.OpenGraphImage != null)
                 .Take(10)
                 .ToList();
 
-            var answers = search.SearchQuestion(keyword);
+            var answers = search.SearchQuestion(keyword,count:20);
             return View(
                 new SearchViewModel
                 {

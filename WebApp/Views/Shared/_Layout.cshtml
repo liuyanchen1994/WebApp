@@ -33,12 +33,12 @@
                 <ul class="nav navbar-nav mr-auto">
                     <li><a class="nav-link text-white" asp-controller="News" asp-action="Index">资讯</a></li>
                     @*<li class="dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="dorpdownResource">资源</a>
-                        <div class="dropdown-menu" aria-labelledby="dorpdownResource">
-                            <a class="dropdown-item" asp-controller="Download" asp-action="Index">下载</a>
-                            <a class="dropdown-item" asp-controller="Document" asp-action="Index">文档</a>
-                        </div>
-                    </li>*@
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="dorpdownResource">资源</a>
+                            <div class="dropdown-menu" aria-labelledby="dorpdownResource">
+                                <a class="dropdown-item" asp-controller="Download" asp-action="Index">下载</a>
+                                <a class="dropdown-item" asp-controller="Document" asp-action="Index">文档</a>
+                            </div>
+                        </li>*@
                     <li><a class="nav-link text-white" asp-controller="Learn" asp-action="Index">学习</a></li>
                     <li>@*<a class="nav-link" asp-controller="Activity" asp-action="Index">活动</a>*@</li>
                     <li><a class="nav-link text-white" asp-controller="Home" asp-action="About">关于</a></li>
@@ -108,7 +108,7 @@
             var keyword = $(this).val();
             if (event.keyCode == 13) {
                 if (keyword.length > 2) {
-                    location.href = "/Home/Search?keyword=" + keyword;
+                    location.href = "/Home/Search?keyword=" + encodeURIComponent(keyword);
                 }
             }
         });
