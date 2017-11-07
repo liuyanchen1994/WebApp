@@ -106,7 +106,10 @@ namespace WebApp
                 options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
+
             services.Configure<AuthMessageSenderOptions>(Configuration.GetSection("Services").GetSection("SendGrid"));
+            services.Configure<CognitiveOptions>(Configuration.GetSection("Services").GetSection("CognitiveServices"));
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

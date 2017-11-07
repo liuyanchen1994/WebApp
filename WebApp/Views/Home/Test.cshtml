@@ -1,0 +1,22 @@
+@using WebApp.Services
+@{
+    ViewData["Title"] = "测试";
+}
+
+@{ 
+    foreach (var item in ViewBag.Result as List<BingSearchWebPage>)
+    {
+        <div data-cacheUrl="@item.CachedPageUrl">
+            <h4>
+                <a href="@item.Url">@item.Name</a>
+            </h4>
+            @item.DisplayUrl
+            <br />
+            <p>
+                @item.Snippet
+            </p>
+            <img src="@item.OpenGraphImage?.ContentUrl" alt="" />
+            
+        </div>
+    }
+}
