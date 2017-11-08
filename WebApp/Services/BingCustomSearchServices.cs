@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace WebApp.Services
 {
@@ -41,7 +42,8 @@ namespace WebApp.Services
                 return default;
             }
             var url = ApiEndpoint +
-                "?q=" + query +
+                "?q=" + HttpUtility.UrlEncode(query) +
+                "&mkt=" + mkt +
                 "&customconfig=" + configId +
                 "&offset=" + offset +
                 "&count=" + count +
@@ -55,7 +57,6 @@ namespace WebApp.Services
                     var responseContent = httpResponseMessage.Content.ReadAsStringAsync().Result;
                     BingCustomSearchResponse response = JsonConvert.DeserializeObject<BingCustomSearchResponse>(responseContent);
 
-                    Console.WriteLine(JsonConvert.SerializeObject(response));
                     return response.WebPages.Value;
                 }
                 catch (Exception e)
