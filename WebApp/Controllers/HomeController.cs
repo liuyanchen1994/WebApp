@@ -109,12 +109,12 @@ namespace WebApp.Controllers
 
             //搜索视频 
             var search = new BingCustomSearchServices(CognitveOptions);
-            var videos = search.SearchVideo(keyword,count:20)?
+            var videos = search.SearchVideo(keyword, count: 20)?
                 .Where(v => v.OpenGraphImage != null)
                 .Take(10)
                 .ToList();
 
-            var answers = search.SearchQuestion(keyword,count:20);
+            var answers = search.SearchQuestion(keyword, "zh-CN", count: 20);
             return View(
                 new SearchViewModel
                 {
@@ -124,6 +124,40 @@ namespace WebApp.Controllers
                 });
         }
 
+
+        public IActionResult SearchVideoJump(string url)
+        {
+            if (url.Contains("channel9.msdn.com"))
+            {
+                var c9Video = _context.C9videos
+                    .Where(m => m.SourceUrl.Equals(url.Replace("https://channel9.msdn.com", "")))
+                    .FirstOrDefault();
+                if (c9Video != null)
+                {
+                    Console.WriteLine(c9Video.Id);
+                    return RedirectToAction(
+                        nameof(VideoController.C9Detail),
+                        "Video",
+                        new { id = c9Video.Id }
+                    );
+                }
+            }
+            else if (url.Contains("mva.microsoft.com"))
+            {
+                var video = _context.MvaVideos
+                    .Where(m => m.SourceUrl.Equals(url))
+                    .FirstOrDefault();
+                if (video != null)
+                {
+                    return RedirectToAction(
+                        nameof(VideoController.MvaDetail),
+                        "Video",
+                        new { id = video.Id }
+                    );
+                }
+            }
+            return Redirect(url);
+        }
         public IActionResult About()
         {
 
