@@ -101,7 +101,7 @@ namespace WebApp.Controllers
                 }
             }
 
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "账号信息更新成功";
             return RedirectToAction(nameof(Index));
         }
 
@@ -125,7 +125,7 @@ namespace WebApp.Controllers
             var email = user.Email;
             await _emailSender.SendEmailConfirmationAsync(email, callbackUrl);
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = "验证邮件发送成功，请注意查收您的邮件(含垃圾箱)！";
             return RedirectToAction(nameof(Index));
         }
 
@@ -172,7 +172,7 @@ namespace WebApp.Controllers
 
             await _signInManager.SignInAsync(user, isPersistent: false);
             _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            StatusMessage = "密码修改成功";
 
             return RedirectToAction(nameof(ChangePassword));
         }
@@ -220,7 +220,7 @@ namespace WebApp.Controllers
             }
 
             await _signInManager.SignInAsync(user, isPersistent: false);
-            StatusMessage = "Your password has been set.";
+            StatusMessage = "设置密码成功";
 
             return RedirectToAction(nameof(SetPassword));
         }
