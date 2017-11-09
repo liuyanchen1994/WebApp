@@ -121,7 +121,7 @@ namespace WebApp.Controllers
                                 TempData["DetailPage"] = "MvaDetail";
                                 videoList = _context.MvaVideos.Where(m => m.Title.Contains(catalog.Name))
                                     .Where(m => language.Equals("all") || m.LanguageCode.Equals(language))
-                                    .OrderByDescending(m => m.CreatedTime)
+                                    .OrderByDescending(m => m.UpdatedTime)
                                     .Skip((p - 1) * pageSize)
                                     .Take(pageSize)
                                     .Select(s =>
@@ -174,7 +174,7 @@ namespace WebApp.Controllers
                             default:
                                 TempData["DetailPage"] = "Detail";
                                 videoList = _context.Video.Where(m => m.Catalog == catalog)
-                                    .OrderByDescending(m => m.CreatedTime)
+                                    .OrderByDescending(m => m.UpdatedTime)
                                     .Skip((p - 1) * pageSize)
                                     .Take(pageSize)
                                     .ToList();
