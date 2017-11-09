@@ -3,9 +3,6 @@ body {
     background: rgba(255, 255, 250, 1);
     font-family: 'Segoe UI', 微软雅黑,Tahoma, Geneva, Verdana, sans-serif
 }
-
-
-
 button, a {
     cursor: pointer !important;
 }
@@ -13,6 +10,7 @@ button, a {
 h7 {
     font-size: 0.9rem;
 }
+
 
 * {
     border-radius: 0px !important;
@@ -27,6 +25,11 @@ ul, li {
     padding-left: 0;
 }
 
+.min-height6{
+    min-height:600px;
+}
+
+/*==============*/
 .news-list {
     margin: 1rem 0;
 }
