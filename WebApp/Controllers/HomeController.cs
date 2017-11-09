@@ -130,7 +130,7 @@ namespace WebApp.Controllers
             if (url.Contains("channel9.msdn.com"))
             {
                 var c9Video = _context.C9videos
-                    .Where(m => m.SourceUrl.Equals(url.Replace("https://channel9.msdn.com", "")))
+                    .Where(m => m.SourceUrl.ToLower().Equals(url.Replace("https://channel9.msdn.com", "").ToLower()))
                     .FirstOrDefault();
                 if (c9Video != null)
                 {
@@ -145,7 +145,7 @@ namespace WebApp.Controllers
             else if (url.Contains("mva.microsoft.com"))
             {
                 var video = _context.MvaVideos
-                    .Where(m => m.SourceUrl.Equals(url))
+                    .Where(m => m.SourceUrl.ToLower().Equals(url.ToLower()))
                     .FirstOrDefault();
                 if (video != null)
                 {
