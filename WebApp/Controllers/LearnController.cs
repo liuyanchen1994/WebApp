@@ -8,16 +8,19 @@ using System.Collections.Generic;
 using WebApp.Helpers;
 using System;
 using System.Net;
+using Microsoft.Extensions.Logging;
 
 namespace WebApp.Controllers
 {
     public class LearnController : Controller
     {
         readonly MSDevContext _context;
+        readonly ILogger<LearnController> _logger;
 
-        public LearnController(MSDevContext context)
+        public LearnController(MSDevContext context, ILogger<LearnController> logger)
         {
             _context = context;
+            _logger = logger;
         }
         [HttpGet]
         public IActionResult Index(string topCatalogId = "", string navId = "", string type = "", int p = 1)
@@ -26,8 +29,7 @@ namespace WebApp.Controllers
             if (!string.IsNullOrEmpty(type))
             {
                 TempData["learnType"] = type;
-            }
-            else
+            }else
             {
                 type = "Video";
             }
@@ -148,7 +150,7 @@ namespace WebApp.Controllers
                                 TempData["DetailPage"] = "C9Detail";
                                 videoList = _context.C9videos.Where(m => m.Title.Contains(catalog.Name))
                                     .Where(m => language.Equals("all") || m.Language.Equals(language))
-                                    .OrderByDescending(m => m.CreatedTime)
+                                    .OrderByDescending(m => m.UpdatedTime)
                                     .Skip((p - 1) * pageSize)
                                     .Take(pageSize)
                                     .Select(s =>
@@ -168,8 +170,9 @@ namespace WebApp.Controllers
                                     }).ToList();
 
                                 pageOption.Total = _context.C9videos.Where(m => m.Title.Contains(catalog.Name))
-                                    .Where(m => language.Equals("all") || m.Language.Equals(language))
                                     .Count();
+
+                                _logger.LogDebug(_context.Database.ToString());
                                 break;
                             default:
                                 TempData["DetailPage"] = "Detail";

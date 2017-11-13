@@ -17,19 +17,19 @@
         }
     </ul>
 </div>
-@*<div class="row">
-        <ul class="learn-nav d-flex col-12">
-            <li class="nav-title">博客</li>
-            @foreach (var item in Model.ArticleCatalogs)
+<div class="row">
+    <ul class="learn-nav d-flex col-12">
+        <li class="nav-title">博客</li>
+        @foreach (var item in Model.ArticleCatalogs)
             {
-                <li>
-                    <a asp-route-topCatalogId="@item.Id" asp-route-type="Blog">
-                        @item.Name
-                    </a>
-                </li>
-            }
-        </ul>
-    </div>*@
+            <li>
+                <a asp-route-topCatalogId="@item.Id" asp-route-type="Blog">
+                    @item.Name
+                </a>
+            </li>
+        }
+    </ul>
+</div>
 @*<div class="row">
         <ul class="learn-nav d-flex">
             <li class="nav-title">练习</li>
@@ -38,8 +38,8 @@
                 <li><a asp-route-id="@item.Id">@item.Name</a></li>
             }
         </ul>
-    </div>*@
-
+    </div>
+*@
 <!--内容-->
 <div class="row mt-2 learn-container">
     <!--左侧二级导航-->
@@ -59,7 +59,7 @@
             @foreach (var navs in Model.SecondaryNavs)
             {
                 <option value="@navs.Id">
-                    @navs.Name 
+                    @navs.Name
                 </option>
             }
 
@@ -82,7 +82,7 @@
             <div class="col-md-6 text-right">
                 @*<input type="search" name="name" value="" class="form-control form-control-sm" />
                     <button class="btn btn-primary btn-sm" type="submit">搜索</button>*@
-           
+
             </div>
         </form>
         <section name="videos" class="row">
@@ -126,7 +126,10 @@
                 <pager pager-option="Model.Pager as MyPagerOption"></pager>
             }
         </section>
-        <section name="blogs"></section>
+        <section name="blogs">
+
+
+        </section>
         <section name="practices"></section>
     </div>
 </div>
