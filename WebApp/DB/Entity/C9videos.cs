@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.DB
 {
-    public partial class C9videos
+    public partial class C9Videos
     {
         public Guid Id { get; set; }
         public string Author { get; set; }
@@ -17,6 +18,8 @@ namespace WebApp.DB
         public string Mp4MidUrl { get; set; }
         public string SeriesTitle { get; set; }
         public string SeriesTitleUrl { get; set; }
+        [MaxLength(64)]
+        public string SeriesType { get; set; }
         public string SourceUrl { get; set; }
         public int? Status { get; set; }
         public string Tags { get; set; }

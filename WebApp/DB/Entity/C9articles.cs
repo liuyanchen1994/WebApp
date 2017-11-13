@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebApp.DB
 {
-    public partial class C9articles
+    public partial class C9Articles
     {
         public Guid Id { get; set; }
         public DateTime CreatedTime { get; set; }
