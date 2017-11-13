@@ -25,7 +25,7 @@ namespace WebApp.Controllers
         [HttpGet]
         public IActionResult Index(string topCatalogId = "", string navId = "", string type = "", int p = 1)
         {
-            var language = TempData["language"]?.ToString() ?? "all";
+            var language = TempData["language"]?.ToString() ?? "";
             if (!string.IsNullOrEmpty(type))
             {
                 TempData["learnType"] = type;
@@ -35,7 +35,6 @@ namespace WebApp.Controllers
                 type = "Video";
             }
             TempData.Keep();
-
 
             int pageSize = 12;
             var pageOption = new MyPagerOption
@@ -66,35 +65,11 @@ namespace WebApp.Controllers
                     //    .FirstOrDefault()
                     //    .InverseTopCatalog
                     //    .ToList();
-                    TempData["DetailPage"] = "MvaDetail";
-                    videoList = _context.MvaVideos
-                        .Where(m => language.Equals("all") || m.LanguageCode.Equals(language))
-                        .OrderByDescending(m => m.CreatedTime)
-                        .Skip((p - 1) * pageSize)
-                        .Take(pageSize)
-                        .Select(s =>
-                        new Video
-                        {
-                            Id = s.Id,
-                            Description = s.Description,
-                            Author = s.Author,
-                            CreatedTime = s.CreatedTime,
-                            Duration = s.CourseDuration,
-                            IsRecommend = s.IsRecommend,
-                            Name = s.Title,
-                            Tags = s.Tags,
-                            ThumbnailUrl = s.CourseImage,
-                            Url = s.SourceUrl,
-                            Views = s.Views
-                        }).ToList();
                     secondaryNav = _context.CataLog.Where(m => m.IsTop == 1 && m.Name.Equals("MVA"))
                         .Include(m => m.InverseTopCatalog)
                         .FirstOrDefault()
                         .InverseTopCatalog
                         .ToList();
-                    //总数量
-                    pageOption.Total = _context.MvaVideos
-                        .Where(m => language.Equals("all") || m.LanguageCode.Equals(language)).Count();
                 }
                 else
                 {
@@ -118,70 +93,83 @@ namespace WebApp.Controllers
                         .FirstOrDefault();
                     if (catalog.Type.Equals("视频"))
                     {
-                        string searchKey = "";
+                        string searchKey = "";//搜索的关键词
+                        string languageWhere = string.IsNullOrWhiteSpace(language) ? "%" : language + "%";//语言条件
+
                         switch (catalog.TopCatalog.Value)
                         {
                             case "mva":
                                 TempData["DetailPage"] = "MvaDetail";
                                 searchKey = $"\"{catalog.Name}\"";
-                                videoList = _context.MvaVideos
-                                    .FromSql($@"select * from MvaDetails Where contains(Title, {searchKey})")
-                                    .Where(m => language.Equals("all") || m.LanguageCode.Equals(language))
-                                    .OrderByDescending(m => m.UpdatedTime)
-                                    .Skip((p - 1) * pageSize)
-                                    .Take(pageSize)
-                                    .Select(s =>
-                                    new Video
-                                    {
-                                        Id = s.Id,
-                                        Description = s.Description,
-                                        Author = s.Author,
-                                        CreatedTime = s.CreatedTime,
-                                        Duration = s.CourseDuration,
-                                        IsRecommend = s.IsRecommend,
-                                        Name = s.Title,
-                                        Tags = s.Tags,
-                                        ThumbnailUrl = s.CourseImage,
-                                        Url = s.SourceUrl,
-                                        Views = s.Views
-                                    }).ToList();
+                                var mvaVideos = _context.MvaVideos
+                                    .FromSql($@"
+                                        SELECT * FROM MvaVideos WHERE contains(Title, {searchKey})
+                                        AND LanguageCode LIKE {languageWhere}
+                                        ORDER BY UpdatedTime DESC
+                                        OFFSET {(p - 1) * pageSize} ROWS FETCH NEXT {pageSize} ROWS ONLY
+                                    ")
+                                    .ToList();
+
+                                videoList = mvaVideos.Select(s =>
+                                     new Video
+                                     {
+                                         Id = s.Id,
+                                         Description = s.Description,
+                                         Author = s.Author,
+                                         CreatedTime = s.CreatedTime,
+                                         Duration = s.CourseDuration,
+                                         IsRecommend = false,
+                                         Name = s.Title,
+                                         Tags = s.Tags,
+                                         ThumbnailUrl = s.CourseImage,
+                                         Url = s.SourceUrl,
+                                         Views = s.Views
+                                     }).ToList();
+
                                 pageOption.Total = _context.MvaVideos
-                                    .FromSql($@"select * from MvaDetails Where contains(Title, {searchKey})")
-                                    .Where(m => language.Equals("all") || m.LanguageCode.Equals(language))
+                                    .FromSql($@"
+                                        SELECT * FROM MvaVideos WHERE contains(Title, {searchKey})
+                                        AND LanguageCode LIKE {languageWhere}
+                                    ")
                                     .Count();
                                 break;
                             case "c9":
                                 TempData["DetailPage"] = "C9Detail";
                                 searchKey = $"\"{catalog.Name}\"";
+
+
                                 var c9videos = _context.C9videos
-                                    .FromSql($@"select * from C9Videos Where contains(Title, {searchKey})")
-                                    .Where(m => language.Equals("all") || m.Language.Equals(language))
-                                    .OrderByDescending(m => m.UpdatedTime)
-                                    .Skip((p - 1) * pageSize)
-                                    .Take(pageSize)
+                                    .FromSql($@"
+                                        SELECT * FROM C9Videos WHERE contains(Title, {searchKey})
+                                        AND Language LIKE {languageWhere}
+                                        ORDER BY UpdatedTime DESC
+                                        OFFSET {(p - 1) * pageSize} ROWS FETCH NEXT {pageSize} ROWS ONLY
+                                    ")
                                     .ToList();
-                                videoList = c9videos.Select(s =>
-                                      new Video
-                                      {
-                                          Id = s.Id,
-                                          Description = s.Description,
-                                          Author = s.Author,
-                                          CreatedTime = s.CreatedTime,
-                                          Duration = s.Duration,
-                                          IsRecommend = false,
-                                          Name = s.Title,
-                                          Tags = s.Tags,
-                                          ThumbnailUrl = s.ThumbnailUrl,
-                                          Url = s.SourceUrl,
-                                          Views = s.Views
-                                      }).ToList();
+                                videoList = c9videos
+                                    .Select(s => new Video
+                                    {
+                                        Id = s.Id,
+                                        Description = s.Description,
+                                        Author = s.Author,
+                                        CreatedTime = s.CreatedTime,
+                                        Duration = s.Duration,
+                                        IsRecommend = false,
+                                        Name = s.Title,
+                                        Tags = s.Tags,
+                                        ThumbnailUrl = s.ThumbnailUrl,
+                                        Url = s.SourceUrl,
+                                        Views = s.Views
+                                    }).ToList();
+
 
                                 pageOption.Total = _context.C9videos
-                                    .FromSql($@"select * from C9Videos Where contains(Title, {searchKey})")
-                                    .Where(m => language.Equals("all") || m.Language.Equals(language))
+                                    .FromSql($@"
+                                        SELECT * FROM C9Videos WHERE contains(Title, {searchKey})
+                                        AND Language LIKE {languageWhere}
+                                    ")
                                     .Count();
-
-                                _logger.LogDebug(_context.Database.ToString());
+                                _logger.LogDebug(pageOption.Total.ToString());
                                 break;
                             default:
                                 TempData["DetailPage"] = "Detail";
