@@ -29,7 +29,8 @@ namespace WebApp.Controllers
             if (!string.IsNullOrEmpty(type))
             {
                 TempData["learnType"] = type;
-            }else
+            }
+            else
             {
                 type = "Video";
             }
@@ -48,7 +49,7 @@ namespace WebApp.Controllers
             //视频一级目录
             var articleCatalogs = _context.CataLog.Where(m => m.Type.Equals("文章") && m.IsTop == 1).ToList();
 
-            var secondaryNav = new List<CataLog>(); //左侧二级目录
+            var secondaryNav = new List<Catalog>(); //左侧二级目录
             var blogList = new List<Blog>();
             var videoList = new List<Video>();
             #region 查询视频内容
@@ -117,11 +118,14 @@ namespace WebApp.Controllers
                         .FirstOrDefault();
                     if (catalog.Type.Equals("视频"))
                     {
+                        string searchKey = "";
                         switch (catalog.TopCatalog.Value)
                         {
                             case "mva":
                                 TempData["DetailPage"] = "MvaDetail";
-                                videoList = _context.MvaVideos.Where(m => m.Title.Contains(catalog.Name))
+                                searchKey = $"\"{catalog.Name}\"";
+                                videoList = _context.MvaVideos
+                                    .FromSql($@"select * from MvaDetail Where contains(Title, {searchKey})")
                                     .Where(m => language.Equals("all") || m.LanguageCode.Equals(language))
                                     .OrderByDescending(m => m.UpdatedTime)
                                     .Skip((p - 1) * pageSize)
@@ -141,35 +145,40 @@ namespace WebApp.Controllers
                                         Url = s.SourceUrl,
                                         Views = s.Views
                                     }).ToList();
-
-                                pageOption.Total = _context.MvaVideos.Where(m => m.Title.Contains(catalog.Name))
+                                pageOption.Total = _context.MvaVideos
+                                    .FromSql($@"select * from MvaDetail Where contains(Title, {searchKey})")
                                     .Where(m => language.Equals("all") || m.LanguageCode.Equals(language))
                                     .Count();
                                 break;
                             case "c9":
                                 TempData["DetailPage"] = "C9Detail";
-                                videoList = _context.C9videos.Where(m => m.Title.Contains(catalog.Name))
+                                searchKey = $"\"{catalog.Name}\"";
+                                var c9videos = _context.C9videos
+                                    .FromSql($@"select * from C9Videos Where contains(Title, {searchKey})")
                                     .Where(m => language.Equals("all") || m.Language.Equals(language))
                                     .OrderByDescending(m => m.UpdatedTime)
                                     .Skip((p - 1) * pageSize)
                                     .Take(pageSize)
-                                    .Select(s =>
-                                    new Video
-                                    {
-                                        Id = s.Id,
-                                        Description = s.Description,
-                                        Author = s.Author,
-                                        CreatedTime = s.CreatedTime,
-                                        Duration = s.Duration,
-                                        IsRecommend = false,
-                                        Name = s.Title,
-                                        Tags = s.Tags,
-                                        ThumbnailUrl = s.ThumbnailUrl,
-                                        Url = s.SourceUrl,
-                                        Views = s.Views
-                                    }).ToList();
+                                    .ToList();
+                                videoList = c9videos.Select(s =>
+                                      new Video
+                                      {
+                                          Id = s.Id,
+                                          Description = s.Description,
+                                          Author = s.Author,
+                                          CreatedTime = s.CreatedTime,
+                                          Duration = s.Duration,
+                                          IsRecommend = false,
+                                          Name = s.Title,
+                                          Tags = s.Tags,
+                                          ThumbnailUrl = s.ThumbnailUrl,
+                                          Url = s.SourceUrl,
+                                          Views = s.Views
+                                      }).ToList();
 
-                                pageOption.Total = _context.C9videos.Where(m => m.Title.Contains(catalog.Name))
+                                pageOption.Total = _context.C9videos
+                                    .FromSql($@"select * from C9Videos Where contains(Title, {searchKey})")
+                                    .Where(m => language.Equals("all") || m.Language.Equals(language))
                                     .Count();
 
                                 _logger.LogDebug(_context.Database.ToString());
@@ -299,7 +308,10 @@ namespace WebApp.Controllers
 
         }
 
+        public IActionResult Test()
+        {
 
-
+            return Json("");
+        }
     }
 }

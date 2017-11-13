@@ -41,7 +41,7 @@ namespace WebApp.DB
         /// <summary>
         /// 分类
         /// </summary>
-        public CataLog Catalog { get; set; }
+        public Catalog Catalog { get; set; }
 
         /// <summary>
         /// 在线地址

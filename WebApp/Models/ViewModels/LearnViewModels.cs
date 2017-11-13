@@ -10,11 +10,11 @@ namespace WebApp.Models.ViewModels
 {
     public class LearnViewModels
     {
-        public List<CataLog> VideoCatalogs { get; set; }
-        public List<CataLog> ArticleCatalogs { get; set; }
-        public List<CataLog> PracticeCatalogs { get; set; }
+        public List<Catalog> VideoCatalogs { get; set; }
+        public List<Catalog> ArticleCatalogs { get; set; }
+        public List<Catalog> PracticeCatalogs { get; set; }
 
-        public List<CataLog> SecondaryNavs { get; set; }
+        public List<Catalog> SecondaryNavs { get; set; }
 
         public List<Video> VideoList { get; set; }
         public List<Blog> BlogList { get; set; }
@@ -29,7 +29,7 @@ namespace WebApp.Models.ViewModels
         public string Name { get; set; }
         [MaxLength(512)]
         public string Description { get; set; }
-        public CataLog Catalog { get; set; }
+        public Catalog Catalog { get; set; }
         [MaxLength(256)]
         public string Url { get; set; }
         [MaxLength(16)]

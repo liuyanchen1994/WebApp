@@ -11,6 +11,7 @@ using System.Net;
 
 namespace WebApp.Controllers
 {
+
     public class VideoController : Controller
     {
         readonly MSDevContext _context;
@@ -19,13 +20,16 @@ namespace WebApp.Controllers
         {
             _context = context;
         }
+
         public async Task<IActionResult> Index(string tech, string type = "mva", int p = 1)
         {
+            return NotFound();
+            #region deprecated
             int pageSize = 6;
             int totalNumber = 1;
             if (p < 1) p = 1;
             var mvaVideos = new List<MvaVideos>();
-            var c9Videos = new List<C9videos>();
+            var c9Videos = new List<C9Videos>();
 
             var language = TempData["language"] ?? "";
             TempData.Keep();
@@ -98,6 +102,7 @@ namespace WebApp.Controllers
                 Pager = pageOption
             };
             return View(videoList);
+            #endregion
         }
 
         [HttpGet]

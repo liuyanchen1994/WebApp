@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
 namespace WebApp.DB
 {
@@ -12,11 +11,20 @@ namespace WebApp.DB
     public class Video
     {
         public Guid Id { get; set; }
+        /// <summary>
+        /// 关联的博客
+        /// </summary>
+        public Blog Blog { get; set; }
+
+        /// <summary>
+        /// 关联的习题
+        /// </summary>
+        public Practice Practice { get; set; }
         [MaxLength(64)]
         public string Name { get; set; }
         [MaxLength(512)]
         public string Description { get; set; }
-        public CataLog Catalog { get; set; }
+        public Catalog Catalog { get; set; }
         [MaxLength(256)]
         public string Url { get; set; }
         [MaxLength(16)]

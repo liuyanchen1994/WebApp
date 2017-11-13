@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace WebApp.DB
 {
-    public partial class CataLog
+    public partial class Catalog
     {
-        public CataLog()
+        public Catalog()
         {
-            InverseTopCatalog = new HashSet<CataLog>();
+            InverseTopCatalog = new HashSet<Catalog>();
             Resource = new HashSet<Resource>();
         }
 
@@ -21,8 +21,8 @@ namespace WebApp.DB
         public DateTime UpdatedTime { get; set; }
         public string Value { get; set; }
 
-        public CataLog TopCatalog { get; set; }
-        public ICollection<CataLog> InverseTopCatalog { get; set; }
+        public Catalog TopCatalog { get; set; }
+        public ICollection<Catalog> InverseTopCatalog { get; set; }
         public ICollection<Resource> Resource { get; set; }
     }
 }

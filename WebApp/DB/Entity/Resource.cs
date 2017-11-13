@@ -45,7 +45,7 @@ namespace WebApp.DB
 
         public bool IsRecommend { get; set; }
 
-        public CataLog Catalog { get; set; }
+        public Catalog Catalog { get; set; }
         public ICollection<Sources> Sources { get; set; }
     }
 }

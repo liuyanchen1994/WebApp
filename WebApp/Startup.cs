@@ -36,14 +36,12 @@ namespace WebApp
             string connectionString = Configuration.GetConnectionString("OnlineConnection");
             services.AddDbContext<MSDevContext>(options => options.UseSqlServer(connectionString));
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("OnlineConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(config =>
+            services.AddIdentity<User, IdentityRole>(config =>
             {
                 config.SignIn.RequireConfirmedEmail = true;
             })
-            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddEntityFrameworkStores<MSDevContext>()
             .AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(options =>
