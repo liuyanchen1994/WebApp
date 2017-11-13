@@ -125,7 +125,7 @@ namespace WebApp.Controllers
                                 TempData["DetailPage"] = "MvaDetail";
                                 searchKey = $"\"{catalog.Name}\"";
                                 videoList = _context.MvaVideos
-                                    .FromSql($@"select * from MvaDetail Where contains(Title, {searchKey})")
+                                    .FromSql($@"select * from MvaDetails Where contains(Title, {searchKey})")
                                     .Where(m => language.Equals("all") || m.LanguageCode.Equals(language))
                                     .OrderByDescending(m => m.UpdatedTime)
                                     .Skip((p - 1) * pageSize)
@@ -146,7 +146,7 @@ namespace WebApp.Controllers
                                         Views = s.Views
                                     }).ToList();
                                 pageOption.Total = _context.MvaVideos
-                                    .FromSql($@"select * from MvaDetail Where contains(Title, {searchKey})")
+                                    .FromSql($@"select * from MvaDetails Where contains(Title, {searchKey})")
                                     .Where(m => language.Equals("all") || m.LanguageCode.Equals(language))
                                     .Count();
                                 break;
