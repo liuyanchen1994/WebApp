@@ -5,11 +5,11 @@
     Layout = "_Layout";
     Model.SourceUrl = "https://channel9.msdn.com" + Model.SourceUrl;
     ViewData["Title"] = WebUtility.HtmlDecode(Model.Title) + "-视频-MSDev";
+    var currentVideoUrl = string.IsNullOrEmpty(Model.Mp4MidUrl) ? Model.Mp4LowUrl : Model.Mp4MidUrl;
 }
 <div class="row pt-2">
-    <div class="col-md-7">
+    <div class="col-md-8">
         <h5>
-
             @Html.Raw(Model.Title)
             <small class="text-muted">
                 [@Model.Duration]
@@ -24,9 +24,7 @@
                 </span>
             }
         </h5>
-        <video controls="controls" width="100%" class="">
-            <source src="@Model.Mp4MidUrl" type="video/mp4" />
-        </video>
+        <iframe src="@Model.SourceUrl/player?format=html5" width="100%" height="540" allowFullScreen frameBorder="0"></iframe>
         <h6 class="text-primary">
             视频介绍:
         </h6>
@@ -36,7 +34,7 @@
             </small>
         </p>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-4">
 
         <h5>视频下载：</h5>
         <h6>

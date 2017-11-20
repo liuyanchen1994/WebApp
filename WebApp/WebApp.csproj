@@ -48,7 +48,7 @@
       <Folder Include="Areas\Community\Controllers\" />
       <Folder Include="Areas\Community\Models\" />
       <Folder Include="Areas\Community\Views\" />
-      <Folder Include="Views\Learn\" />
+      <Folder Include="Views\" />
     </ItemGroup>
 </Project>
         
