@@ -2,13 +2,6 @@
 @model LearnViewModels
 @{
     ViewData["Title"] = "学习";
-
-    string LanguageSelected(string language)
-    {
-        if (TempData["language"].Equals(language))
-            return "selected";
-        return "";
-    }
 }
 <!--导航部分-->
 <div class="row">
@@ -84,12 +77,23 @@
                     <option value="en">英文</option>
                     <option value="zh">中文</option>
                 </select>
+
+                @if (Model.EventList.Count > 0)
+                {
+                    <select name="eventId" class="form-control form-control-sm" style="max-width:240px">
+                        @foreach (var item in Model.EventList as List<C9Event>)
+                        {
+                            <option value="@item.Id">
+                                @Html.Raw(item.TopicName)
+                            </option>
+                        }
+                    </select>
+                }
                 <button class="btn btn-sm btn-dark form-control" type="submit">筛选</button>
             </div>
             <div class="col-md-6 text-right">
                 @*<input type="search" name="name" value="" class="form-control form-control-sm" />
                     <button class="btn btn-primary btn-sm" type="submit">搜索</button>*@
-
             </div>
         </form>
         <section name="videos" class="row">
@@ -133,10 +137,7 @@
                 <pager pager-option="Model.Pager as MyPagerOption"></pager>
             }
         </section>
-        <section name="blogs">
-
-
-        </section>
+        <section name="blogs"></section>
         <section name="practices"></section>
     </div>
 </div>
@@ -146,12 +147,16 @@
         $(document).ready(function () {
 
             $("select[name='SecondaryNavs'] option[value='@Context.Request.Query["navId"]']").attr("selected", "selected");
-            $("select[name='language'] option[value='@TempData["language"]']").attr("selected","selected");
+            $("select[name='language'] option[value='@TempData["language"]']").attr("selected", "selected");
+            $("select[name='eventId'] option[value='@Context.Request.Query["eventId"]']").attr("selected", "selected");
+
             $("select[name='SecondaryNavs']").change(function () {
                 var navId = $(this).val();
-                location.href = `/Learn?navId=${navId}&topCatalogId=@Context.Request.Query["topCatalogId"]&type=@TempData["learnType"]`;
-
+                location.href = `/Learn?navId=${navId}
+                    &topCatalogId=@Context.Request.Query["topCatalogId"]
+                    &type=@TempData["learnType"]`;
             });
+
         });
 
     </script>

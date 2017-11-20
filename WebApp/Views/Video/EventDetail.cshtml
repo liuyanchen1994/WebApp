@@ -1,0 +1,70 @@
+@using WebApp.DB
+@using System.Net
+@model WebApp.DB.EventVideo
+@{
+    Layout = "_Layout";
+    Model.SourceUrl = "https://channel9.msdn.com" + Model.SourceUrl;
+    ViewData["Title"] = WebUtility.HtmlDecode(Model.Title) + "-视频-MSDev";
+    var currentVideoUrl = string.IsNullOrEmpty(Model.Mp4MidUrl) ? Model.Mp4LowUrl : Model.Mp4MidUrl;
+}
+<div class="row pt-2">
+    <div class="col-md-8">
+        <h5>
+            @Html.Raw(Model.Title)
+            <small class="text-muted">
+                [@Model.Duration]
+            </small>
+            @if (!string.IsNullOrEmpty(Model.Author))
+            {
+                <span class="text-muted" style="font-size:0.9rem">
+                    作者:
+                    @Model.Author
+                    &nbsp;&nbsp;
+                    @Model.UpdatedTime.ToString("yyyy-MM-dd")
+                </span>
+            }
+        </h5>
+        <iframe src="@Model.SourceUrl/player?format=html5" width="100%" height="540" allowFullScreen frameBorder="0"></iframe>
+        <h6 class="text-primary">
+            视频介绍:
+        </h6>
+        <p>
+            <small>
+                @Html.Raw(Model.Description)
+            </small>
+        </p>
+    </div>
+    <div class="col-md-4">
+
+        <h5>视频下载：</h5>
+        <h6>
+            @if (!string.IsNullOrEmpty(@Model.Mp3Url))
+            {
+                <a href="@Model.Mp3Url" class="badge badge-primary">
+                    Mp3音频
+                </a>
+            }
+            @if (!string.IsNullOrEmpty(@Model.Mp4LowUrl))
+            {
+                <a href="@Model.Mp4LowUrl" class="badge badge-primary">
+                    普清
+                </a>
+            }
+            @if (!string.IsNullOrEmpty(@Model.Mp4MidUrl))
+            {
+                <a href="@Model.Mp4MidUrl" class="badge badge-primary">
+                    高清
+                </a>
+            }
+            @if (!string.IsNullOrEmpty(@Model.Mp4HigUrl))
+            {
+                <a href="@Model.Mp4HigUrl" class="badge badge-primary">
+                    超清
+                </a>
+            }
+        </h6>
+        <h6>
+            <a href="@Model.SourceUrl" class="badge badge-danger" target="_blank">channel9源地址</a>
+        </h6>
+    </div>
+</div>

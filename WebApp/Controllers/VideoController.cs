@@ -165,7 +165,19 @@ namespace WebApp.Controllers
             return View(video);
         }
 
+        [HttpGet]
+        public IActionResult EventDetail(string id)
+        {
+            var video = _context.EventVideo
+                .Where(m => m.Id == Guid.Parse(id))
+                .FirstOrDefault();
 
+            //更新浏览数量
+            video.Views++;
+            _context.EventVideo.Update(video);
+            _context.SaveChanges();
+            return View(video);
+        }
         [HttpGet]
         public IActionResult SetLanguage(string language)
         {
