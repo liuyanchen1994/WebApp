@@ -119,9 +119,14 @@ namespace WebApp.Controllers
         public IActionResult MvaDetail(string id, string detail = null)
         {
             var video = _context.MvaVideos
-                .Include(m => m.Details)
                 .Where(m => m.Id == Guid.Parse(id))
+                .Include(m => m.Details)
                 .FirstOrDefault();
+
+            if (video == null)
+            {
+                return NotFound();
+            }
             //更新浏览数量
             video.Views++;
             _context.MvaVideos.Update(video);
@@ -160,7 +165,19 @@ namespace WebApp.Controllers
             return View(video);
         }
 
+        [HttpGet]
+        public IActionResult EventDetail(string id)
+        {
+            var video = _context.EventVideo
+                .Where(m => m.Id == Guid.Parse(id))
+                .FirstOrDefault();
 
+            //更新浏览数量
+            video.Views++;
+            _context.EventVideo.Update(video);
+            _context.SaveChanges();
+            return View(video);
+        }
         [HttpGet]
         public IActionResult SetLanguage(string language)
         {

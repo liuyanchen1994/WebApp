@@ -9,6 +9,7 @@ using WebApp.Helpers;
 using System;
 using System.Net;
 using Microsoft.Extensions.Logging;
+using System.Web;
 
 namespace WebApp.Controllers
 {
@@ -22,8 +23,17 @@ namespace WebApp.Controllers
             _context = context;
             _logger = logger;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="topCatalogId">顶级导航id</param>
+        /// <param name="navId">二级导航id</param>
+        /// <param name="type">内容类型</param>
+        /// <param name="topicName">event主题名称</param>
+        /// <param name="p"></param>
+        /// <returns></returns>
         [HttpGet]
-        public IActionResult Index(string topCatalogId = "", string navId = "", string type = "", int p = 1)
+        public IActionResult Index(string topCatalogId = "", string navId = "", string type = "", string eventId = "", int p = 1)
         {
             var language = TempData["language"]?.ToString() ?? "";
             if (!string.IsNullOrEmpty(type))
@@ -41,7 +51,7 @@ namespace WebApp.Controllers
             {
                 CurrentPage = p,
                 PageSize = pageSize,
-                RouteUrl = Request.Path + $"?navId={navId}&type={type}&topCatalogId={topCatalogId}"
+                RouteUrl = Request.Path + $"?navId={navId}&type={type}&topCatalogId={topCatalogId}&eventId={eventId}"
             };
             //博客一级目录
             var videoCatalogs = _context.CataLog.Where(m => m.Type.Equals("视频") && m.IsTop == 1).ToList();
@@ -51,6 +61,8 @@ namespace WebApp.Controllers
             var secondaryNav = new List<Catalog>(); //左侧二级目录
             var blogList = new List<Blog>();
             var videoList = new List<Video>();
+            var eventList = new List<C9Event>();//大会视频主题
+
             #region 查询视频内容
             if (type.Equals("Video"))
             {
@@ -65,18 +77,18 @@ namespace WebApp.Controllers
                     //    .FirstOrDefault()
                     //    .InverseTopCatalog
                     //    .ToList();
-                    secondaryNav = _context.CataLog.Where(m => m.IsTop == 1 && m.Name.Equals("MVA"))
+                    secondaryNav = _context.CataLog.Where(m => m.IsTop == 1 && m.Value.Equals("Event"))
                         .Include(m => m.InverseTopCatalog)
-                        .FirstOrDefault()
-                        .InverseTopCatalog
+                        .FirstOrDefault()?
+                        .InverseTopCatalog?
                         .ToList();
                 }
                 else
                 {
                     secondaryNav = _context.CataLog.Where(m => m.Id == Guid.Parse(topCatalogId))
                         .Include(m => m.InverseTopCatalog)
-                        .FirstOrDefault()
-                        .InverseTopCatalog
+                        .FirstOrDefault()?
+                        .InverseTopCatalog?
                         .ToList();
                 }
                 //默认的navId，根据当前catalogId获取
@@ -96,8 +108,48 @@ namespace WebApp.Controllers
                         string searchKey = "";//搜索的关键词
                         string languageWhere = string.IsNullOrWhiteSpace(language) ? "%" : language + "%";//语言条件
 
-                        switch (catalog.TopCatalog.Value)
+                        switch (catalog.TopCatalog.Value.ToLower())
                         {
+                            case "event":
+                                TempData["DetailPage"] = "EventDetail";
+                                //大会类型
+                                string catalogValue = catalog.Value.Replace("Event", "");
+                                //查询大会目录
+                                eventList = _context.C9Event
+                                   .Where(m => m.EventName.Equals(catalogValue))
+                                   .ToList();
+                                //默认选择项
+                                if (string.IsNullOrEmpty(eventId))
+                                {
+                                    eventId = eventList.FirstOrDefault()?.Id.ToString();
+                                }
+                                videoList = _context.EventVideo
+                                    .Where(m => m.C9EventId.ToString().Equals(eventId))
+                                    .OrderByDescending(m => m.CreatedTime)
+                                    .Select(s =>
+                                    new Video
+                                    {
+                                        Id = s.Id,
+                                        Description = s.Description,
+                                        Author = s.Author,
+                                        CreatedTime = s.CreatedTime,
+                                        Duration = s.Duration,
+                                        IsRecommend = false,
+                                        Name = s.Title,
+                                        Tags = s.Tags,
+                                        ThumbnailUrl = s.ThumbnailUrl,
+                                        Url = s.SourceUrl,
+                                        Views = s.Views
+                                    })
+                                    .Skip((p - 1) * pageSize)
+                                    .Take(pageSize)
+                                    .ToList();
+
+                                pageOption.Total = _context.EventVideo
+                                    .Where(m => m.C9EventId.ToString().Equals(eventId))
+                                    .Count();
+                                break;
+
                             case "mva":
                                 TempData["DetailPage"] = "MvaDetail";
                                 searchKey = $"\"{catalog.Name}\"";
@@ -207,7 +259,8 @@ namespace WebApp.Controllers
                 SecondaryNavs = secondaryNav,
                 BlogList = blogList,
                 VideoList = videoList,
-                Pager = pageOption
+                Pager = pageOption,
+                EventList = eventList
             });
         }
 
@@ -217,15 +270,15 @@ namespace WebApp.Controllers
         /// <param name="language">语言</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult SetFilter(string language, string topCatalogId, string navId, string learnType)
+        public IActionResult SetFilter(string language, string topCatalogId, string navId, string learnType, string eventId)
         {
             TempData["language"] = language;
-
             return RedirectToAction(nameof(Index), new
             {
                 topCatalogId = topCatalogId,
                 navId = navId,
-                type = learnType
+                type = learnType,
+                eventId = eventId
             });
         }
 
