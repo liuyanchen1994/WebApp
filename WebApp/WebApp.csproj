@@ -48,9 +48,7 @@
       <Folder Include="Areas\Community\Controllers\" />
       <Folder Include="Areas\Community\Models\" />
       <Folder Include="Areas\Community\Views\" />
-      <Folder Include="Views\">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Folder>
+      <Folder Include="Views\" />
     </ItemGroup>
 </Project>
         
