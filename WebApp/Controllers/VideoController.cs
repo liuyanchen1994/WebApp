@@ -109,6 +109,12 @@ namespace WebApp.Controllers
         public IActionResult Detail(string id)
         {
             var video = _context.Video.Find(Guid.Parse(id));
+            //暂时兼容旧链接
+            if (video == null)
+            {
+                return RedirectToAction(nameof(MvaDetail), new { id = id });
+            }
+
             video.Views++;
             _context.Update(video);
             _context.SaveChanges();
