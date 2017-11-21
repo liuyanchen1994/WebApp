@@ -16,7 +16,7 @@
             </small>
             @if (!string.IsNullOrEmpty(Model.Author))
             {
-                <span class="text-muted" style="font-size:0.9rem">
+                <span class="text-muted" style="font-size:0.9rem"> 
                     作者:
                     @Model.Author
                     &nbsp;&nbsp;
@@ -27,7 +27,7 @@
         <iframe src="@Model.SourceUrl/player?format=html5" width="100%" height="540" allowFullScreen frameBorder="0"></iframe>
         <h6 class="text-primary">
             视频介绍:
-        </h6>
+        </h6>.
         <p>
             <small>
                 @Html.Raw(Model.Description)
