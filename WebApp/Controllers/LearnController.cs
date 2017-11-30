@@ -247,6 +247,34 @@ namespace WebApp.Controllers
             #region 查询博客内容
             if (type.Equals("Blog"))
             {
+                //默认主页显示内容
+                if (String.IsNullOrWhiteSpace(topCatalogId))
+                {
+                    secondaryNav = _context.CataLog.Where(m => m.IsTop == 1 && m.Value.Equals("ArticleCourse"))
+                        .Include(m => m.InverseTopCatalog)
+                        .FirstOrDefault()?
+                        .InverseTopCatalog?
+                        .ToList();
+                }
+                else
+                {
+                    secondaryNav = _context.CataLog.Where(m => m.Id == Guid.Parse(topCatalogId))
+                        .Include(m => m.InverseTopCatalog)
+                        .FirstOrDefault()?
+                        .InverseTopCatalog?
+                        .ToList();
+                }
+                //默认的navId，根据当前catalogId获取
+                if (String.IsNullOrEmpty(navId))
+                {
+                    navId = secondaryNav.FirstOrDefault()?.Id.ToString();
+                }
+                if (!string.IsNullOrWhiteSpace(navId))
+                {
+                    blogList = _context.Blog.Where(m => m.Catalog.Id.ToString().Equals(navId))
+                        .ToList();
+
+                }
                 pageOption.Total = blogList.Count();
 
             }
@@ -283,70 +311,19 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Detail(string id, string detail = null)
-        {
-
-
-            var video = _context.MvaVideos
-                .Include(m => m.Details)
-                .Where(m => m.Id == Guid.Parse(id))
-                .FirstOrDefault();
-            //更新浏览数量
-            video.Views++;
-            _context.MvaVideos.Update(video);
-            _context.SaveChanges();
-
-            if (video.Details.Count < 1)
-            {
-                //重新获取详细内容
-                return NotFound();
-            }
-            var currentDetail = video.Details.OrderBy(m => m.Sequence).FirstOrDefault();
-
-            if (!string.IsNullOrEmpty(detail))
-            {
-                currentDetail = _context.MvaDetails.Where(m => m.MvaId.Equals(detail)).FirstOrDefault();
-            }
-            return View(new VideoDetailModels
-            {
-                MvaVideo = video,
-                Details = video.Details.OrderBy(m => m.Sequence).ToList() ?? default,
-                CurrentDetail = currentDetail ?? default
-            });
-        }
-
-        [HttpGet]
-        public IActionResult C9Detail(string id)
-        {
-            var video = _context.C9videos
-                .Where(m => m.Id == Guid.Parse(id))
-                .FirstOrDefault();
-
-            //更新浏览数量
-            video.Views++;
-            _context.C9videos.Update(video);
-            _context.SaveChanges();
-            return View(video);
-        }
-
-
-        [HttpGet]
         public IActionResult SetLanguage(string language)
         {
             TempData["language"] = language;
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult C9Video()
+        [HttpGet]
+        public IActionResult Blog(Guid id)
         {
-            var re = _context.C9videos.Where(m => m.Language.Equals("zh-cn"))
-                .Where(m => m.Duration != null)
-                .Where(m => m.SeriesTitleUrl.Contains("Event"))
-                .OrderByDescending(m => m.UpdatedTime)
-                .Take(100)
-                .ToList();
-            return Json(re);
-
+            if (id == null) return NotFound();
+            var blog = _context.Blog.Find(id);
+            if (blog == null) return NotFound();
+            return View(blog);
         }
 
         public IActionResult Test()
