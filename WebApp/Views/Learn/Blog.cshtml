@@ -1,6 +1,6 @@
-@model WebApp.DB.Blog
+@model LearnBlogViewModel
 @{
-    ViewData["Title"] = @Model.Title + "-MSDev";
+    ViewData["Title"] = @Model.Blog.Title + "-MSDev";
 }
 <link href="~/lib/editor.md/css/editormd.css" rel="stylesheet" />
 <style>
@@ -15,30 +15,52 @@
 <div class="row">
     <section name="article" class="article-content p-2 col-lg-9">
         <h4 class="text-center my-2">
-            @Model.Title
+            @Model.Blog.Title
         </h4>
         <div class="pl-3">
             <span class="text-info">
-                作者:@Model.AuthorName
+                作者:@Model.Blog.AuthorName
             </span>
             <span class="text-muted">
-                @Model.CreatedTime
+                @Model.Blog.CreatedTime
             </span>
         </div>
-        <div id="content" style="display: none;">@Model.Content</div>
+        <div id="content" style="display: none;">@Model.Blog.Content</div>
         <div class="my-2" id="mk-content">
         </div>
     </section>
 
     <!--  TODO: 关联内容  -->
-    @*<section name="relation" class="col-lg-3 ">
+    <section name="relation" class="col-lg-3 ">
         <div class="flex-cloumn bg-white p-2">
-            <h5>关联内容:</h5>
-            <h6>教学视频:</h6>
-            <h6>实践练习：</h6>
-            <h5>系列文章:</h5>
+            @if (Model.Blog.Video != null)
+            {
+                <h6>关联视频:</h6>
+                <p>
+                    <a asp-controller="Video" asp-action="Detail" asp-route-id="@Model.Blog.Video.Id">@Model.Blog.Video.Name</a>
+                </p>
+            }
+            @if (Model.Blog.Practice != null)
+            {
+                <h6>对应实践：</h6>
+                <p>
+                    <a asp-controller="Practice" asp-action="Detail" asp-route-id="@Model.Blog.Practice.Id">@Model.Blog.Practice.Title</a>
+                </p>
+            }
+            @if (Model.RelateBlogs?.Count > 0)
+            {
+                <h5>系列文章:</h5>
+                @foreach (var item in Model.RelateBlogs)
+                {
+                    <p>
+                        <a asp-route-id="@item.Id">
+                            @item.Title
+                        </a>
+                    </p>
+                }
+            }
         </div>
-    </section>*@
+    </section>
 
     <!-- TOOD: 返回顶部按钮 -->
 </div>

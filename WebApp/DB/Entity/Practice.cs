@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApp.DB
 {
@@ -10,9 +11,9 @@ namespace WebApp.DB
     public class Practice
     {
         public Guid Id { get; set; }
-
-        public Blog Blog { get; set; }
+       
         public Video Video { get; set; }
+        public Blog Blog { get; set; }
 
         public Catalog Catalog { get; set; }
 
