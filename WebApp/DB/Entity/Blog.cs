@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApp.DB
 {
@@ -11,6 +12,16 @@ namespace WebApp.DB
     {
 
         public Guid Id { get; set; }
+        /// <summary>
+        /// 关联的视频
+        /// </summary>
+        [ForeignKey("VideoId")]
+        public Video Video { get; set; }
+        /// <summary>
+        /// 关联的练习
+        /// </summary>
+        [ForeignKey("PracticeId")]
+        public Practice Practice { get; set; }
 
         [MaxLength(128)]
         public string Title { get; set; }
