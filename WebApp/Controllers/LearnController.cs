@@ -273,7 +273,6 @@ namespace WebApp.Controllers
                 {
                     blogList = _context.Blog.Where(m => m.Catalog.Id.ToString().Equals(navId))
                         .ToList();
-
                 }
                 pageOption.Total = blogList.Count();
 
@@ -321,9 +320,24 @@ namespace WebApp.Controllers
         public IActionResult Blog(Guid id)
         {
             if (id == null) return NotFound();
-            var blog = _context.Blog.Find(id);
+            var blog = _context.Blog
+                .Where(m => m.Id == id)
+                .Include(m=>m.Catalog)
+                .Include(m => m.Video)
+                .Include(m => m.Practice)
+                .FirstOrDefault();
             if (blog == null) return NotFound();
-            return View(blog);
+
+            var relateBlogs = _context.Blog
+                .Where(m => m.Catalog == blog.Catalog)
+                .Where(m=>m.Id!=blog.Id)
+                .ToList();
+            
+            return View(new LearnBlogViewModel
+            {
+                Blog = blog,
+                RelateBlogs = relateBlogs
+            });
         }
 
         public IActionResult Test()
