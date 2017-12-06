@@ -137,7 +137,16 @@
                 <pager pager-option="Model.Pager as MyPagerOption"></pager>
             }
         </section>
-        <section name="blogs"></section>
+        <section name="blogs">
+            @foreach (var item in Model.BlogList)
+            {
+                <h5>
+                    @item.Title
+                </h5>
+            }
+
+
+        </section>
         <section name="practices"></section>
     </div>
 </div>
