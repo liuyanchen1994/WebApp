@@ -137,15 +137,19 @@
                 <pager pager-option="Model.Pager as MyPagerOption"></pager>
             }
         </section>
-        <section name="blogs">
-            @foreach (var item in Model.BlogList)
+        <section name="blogs" class="row">
+            @foreach (var blog in Model.BlogList)
             {
-                <h5>
-                    @item.Title
-                </h5>
+                <div class="col-lg-6 mt-2 p-2 pl-4">
+                    <h5>
+                        <a class="text-dark" asp-action="Blog" asp-route-id="@blog.Id">@blog.Title</a>
+                    </h5>
+                    <small class="text-muted">
+                        @blog.AuthorName @blog.CreatedTime.ToString("yyyy-MM-dd H:mm")
+                        &nbsp;&nbsp;@(blog.Views == null ? "" : "浏览:" + blog.Views)
+                    </small>
+                </div>
             }
-
-
         </section>
         <section name="practices"></section>
     </div>

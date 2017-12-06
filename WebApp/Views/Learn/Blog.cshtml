@@ -1,0 +1,118 @@
+@model LearnBlogViewModel
+@{
+    ViewData["Title"] = @Model.Blog.Title + "-MSDev";
+}
+<link href="~/lib/editor.md/css/editormd.css" rel="stylesheet" />
+<style>
+    .editormd-html-preview {
+        background-color: transparent !important;
+    }
+
+    p {
+        text-indent: 0;
+    }
+</style>
+<div class="row">
+    <section name="article" class="article-content p-2 col-lg-9">
+        <h4 class="text-center my-2">
+            @Model.Blog.Title
+        </h4>
+        <div class="pl-3">
+            <span class="text-info">
+                作者:@Model.Blog.AuthorName
+            </span>
+            <span class="text-muted">
+                @Model.Blog.CreatedTime
+            </span>
+        </div>
+        <div id="content" style="display: none;">@Model.Blog.Content</div>
+        <div class="my-2" id="mk-content">
+        </div>
+    </section>
+
+    <!--  TODO: 关联内容  -->
+    <section name="relation" class="col-lg-3 ">
+        <div class="flex-cloumn bg-white p-2">
+            @if (Model.Blog.Video != null)
+            {
+                <h6>关联视频:</h6>
+                <p>
+                    <a asp-controller="Video" asp-action="Detail" asp-route-id="@Model.Blog.Video.Id">@Model.Blog.Video.Name</a>
+                </p>
+            }
+            @if (Model.Blog.Practice != null)
+            {
+                <h6>对应实践：</h6>
+                <p>
+                    <a asp-controller="Practice" asp-action="Detail" asp-route-id="@Model.Blog.Practice.Id">@Model.Blog.Practice.Title</a>
+                </p>
+            }
+            @if (Model.RelateBlogs?.Count > 0)
+            {
+                <h5>系列文章:</h5>
+                @foreach (var item in Model.RelateBlogs)
+                {
+                    <p>
+                        <a asp-route-id="@item.Id">
+                            @item.Title
+                        </a>
+                    </p>
+                }
+            }
+        </div>
+    </section>
+
+    <!-- TOOD: 返回顶部按钮 -->
+</div>
+@section Scripts{
+    <script src="/lib/editor.md/lib/marked.min.js"></script>
+    <script src="/lib/editor.md/lib/prettify.min.js"></script>
+    <script src="/lib/editor.md/lib/raphael.min.js"></script>
+    <script src="/lib/editor.md/lib/underscore.min.js"></script>
+    <script src="/lib/editor.md/lib/sequence-diagram.min.js"></script>
+    <script src="/lib/editor.md/lib/flowchart.min.js"></script>
+    <script src="/lib/editor.md/lib/jquery.flowchart.min.js"></script>
+    <script src="~/lib/editor.md/editormd.js"></script>
+    <script>
+        $(document).ready(function () {
+            var content = $("#content").text();
+            testEditormdView = editormd.markdownToHTML("mk-content", {
+                markdown: content,//+ "\r\n" + $("#append-test").text(),
+                htmlDecode: "style,script,iframe",  // you can filter tags decode
+                //toc             : false,
+                tocm: true,    // Using [TOCM]
+                tocContainer: "#custom-toc-container", // 自定义 ToC 容器层
+                //gfm             : false,
+                //tocDropdown     : true,
+                // markdownSourceCode : true, // 是否保留 Markdown 源码，即是否删除保存源码的 Textarea 标签
+                emoji: true,
+                taskList: true,
+                tex: true,  // 默认不解析
+                flowChart: true,  // 默认不解析
+                sequenceDiagram: true,  // 默认不解析
+            });
+
+            //content = content.replace(/&gt;/g, '>');
+            //content = content.replace(/&lt;/g, '<');
+            //var editor = editormd("editormd", {
+            //    name: "mk-content",
+            //    width: "100%",
+            //    height: 740,
+            //    path: '/lib/editor.md/lib/',
+            //    previewTheme: "default",
+            //    editorTheme: "neat",
+            //    markdown: content,
+            //    codeFold: true,
+            //    htmlDecode: "style,script",  // you can filter tags decode
+            //    //toc             : false,
+            //    tocm: true,    // Using [TOCM]
+            //    tex: true,  // 默认不解析
+            //    flowChart: true,  // 默认不解析
+            //    sequenceDiagram: true  // 默认不解析
+            //});
+
+
+        });
+
+    </script>
+}

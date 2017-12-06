@@ -2,46 +2,45 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
-namespace WebApp.DB
+namespace WebApp.Areas.Community.Data.Entities
 {
     /// <summary>
     /// 博客,markdown
     /// </summary>
-    public class Blog
+    public class Blog:BaseModel
     {
-
-        public Guid Id { get; set; }
         /// <summary>
-        /// 关联的视频
+        /// 系列
         /// </summary>
-        [ForeignKey("VideoId")]
-        public Video Video { get; set; }
-        /// <summary>
-        /// 关联的练习
-        /// </summary>
-        [ForeignKey("PracticeId")]
-        public Practice Practice { get; set; }
+        public Series Series { get; set; }
+        public Guid SeriesId { get; set; }
 
         [MaxLength(128)]
         public string Title { get; set; }
 
         [MaxLength(500)]
         public string Description { get; set; }
-
-
+        /// <summary>
+        /// 类型：私有，公开
+        /// </summary>
+        public string Type { get; set; }
         public string Content { get; set; }
-
         /// <summary>
         /// 作者名称
         /// </summary>
         [MaxLength(64)]
         public string AuthorName { get; set; }
         /// <summary>
+        /// 目录：新闻、技术、经历等
+        /// </summary>
+        [MaxLength(32)]
+        public string CatalogName { get; set; }
+        /// <summary>
         /// 作者唯一标识 
         /// </summary>
-        [MaxLength(128)]
-        public string AuthorId { get; set; }
+        public Guid AuthorId { get; set; }
 
         /// <summary>
         /// 标签
@@ -50,23 +49,12 @@ namespace WebApp.DB
         public string Tags { get; set; }
 
         /// <summary>
-        /// 分类
-        /// </summary>
-        public Catalog Catalog { get; set; }
-
-        /// <summary>
         /// 在线地址
         /// </summary>
         [MaxLength(256)]
         public string SourceUrl { get; set; }
 
-        public DateTime CreatedTime { get; set; }
-        public DateTime UpdateTime { get; set; }
         public bool IsRecommend { get; set; }
-
-        public int? Views { get; set; }
-        [MaxLength(64)]
-        public string Status { get; set; }
 
     }
 }
