@@ -96,7 +96,7 @@ namespace WebApp.Controllers
                 {
                     navId = secondaryNav.FirstOrDefault()?.Id.ToString();
                 }
-                if (!string.IsNullOrWhiteSpace(navId))
+                if (!String.IsNullOrEmpty(navId))
                 {
                     //判断分类类型
                     var catalog = _context.CataLog
@@ -247,6 +247,32 @@ namespace WebApp.Controllers
             #region 查询博客内容
             if (type.Equals("Blog"))
             {
+                //默认主页显示内容
+                if (String.IsNullOrWhiteSpace(topCatalogId))
+                {
+                    secondaryNav = _context.CataLog.Where(m => m.IsTop == 1 && m.Value.Equals("ArticleCourse"))
+                        .Include(m => m.InverseTopCatalog)
+                        .FirstOrDefault()?
+                        .InverseTopCatalog?
+                        .ToList();
+                }
+                else
+                {
+                    secondaryNav = _context.CataLog.Where(m => m.Id == Guid.Parse(topCatalogId))
+                        .Include(m => m.InverseTopCatalog)
+                        .FirstOrDefault()?
+                        .InverseTopCatalog?
+                        .ToList();
+                }
+                //默认的navId，根据当前catalogId获取
+                if (String.IsNullOrEmpty(navId))
+                {
+                    navId = secondaryNav.FirstOrDefault()?.Id.ToString();
+                }
+
+                blogList = _context.Blog.Where(m => m.Catalog.Id.ToString().Equals(navId))
+                   .ToList();
+
                 pageOption.Total = blogList.Count();
 
             }
