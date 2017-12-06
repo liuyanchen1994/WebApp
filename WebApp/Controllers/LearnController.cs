@@ -96,7 +96,7 @@ namespace WebApp.Controllers
                 {
                     navId = secondaryNav.FirstOrDefault()?.Id.ToString();
                 }
-                if (!string.IsNullOrWhiteSpace(navId))
+                if (!String.IsNullOrEmpty(navId))
                 {
                     //判断分类类型
                     var catalog = _context.CataLog
@@ -272,9 +272,12 @@ namespace WebApp.Controllers
                 if (!string.IsNullOrWhiteSpace(navId))
                 {
                     blogList = _context.Blog.Where(m => m.Catalog.Id.ToString().Equals(navId))
+                        .Where(m => m.Status.Equals(StatusType.Publish))
                         .ToList();
                 }
-                pageOption.Total = blogList.Count();
+                pageOption.Total = blogList
+                    .Where(m => m.Status.Equals(StatusType.Publish))
+                    .Count();
 
             }
             #endregion
@@ -322,7 +325,7 @@ namespace WebApp.Controllers
             if (id == null) return NotFound();
             var blog = _context.Blog
                 .Where(m => m.Id == id)
-                .Include(m=>m.Catalog)
+                .Include(m => m.Catalog)
                 .Include(m => m.Video)
                 .Include(m => m.Practice)
                 .FirstOrDefault();
@@ -330,9 +333,10 @@ namespace WebApp.Controllers
 
             var relateBlogs = _context.Blog
                 .Where(m => m.Catalog == blog.Catalog)
-                .Where(m=>m.Id!=blog.Id)
+                .Where(m=>m.Status.Equals(StatusType.Publish))
+                .Where(m => m.Id != blog.Id)
                 .ToList();
-            
+
             return View(new LearnBlogViewModel
             {
                 Blog = blog,
