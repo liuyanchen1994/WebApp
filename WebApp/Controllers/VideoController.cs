@@ -106,9 +106,13 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Detail(string id)
+        public IActionResult Detail(Guid id)
         {
-            var video = _context.Video.Find(Guid.Parse(id));
+            var video = _context.Video
+                .Where(m=>m.Id==id)
+                .Include(m=>m.Blog)
+                .Include(m=>m.Practice)
+                .FirstOrDefault();
             //暂时兼容旧链接
             if (video == null)
             {

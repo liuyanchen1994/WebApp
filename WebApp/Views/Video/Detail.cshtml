@@ -26,8 +26,8 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="@Model.Url" class="btn btn-sm btn-outline-dark">视频下载</a>
-                @*<a href="@Model.Url" class="btn btn-sm btn-outline-dark">关联文章</a>
-                <a href="@Model.Url" class="btn btn-sm btn-outline-dark">关联练习</a>*@
+                <a asp-controller="Learn" asp-action="Blog" asp-route-id="@Model.Blog?.Id" class="btn btn-sm btn-outline-dark">关联文章</a>
+                @*<a href="@Model.Url" class="btn btn-sm btn-outline-dark">关联练习</a>*@
             </div>
 
 
