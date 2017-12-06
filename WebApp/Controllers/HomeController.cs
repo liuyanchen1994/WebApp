@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 using WebApp.DB;
@@ -11,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApp.Helpers;
 using WebApp.Services;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApp.Controllers
 {
@@ -19,6 +16,7 @@ namespace WebApp.Controllers
     {
         readonly MSDevContext _context;
         readonly IOptions<CognitiveOptions> CognitveOptions;
+
         public HomeController(MSDevContext context,
             IOptions<CognitiveOptions> options)
         {
@@ -83,7 +81,6 @@ namespace WebApp.Controllers
             return View(data);
         }
 
-
         [HttpGet]
         /// <summary>
         /// 搜索页内容
@@ -123,7 +120,6 @@ namespace WebApp.Controllers
                     AnswerList = answers
                 });
         }
-
 
         public IActionResult SearchVideoJump(string url)
         {
@@ -175,12 +171,5 @@ namespace WebApp.Controllers
             return View(new ErrorViewModel { RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-
-        public IActionResult Test()
-        {
-            var search = new BingCustomSearchServices(CognitveOptions);
-            ViewBag.Result = search.SearchQuestion("vs2017 代码风格");
-            return View();
-        }
     }
 }

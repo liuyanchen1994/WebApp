@@ -269,10 +269,11 @@ namespace WebApp.Controllers
                 {
                     navId = secondaryNav.FirstOrDefault()?.Id.ToString();
                 }
-
-                blogList = _context.Blog.Where(m => m.Catalog.Id.ToString().Equals(navId))
-                   .ToList();
-
+                if (!string.IsNullOrWhiteSpace(navId))
+                {
+                    blogList = _context.Blog.Where(m => m.Catalog.Id.ToString().Equals(navId))
+                        .ToList();
+                }
                 pageOption.Total = blogList.Count();
 
             }
@@ -309,70 +310,34 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Detail(string id, string detail = null)
-        {
-
-
-            var video = _context.MvaVideos
-                .Include(m => m.Details)
-                .Where(m => m.Id == Guid.Parse(id))
-                .FirstOrDefault();
-            //更新浏览数量
-            video.Views++;
-            _context.MvaVideos.Update(video);
-            _context.SaveChanges();
-
-            if (video.Details.Count < 1)
-            {
-                //重新获取详细内容
-                return NotFound();
-            }
-            var currentDetail = video.Details.OrderBy(m => m.Sequence).FirstOrDefault();
-
-            if (!string.IsNullOrEmpty(detail))
-            {
-                currentDetail = _context.MvaDetails.Where(m => m.MvaId.Equals(detail)).FirstOrDefault();
-            }
-            return View(new VideoDetailModels
-            {
-                MvaVideo = video,
-                Details = video.Details.OrderBy(m => m.Sequence).ToList() ?? default,
-                CurrentDetail = currentDetail ?? default
-            });
-        }
-
-        [HttpGet]
-        public IActionResult C9Detail(string id)
-        {
-            var video = _context.C9videos
-                .Where(m => m.Id == Guid.Parse(id))
-                .FirstOrDefault();
-
-            //更新浏览数量
-            video.Views++;
-            _context.C9videos.Update(video);
-            _context.SaveChanges();
-            return View(video);
-        }
-
-
-        [HttpGet]
         public IActionResult SetLanguage(string language)
         {
             TempData["language"] = language;
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult C9Video()
+        [HttpGet]
+        public IActionResult Blog(Guid id)
         {
-            var re = _context.C9videos.Where(m => m.Language.Equals("zh-cn"))
-                .Where(m => m.Duration != null)
-                .Where(m => m.SeriesTitleUrl.Contains("Event"))
-                .OrderByDescending(m => m.UpdatedTime)
-                .Take(100)
-                .ToList();
-            return Json(re);
+            if (id == null) return NotFound();
+            var blog = _context.Blog
+                .Where(m => m.Id == id)
+                .Include(m=>m.Catalog)
+                .Include(m => m.Video)
+                .Include(m => m.Practice)
+                .FirstOrDefault();
+            if (blog == null) return NotFound();
 
+            var relateBlogs = _context.Blog
+                .Where(m => m.Catalog == blog.Catalog)
+                .Where(m=>m.Id!=blog.Id)
+                .ToList();
+            
+            return View(new LearnBlogViewModel
+            {
+                Blog = blog,
+                RelateBlogs = relateBlogs
+            });
         }
 
         public IActionResult Test()
