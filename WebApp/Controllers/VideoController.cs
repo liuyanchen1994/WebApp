@@ -109,9 +109,10 @@ namespace WebApp.Controllers
         public IActionResult Detail(Guid id)
         {
             var video = _context.Video
-                .Where(m=>m.Id==id)
-                .Include(m=>m.Blog)
-                .Include(m=>m.Practice)
+                .Where(m => m.Status == StatusType.Publish)
+                .Where(m => m.Id == id)
+                .Include(m => m.Blog)
+                .Include(m => m.Practice)
                 .FirstOrDefault();
             //暂时兼容旧链接
             if (video == null)
