@@ -226,12 +226,14 @@ namespace WebApp.Controllers
                             default:
                                 TempData["DetailPage"] = "Detail";
                                 videoList = _context.Video.Where(m => m.Catalog == catalog)
+                                    .Where(m => m.Status == StatusType.Publish)
                                     .OrderByDescending(m => m.UpdatedTime)
                                     .Skip((p - 1) * pageSize)
                                     .Take(pageSize)
                                     .ToList();
 
                                 pageOption.Total = _context.Video.Where(m => m.Catalog == catalog)
+                                    .Where(m => m.Status == StatusType.Publish)
                                     .Count();
                                 break;
                         }
@@ -333,7 +335,7 @@ namespace WebApp.Controllers
 
             var relateBlogs = _context.Blog
                 .Where(m => m.Catalog == blog.Catalog)
-                .Where(m=>m.Status.Equals(StatusType.Publish))
+                .Where(m => m.Status.Equals(StatusType.Publish))
                 .Where(m => m.Id != blog.Id)
                 .ToList();
 
