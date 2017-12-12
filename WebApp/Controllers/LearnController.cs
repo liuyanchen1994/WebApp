@@ -77,7 +77,7 @@ namespace WebApp.Controllers
                     //    .FirstOrDefault()
                     //    .InverseTopCatalog
                     //    .ToList();
-                    secondaryNav = _context.CataLog.Where(m => m.IsTop == 1 && m.Value.Equals("Event"))
+                    secondaryNav = _context.CataLog.Where(m => m.IsTop == 1 && m.Value.Equals("CourseVideo"))
                         .Include(m => m.InverseTopCatalog)
                         .FirstOrDefault()?
                         .InverseTopCatalog?
