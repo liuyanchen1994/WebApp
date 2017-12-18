@@ -55,7 +55,7 @@
                         <div class="col-md-8 m-0">
                             <div class="video-banner">
                                 <a class="video-banner-img" asp-action="MvaDetail" asp-controller="Video" asp-route-id="@mvaVideo1.Id" target="_blank">
-                                    <img src="@mvaVideo1.CourseImage" />
+                                    <img src="@mvaVideo1.CourseImage" alt="@mvaVideo1.Title"/>
                                 </a>
                                 <div class="video-banner-content p-1">
                                     <h5 class="content-title">
@@ -79,7 +79,7 @@
                         <div class="col-md-4">
                             <div class="video-banner">
                                 <a class="video-banner-img" asp-action="MvaDetail" asp-controller="Video" asp-route-id="@mvaVideo2.Id" target="_blank">
-                                    <img src="@mvaVideo2.CourseImage" />
+                                    <img src="@mvaVideo2.CourseImage" alt="@mvaVideo2.Title"/>
                                 </a>
                                 <div class="video-banner-content p-1">
                                     <h7 class="content-title">
@@ -101,7 +101,7 @@
                             </div>
                             <div class="video-banner mt-3">
                                 <a class="video-banner-img" asp-action="MvaDetail" asp-controller="Video" asp-route-id="@mvaVideo3.Id" target="_blank">
-                                    <img src="@mvaVideo3.CourseImage" />
+                                    <img src="@mvaVideo3.CourseImage"  alt="@mvaVideo3.Title"/>
                                 </a>
                                 <div class="video-banner-content p-1">
                                     <h7 class="content-title">
@@ -133,7 +133,7 @@
                             <div class="col-md-4">
                                 <div class="video-banner">
                                     <a class="video-banner-img" asp-action="C9Detail" asp-controller="Video" asp-route-id="@video.Id" target="_blank">
-                                        <img src="@video.ThumbnailUrl" />
+                                        <img src="@video.ThumbnailUrl"  alt="@video.Title"/>
                                     </a>
                                     <div class="video-banner-content p-1">
                                         <h7 class="content-title">
@@ -258,7 +258,7 @@
                         <a href="@download.AbsolutePath" style="text-decoration:none" target="_blank" title="@download.Description">
                             @if (!string.IsNullOrEmpty(download.Imgurl))
                             {
-                                <img src="@download.Imgurl" title="@download.Name" width="36" height="36" class="m-1" />
+                                <img src="@download.Imgurl" title="@download.Name" width="36" height="36" class="m-1" alt="@download.Name"/>
 
                             }
                             <span>@download.Name</span>
@@ -284,7 +284,7 @@
                         <a href="@document.AbsolutePath" style="text-decoration:none" target="_blank" title="@document.Description">
                             @if (!string.IsNullOrEmpty(document.Imgurl))
                             {
-                                <img src="@document.Imgurl" title="@document.Name" width="36" height="36" class="m-1" style="border-radius:2px !important" />
+                                <img src="@document.Imgurl" title="@document.Name" width="36" height="36" class="m-1" style="border-radius:2px !important" alt="@document.Name"/>
                             }
 
                             <span>@document.Name</span>
@@ -299,7 +299,7 @@
             <div class="card-block p-0 text-center">
                 <h5 class="p-2 text-left" style="border-bottom:1px solid #cccccc">推荐服务</h5>
                 <a href="http://www.qcloud.com/redirect.php?redirect=1001&cps_key=8451e9a1ec4d14dec1cd821e079065c1" target="_blank">
-                    <img src="https://msdevccdiag579.blob.core.windows.net/msdev-image/txcloud.jpg" title="腾讯云主机" />
+                    <img src="https://msdevccdiag579.blob.core.windows.net/msdev-image/txcloud.jpg" title="腾讯云主机"  alt="腾讯云主机"/>
                 </a>
             </div>
         </div>
