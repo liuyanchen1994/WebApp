@@ -49,6 +49,21 @@ namespace WebApp.DB
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Blog>(entity =>
+            {
+                entity.HasOne(e => e.Video)
+                .WithOne(v => v.Blog);
+                entity.HasOne(e => e.Practice)
+                .WithOne(p => p.Blog);
+            });
+
+            modelBuilder.Entity<Video>(entity =>
+            {
+                entity.HasOne(e => e.Blog)
+                .WithOne(v => v.Video);
+                entity.HasOne(e => e.Practice)
+                .WithOne(p => p.Video);
+            });
             modelBuilder.Entity<UserActivity>(entity =>
             {
                 entity.HasKey(e => new { e.AcitvityId, e.UserId });
