@@ -114,6 +114,7 @@ namespace WebApp.Controllers
                 .Include(m => m.Blog)
                 .Include(m => m.Practice)
                 .FirstOrDefault();
+
             //暂时兼容旧链接
             if (video == null)
             {
