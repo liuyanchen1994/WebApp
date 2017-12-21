@@ -37,13 +37,18 @@ namespace WebApp.Controllers
         public IActionResult Index(string topCatalogId = "", string navId = "", string type = "", string eventId = "", int p = 1)
         {
             var language = TempData["language"]?.ToString() ?? "";
-            var configs = JsonConvert.DeserializeObject<List<Config>>(TempData["configs"].ToString());
+            var configsString = TempData["configs"]?.ToString();
+            var configs = new List<Config>();
 
-            if (configs == null)
+            if (configsString == null)
             {
                 configs = _context.Config.Where(m => m.Type.Equals("默认值"))
                     .ToList();
                 TempData["configs"] = JsonConvert.SerializeObject(configs);
+            }
+            else
+            {
+                configs = JsonConvert.DeserializeObject<List<Config>>(configsString);
             }
 
             if (!string.IsNullOrEmpty(type))
@@ -272,7 +277,7 @@ namespace WebApp.Controllers
                 {
                     var value = configs.Where(m => m.Name.Equals("defaultBlogSeries")).First()?.Value;
                     navId = _context.CataLog.Where(m => m.Value.Equals(value))
-                        .Where(m=>m.Type.Equals("文章"))
+                        .Where(m => m.Type.Equals("文章"))
                         .FirstOrDefault()?.Id.ToString();
                 }
                 if (!string.IsNullOrWhiteSpace(navId))
