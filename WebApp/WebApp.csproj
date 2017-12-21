@@ -45,11 +45,6 @@
       </None>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Areas\Community\Controllers\" />
-      <Folder Include="Areas\Community\Models\" />
-      <Folder Include="Areas\Community\Views\" />
-    </ItemGroup>
-    <ItemGroup>
       <None Include="appsettings.Development.json" />
     </ItemGroup>
 </Project>
