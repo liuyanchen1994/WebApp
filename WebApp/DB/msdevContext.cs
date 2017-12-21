@@ -15,7 +15,7 @@ namespace WebApp.DB
         }
 
         #region DbSet
-
+        public DbSet<Config> Config { get; set; }
         public DbSet<C9Event> C9Event { get; set; }
         public DbSet<EventVideo> EventVideo { get; set; }
         public DbSet<PracticeAnswer> PracticeAnswer { get; set; }
