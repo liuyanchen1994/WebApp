@@ -21,7 +21,7 @@
     <ul class="learn-nav d-flex col-12">
         <li class="nav-title">博客</li>
         @foreach (var item in Model.ArticleCatalogs)
-            {
+        {
             <li>
                 <a asp-route-topCatalogId="@item.Id" asp-route-type="Blog">
                     @item.Name
@@ -48,8 +48,15 @@
         <ul class="nav flex-column nav-pills">
             @foreach (var navs in Model.SecondaryNavs)
             {
-                <li class="">
-                    <a asp-route-navId="@navs.Id" asp-route-type="@TempData["learnType"]" asp-route-topCatalogId="@Context.Request.Query["topCatalogId"]" class="nav-link">@navs.Name</a>
+                var active = "";
+                if (navs.Id.ToString() == ViewBag.NavId as string){
+                    active = "active";
+                }
+                <li class="nav-item">
+                    <a asp-route-navId="@navs.Id" asp-route-type="@TempData["learnType"]" asp-route-topCatalogId="@Context.Request.Query["topCatalogId"]"
+                       class="nav-link @active">
+                        @navs.Name
+                    </a>
                 </li>
             }
 
@@ -59,9 +66,18 @@
         <select class="form-control custom-select" name="SecondaryNavs">
             @foreach (var navs in Model.SecondaryNavs)
             {
-                <option value="@navs.Id">
-                    @navs.Name
-                </option>
+                if (navs.Id.ToString() == ViewBag.NavId as string)
+                {
+                    <option value="@navs.Id" selected>
+                        @navs.Name
+                    </option>
+                }
+                else
+                {
+                    <option value="@navs.Id">
+                        @navs.Name
+                    </option>
+                }
             }
 
         </select>
@@ -159,8 +175,6 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-
-            $("select[name='SecondaryNavs'] option[value='@Context.Request.Query["navId"]']").attr("selected", "selected");
             $("select[name='language'] option[value='@TempData["language"]']").attr("selected", "selected");
             $("select[name='eventId'] option[value='@Context.Request.Query["eventId"]']").attr("selected", "selected");
 
