@@ -10,7 +10,7 @@
         @foreach (var item in Model.VideoCatalogs)
         {
             <li>
-                <a asp-route-topCatalogId="@item.Id" asp-route-type="Video">
+                <a asp-route-topCatalogId="@item.Id">
                     @item.Name
                 </a>
             </li>
@@ -23,7 +23,7 @@
         @foreach (var item in Model.ArticleCatalogs)
         {
             <li>
-                <a asp-route-topCatalogId="@item.Id" asp-route-type="Blog">
+                <a asp-route-topCatalogId="@item.Id">
                     @item.Name
                 </a>
             </li>
@@ -53,7 +53,7 @@
                     active = "active";
                 }
                 <li class="nav-item">
-                    <a asp-route-navId="@navs.Id" asp-route-type="@TempData["learnType"]" asp-route-topCatalogId="@Context.Request.Query["topCatalogId"]"
+                    <a asp-route-navId="@navs.Id"  asp-route-topCatalogId="@Context.Request.Query["topCatalogId"]"
                        class="nav-link @active">
                         @navs.Name
                     </a>
@@ -181,8 +181,7 @@
             $("select[name='SecondaryNavs']").change(function () {
                 var navId = $(this).val();
                 location.href = `/Learn?navId=${navId}
-                    &topCatalogId=@Context.Request.Query["topCatalogId"]
-                    &type=@TempData["learnType"]`;
+                    &topCatalogId=@Context.Request.Query["topCatalogId"]`;
             });
 
         });
