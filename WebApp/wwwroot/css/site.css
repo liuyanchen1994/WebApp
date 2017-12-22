@@ -1,6 +1,6 @@
 
 body {
-    background: rgba(255, 255, 250, 1);
+    background: #f4f4f4;
     font-family: 'Segoe UI', 微软雅黑,Tahoma, Geneva, Verdana, sans-serif
 }
 button, a {
@@ -83,8 +83,9 @@ img.bingnews-small {
 }
 
 .nav-search {
-    background-color: #464949 !important;
-    color: #eee !important;
+    border:none;
+    border-bottom:1px solid #eee;
+    color: Highlight !important;
 }
 /*主页视频*/
 .video-banner {
@@ -92,6 +93,7 @@ img.bingnews-small {
     width: 100%;
     height: auto;
     cursor: pointer;
+    border:1px solid #eee;
 }
 
     .video-banner > .video-banner-img {
@@ -111,8 +113,8 @@ img.bingnews-small {
         left: 0;
         z-index: 9;
         color: white;
-        opacity: 0.66;
-        background-color: #000000;
+        opacity: 0.6;
+        background-color: #000;
     }
 
 /*搜索结果 */

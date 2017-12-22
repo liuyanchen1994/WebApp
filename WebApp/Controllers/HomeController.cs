@@ -51,8 +51,8 @@ namespace WebApp.Controllers
                  .Take(3)
                  .ToList();
 
-            var c9Videos = _context.C9videos
-                 .OrderByDescending(m => m.UpdatedTime)
+            var Videos = _context.Video
+                 .OrderByDescending(m => m.CreatedTime)
                  .Take(3)
                  .ToList();
 
@@ -75,7 +75,7 @@ namespace WebApp.Controllers
                 Downloads = downloads,
                 Documents = documents,
                 MvaVideos = mvaVideos,
-                C9Videos = c9Videos,
+                Videos = Videos,
                 SelfNews = selfNews
             };
             return View(data);
