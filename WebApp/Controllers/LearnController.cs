@@ -293,8 +293,10 @@ namespace WebApp.Controllers
                     .Count();
 
             }
-            #endregion
+            #endregion  
 
+
+            ViewBag.NavId = navId.Trim();
             return View(new LearnViewModels
             {
                 VideoCatalogs = videoCatalogs,
