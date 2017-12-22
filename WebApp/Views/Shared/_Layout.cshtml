@@ -26,20 +26,20 @@
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
-    <nav class="navbar navbar-expand-md" style="background-color:#2f2f2f;">
+    <nav class="navbar navbar-expand-md bg-white">
         <div class="container">
-            <a class="navbar-brand app-title text-white" href="/">MSDev</a>
+            <a class="navbar-brand app-title text-dark" href="/">MSDev</a>
             <div class="d-flex d-block d-sm-none">
                 <input class="form-control mr-sm-2 nav-search search-input" type="text" placeholder="资源/问题/视频" aria-label="Search">
             </div>
-            <button class="navbar-toggler navbar-toggler-right navbar-dark" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            <button class="navbar-toggler navbar-toggler-right navbar-light" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav mr-auto">
-                    <li><a class="nav-link text-white" asp-controller="News" asp-action="Index">资讯</a></li>
+                    <li><a class="nav-link text-dark" asp-controller="News" asp-action="Index">资讯</a></li>
                     @*<li class="dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="dorpdownResource">资源</a>
                             <div class="dropdown-menu" aria-labelledby="dorpdownResource">
@@ -47,9 +47,9 @@
                                 <a class="dropdown-item" asp-controller="Document" asp-action="Index">文档</a>
                             </div>
                         </li>*@
-                    <li><a class="nav-link text-white" asp-controller="Learn" asp-action="Index">学习</a></li>
+                    <li><a class="nav-link text-dark" asp-controller="Learn" asp-action="Index">学习</a></li>
                     <li>@*<a class="nav-link" asp-controller="Activity" asp-action="Index">活动</a>*@</li>
-                    <li><a class="nav-link text-white" asp-controller="Home" asp-action="About">关于</a></li>
+                    <li><a class="nav-link text-dark" asp-controller="Home" asp-action="About">关于</a></li>
                 </ul>
                 <div class="d-none d-md-block">
                     <input class="form-control mr-sm-2 nav-search search-input" type="text" placeholder="资源/问题/视频" aria-label="Search">
@@ -61,8 +61,10 @@
     </nav>
     <div class="@ViewData["Container"]">
         @RenderBody()
-        <hr />
-        <footer class="mb-2">
+
+    </div>
+    <div class="container-fluid bg-white py-3" style="position:fixed;bottom:0;border-top:1px solid #f4f4f4">
+        <footer class="container">
             <div class="row justify-content-between">
                 <div class="col-md-6">
                     &copy;
