@@ -123,7 +123,7 @@ namespace WebApp.Controllers
             {
 
                 string searchKey = "";//搜索的关键词
-                string languageWhere = string.IsNullOrWhiteSpace(language) ? "%" : language + "%";//语言条件
+                string languageWhere = language + "%";//语言条件
 
                 switch (catalog.TopCatalog.Value.ToLower())
                 {
