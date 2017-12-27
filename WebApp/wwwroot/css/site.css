@@ -1,8 +1,9 @@
 
 body {
     background: #f4f4f4;
-    font-family: 'Segoe UI', 微软雅黑,Tahoma, Geneva, Verdana, sans-serif
+    font-family: 'Segoe UI', "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif
 }
+
 button, a {
     cursor: pointer !important;
 }
@@ -22,8 +23,8 @@ p {
 
 
 
-.min-height6{
-    min-height:600px;
+.min-height6 {
+    min-height: 600px;
 }
 
 /*==============*/
@@ -83,8 +84,8 @@ img.bingnews-small {
 }
 
 .nav-search {
-    border:none;
-    border-bottom:1px solid #eee;
+    border: none;
+    border-bottom: 1px solid #eee;
     color: Highlight !important;
 }
 /*主页视频*/
@@ -93,7 +94,7 @@ img.bingnews-small {
     width: 100%;
     height: auto;
     cursor: pointer;
-    border:1px solid #eee;
+    border: 1px solid #eee;
 }
 
     .video-banner > .video-banner-img {
@@ -153,11 +154,12 @@ img.bingnews-small {
     font-size: 1.1rem;
 }
 
-    .document-card:hover, .document-card:hover > a{
+    .document-card:hover, .document-card:hover > a {
         color: white !important;
         background-color: dodgerblue;
     }
-        .document-card:hover > a span.badge-light{
+
+        .document-card:hover > a span.badge-light {
             color: white !important;
             background-color: dodgerblue;
         }
@@ -169,7 +171,7 @@ ul.learn-nav {
     margin-bottom: 0;
     padding: 0 12px;
     padding-left: 0;
-    border:1px solid #eee;
+    border: 1px solid #eee;
     border-left: 4px solid dodgerblue;
     background-color: white;
 }
