@@ -4,14 +4,24 @@
 }
 @model WebApp.Models.ViewModels.DocumentViewModels
 
+<style>
+    .list-group-item{
+        border:none;
+        border-bottom:1px solid #eee;
+    }
+</style>
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 mt-2">
         @{
             @foreach (var catalog in Model.Catalog)
             {
                 <div class="list-group">
-                    <a class="list-group-item list-group-item-action list-group-item-heading p-2" data-toggle="collapse" href="#collapse-@catalog.Value" aria-expanded="true" aria-controls="collapse-@catalog.Value">
-                        @catalog.Name
+                    <a class="list-group-item list-group-item-action list-group-item-heading p-2" 
+                       data-toggle="collapse" href="#collapse-@catalog.Value" aria-expanded="true" aria-controls="collapse-@catalog.Value"
+                       style="background-color:#fafafa">
+                        <strong>
+                            @catalog.Name
+                        </strong>
                     </a>
                     <div class="collapse show" id="collapse-@catalog.Value">
                         @foreach (var childCatalog in catalog.InverseTopCatalog)
@@ -38,21 +48,21 @@
                 <div class="row">
                     @foreach (var resource in Model.Resource)
                     {
-                        <div class="col-md-4">
-                            <div class="card document-card my-2 text-center" style="border:1px solid #dbdbdb;box-shadow: 0px 2px 5px #e8e8e8;">
+                        <div class="col-md-4 mt-2">
+                            <div class="card document-card my-1 text-center" style="border:none;box-shadow: 0 1px 2px 1px #dedede;">
                                 <a href="@resource.AbsolutePath" target="_blank" class="py-3" style="text-decoration:none">
                                     @if (!string.IsNullOrEmpty(resource.Imgurl))
-                                    {
-                                        <img src="@resource.Imgurl" title="@resource.Name" width="36px" style="border-radius:50% !important"/>
-                                    }
-                                    <span>
+    {
+                                <img src="@resource.Imgurl" title="@resource.Name" width="36px" style="border-radius:50% !important" />
+}
+                                    <span class="align-middle">
                                         @resource.Name
-                                        <small>
-                                            <span class="badge badge-light">
-                                                @TypeValueHelper.Language[resource.Language]
-                                            </span>
-                                        </small>
                                     </span>
+                                    <small class="align-middle">
+                                        <span class="badge badge-light">
+                                            @TypeValueHelper.Language[resource.Language]
+                                        </span>
+                                    </small>
                                 </a>
                             </div>
                         </div>

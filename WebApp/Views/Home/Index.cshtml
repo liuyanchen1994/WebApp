@@ -52,7 +52,9 @@
             <div class="card col-12 p-0">
                 <div class="card-header p-2 d-flex justify-content-between">
                     <div class="col">
-                        推荐视频
+                        <strong>
+                            推荐视频
+                        </strong>
                     </div>
                     <div class="col text-right">
                         <a asp-action="Index" asp-controller="Learn">查看更多</a>
@@ -177,7 +179,9 @@
             <div class="card col-md-6 p-0">
                 <div class="card-header p-2 d-flex justify-content-between">
                     <div class="col">
-                        最新资讯
+                        <strong>
+                            最新资讯
+                        </strong>
                     </div>
                     <div class="col text-right">
                         <a asp-action="Index" asp-controller="News">查看更多</a>
@@ -217,7 +221,9 @@
             </div>
             <div class="card col-md-6 p-0">
                 <div class="card-header p-2">
-                    官方博客
+                    <strong>
+                        官方博客
+                    </strong>
                 </div>
                 <div class="card-block p-1">
                     @foreach (var blog in blogList)
@@ -256,7 +262,10 @@
             <div class="card-block p-0">
                 <div class="p-2 d-flex justify-content-between card-header">
                     <div class="col">
-                        推荐下载
+                        <strong>
+                            推荐下载
+                        </strong>
+                        
                     </div>
                     <div class="col text-right">
                         <a asp-controller="Download" asp-action="">更多</a>
@@ -282,7 +291,9 @@
             <div class="card-block p-0">
                 <div class="p-2 d-flex justify-content-between card-header">
                     <div class="col">
-                        快捷文档
+                        <strong>
+                            快捷文档
+                        </strong>
                     </div>
                     <div class="col text-right">
                         <a asp-controller="Document" asp-action="">更多</a>
@@ -307,7 +318,11 @@
         <!--推荐服务-->
         <div class="card mb-1">
             <div class="card-block p-0 text-center">
-                <div class="p-2 text-left card-header">推荐服务</div>
+                <div class="p-2 text-left card-header">
+                    <strong>
+                        推荐服务
+                    </strong>
+                </div>
                 <div class="p-2">
                     <a href="http://www.qcloud.com/redirect.php?redirect=1001&cps_key=8451e9a1ec4d14dec1cd821e079065c1" target="_blank">
                         <img src="https://msdevccdiag579.blob.core.windows.net/msdev-image/txcloud.jpg" title="腾讯云主机" alt="腾讯云主机" />
