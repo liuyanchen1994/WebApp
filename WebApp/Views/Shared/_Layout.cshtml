@@ -120,7 +120,7 @@
         $(".search-input").keyup(function (event) {
             var keyword = $(this).val();
             if (event.keyCode == 13) {
-                if (keyword.length > 2) {
+                if (keyword.length >= 2) {
                     location.href = "/Home/Search?keyword=" + encodeURIComponent(keyword);
                 }
             }

@@ -315,13 +315,30 @@ namespace WebApp.Controllers
                 .Include(m => m.Video)
                 .Include(m => m.Practice)
                 .FirstOrDefault();
+
             if (blog == null) return NotFound();
+
+            if (blog.Video.Status != StatusType.Publish)
+            {
+                blog.Video = default;
+            }
 
             var relateBlogs = _context.Blog
                 .Where(m => m.Catalog == blog.Catalog)
                 .Where(m => m.Status.Equals(StatusType.Publish))
                 .Where(m => m.Id != blog.Id)
                 .ToList();
+
+            if (blog.Views == null)
+            {
+                blog.Views = 1;
+            }
+            else
+            {
+                blog.Views++;
+            }
+            _context.Update(blog);
+            _context.SaveChangesAsync();
 
             return View(new LearnBlogViewModel
             {
