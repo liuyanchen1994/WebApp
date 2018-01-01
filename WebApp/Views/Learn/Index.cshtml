@@ -49,11 +49,12 @@
             @foreach (var navs in Model.SecondaryNavs)
             {
                 var active = "";
-                if (navs.Id.ToString() == ViewBag.NavId as string){
+                if (navs.Id.ToString() == ViewBag.NavId as string)
+                {
                     active = "active";
                 }
                 <li class="nav-item">
-                    <a asp-route-navId="@navs.Id"  asp-route-topCatalogId="@Context.Request.Query["topCatalogId"]"
+                    <a asp-route-navId="@navs.Id" asp-route-topCatalogId="@Context.Request.Query["topCatalogId"]"
                        class="nav-link @active">
                         @navs.Name
                     </a>
@@ -157,14 +158,20 @@
         <section name="blogs" class="row">
             @foreach (var blog in Model.BlogList)
             {
-                <div class="col-lg-6 mt-2 p-2 pl-4">
-                    <h5>
-                        <a class="text-dark" asp-action="Blog" asp-route-id="@blog.Id">@blog.Title</a>
-                    </h5>
-                    <small class="text-muted">
-                        @blog.AuthorName @blog.CreatedTime.ToString("yyyy-MM-dd H:mm")
-                        &nbsp;&nbsp;@(blog.Views == null ? "" : "浏览:" + blog.Views)
-                    </small>
+                <div class="col-lg-12 mt-2 px-4 pt-2 bg-white ">
+                    <div class="justify-content-between row m-0">
+                        <h5>
+                            <a class="text-info" asp-action="Blog" asp-route-id="@blog.Id">@blog.Title</a>
+                        </h5>
+                        <small class="text-muted">
+                            @blog.AuthorName @blog.CreatedTime.ToString("yyyy-MM-dd H:mm")
+                            &nbsp;&nbsp;@(blog.Views == null ? "" : "浏览: " + blog.Views)
+                        </small>
+                    </div>
+                    <p class="text-dark" style="text-indent:0">
+                        @blog.Description
+                    </p>
+
                 </div>
             }
         </section>
