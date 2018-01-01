@@ -6,8 +6,9 @@
 <style>
     .editormd-html-preview {
         background-color: transparent !important;
-        font-size:16px !important;
+        font-size: 16px !important;
     }
+
     p {
         text-indent: 0 !important;
     }
@@ -47,9 +48,8 @@
             @if (Model.Blog.Practice != null)
             {
                 <h6>实践内容:</h6>
-                <p>
-                    @Model.Blog.Practice.Content
-                    @*<a asp-controller="Practice" asp-action="Detail" asp-route-id="@Model.Blog.Practice.Id">@Model.Blog.Practice.Title</a>*@
+                <p class="bg-light py-2">
+                    @Html.Raw(Model.Blog.Practice.Content.Replace("\n", "</br>"))
                 </p>
             }
             @if (Model.RelateBlogs?.Count > 0)
