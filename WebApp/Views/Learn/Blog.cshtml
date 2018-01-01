@@ -24,6 +24,10 @@
             <span class="text-muted">
                 @Model.Blog.CreatedTime
             </span>
+            <span class="text-muted">
+                &nbsp;&nbsp;
+                (@Model.Blog.Views)
+            </span>
         </div>
         <div id="content" style="display: none;">@Model.Blog.Content</div>
         <div class="my-2" id="mk-content">
@@ -42,9 +46,10 @@
             }
             @if (Model.Blog.Practice != null)
             {
-                <h6>对应实践：</h6>
+                <h6>实践内容:</h6>
                 <p>
-                    <a asp-controller="Practice" asp-action="Detail" asp-route-id="@Model.Blog.Practice.Id">@Model.Blog.Practice.Title</a>
+                    @Model.Blog.Practice.Content
+                    @*<a asp-controller="Practice" asp-action="Detail" asp-route-id="@Model.Blog.Practice.Id">@Model.Blog.Practice.Title</a>*@
                 </p>
             }
             @if (Model.RelateBlogs?.Count > 0)
