@@ -10,7 +10,9 @@ namespace WebApp.Models.ViewModels
     public class SearchViewModel
     {
         public List<Resource> ResourceList { get; set; }
-        public List<BingSearchWebPage> VideoList { get; set; }
+        public List<Blog> BlogList { get; set; }
+        public List<Video> VideoList { get; set; }
+        public List<BingSearchWebPage> SearchVideoList { get; set; }
         public List<BingSearchWebPage> AnswerList { get; set; }
 
     }

@@ -4,7 +4,9 @@
     ViewData["Title"] = "搜索-MSDev";
     ViewData["Container"] = "container-fluid";
     var resources = Model.ResourceList?.GroupBy(m => m.Catalog.Type).ToList();
+    var searchVideos = Model.SearchVideoList;
     var videos = Model.VideoList;
+    var blogs = Model.BlogList;
     var answers = Model.AnswerList;
 }
 <div class="row" style="min-height:800px">
@@ -53,6 +55,36 @@
                         }
                     }
                 }
+                @* 输出博客 *@
+                @if (blogs != null)
+                {
+                    <section class="scrst-block">
+                        <h5 class="scrst-title">博客</h5>
+                        @foreach (var blog in blogs)
+                        {
+                            <div class="scrst-content">
+                                <a asp-controller="Learn" asp-action="Blog" asp-route-id="@blog.Id">
+                                    @blog.Title
+                                </a>
+                            </div>
+                        }
+                    </section>
+                }
+                @* 输出视频 *@
+                @if (videos != null)
+                {
+                    <section class="scrst-block">
+                        <h5 class="scrst-title">视频</h5>
+                        @foreach (var video in videos)
+                        {
+                            <div class="scrst-content">
+                                <a asp-controller="Video" asp-action="Detail" asp-route-id="@video.Id">
+                                    @video.Name
+                                </a>
+                            </div>
+                        }
+                    </section>
+                }
             </div>
             <section class="answer col-md-5">
                 @if (answers != null)
@@ -86,9 +118,9 @@
             </section>
             <section class="video col-xl-2 col-md-3 px-xl-4 px-lg-3" style="line-height:16px">
                 <h5>相关视频</h5>
-                @if (videos != null)
+                @if (searchVideos != null)
                 {
-                    foreach (var item in videos)
+                    foreach (var item in searchVideos)
                     {
                         <div class="row my-3 justify-content-md-center" data-cacheUrl="@item.CachedPageUrl">
                             <div class="col-md-12">
