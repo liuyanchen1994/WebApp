@@ -43,7 +43,7 @@
             课后习题:
         </h6>
         <p class="bg-light py-2">
-            @Html.Raw(Model.Blog.Practice.Content.Replace("\n", "</br>"))
+            @Html.Raw(Model.Blog?.Practice?.Content.Replace("\n", "</br>"))
         </p>
     </div>
 </div>
