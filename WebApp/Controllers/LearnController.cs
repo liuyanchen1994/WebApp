@@ -318,7 +318,7 @@ namespace WebApp.Controllers
 
             if (blog == null) return NotFound();
 
-            if (blog.Video.Status != StatusType.Publish)
+            if (blog.Video?.Status != StatusType.Publish)
             {
                 blog.Video = default;
             }
