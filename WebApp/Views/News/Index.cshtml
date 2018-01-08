@@ -8,24 +8,25 @@
     var tags = Model.Tags;
 }
 
-<div class="row">
+<div class="row my-2">
     <div class="col-md-2">
-        <ul class="nav flex-column nav-pills" role="tablist">
+        <ul class="nav flex-column nav-pills bg-white" role="tablist">
             @foreach (var tag in tags)
             {
                 string liclass = "";
                 var tagQuery = Context.Request.Query["tag"];
-                
+                if (string.IsNullOrEmpty(tagQuery))
+                { tagQuery = "微软"; }
                 if (tag.Equals(tagQuery))
                 {
                     liclass = "active";
                 }
-                <li class="nav nav-item">
-                    <a class="nav-link @liclass" asp-action="Index" asp-route-tag="@tag" role="tab">
+                <li class="nav nav-item ">
+                    <a class="nav-link @liclass text-center w-100" asp-action="Index" asp-route-tag="@tag" role="tab">
                         @tag
                     </a>
                 </li>
-                
+
             }
         </ul>
     </div>
@@ -33,7 +34,7 @@
         @foreach (var bingNews in bingNewsList)
         {
             var Url = HttpUtility.ParseQueryString(new Uri(bingNews.Url).Query);
-            <div class="row news-list">
+            <div class="row news-list bg-white m-0 mb-2 p-2">
                 <div class="col-md-auto d-md-flex d-none">
                     <a href="@Url["r"]" target="_blank">
                         <img class="bingnews" src="@bingNews.ThumbnailUrl" alt="">

@@ -10,7 +10,7 @@
         @foreach (var item in Model.VideoCatalogs)
         {
             <li>
-                <a asp-route-topCatalogId="@item.Id" asp-route-type="Video">
+                <a asp-route-topCatalogId="@item.Id">
                     @item.Name
                 </a>
             </li>
@@ -23,7 +23,7 @@
         @foreach (var item in Model.ArticleCatalogs)
         {
             <li>
-                <a asp-route-topCatalogId="@item.Id" asp-route-type="Blog">
+                <a asp-route-topCatalogId="@item.Id">
                     @item.Name
                 </a>
             </li>
@@ -44,16 +44,17 @@
 <!--内容-->
 <div class="row mt-2 learn-container">
     <!--左侧二级导航-->
-    <div class="col col-md-auto p-2 bg-light mr-2 d-none d-sm-inline-block">
+    <div class="col col-md-auto bg-white p-2 mr-2 d-none d-sm-inline-block">
         <ul class="nav flex-column nav-pills">
             @foreach (var navs in Model.SecondaryNavs)
             {
                 var active = "";
-                if (navs.Id.ToString() == ViewBag.NavId as string){
+                if (navs.Id.ToString() == ViewBag.NavId as string)
+                {
                     active = "active";
                 }
                 <li class="nav-item">
-                    <a asp-route-navId="@navs.Id" asp-route-type="@TempData["learnType"]" asp-route-topCatalogId="@Context.Request.Query["topCatalogId"]"
+                    <a asp-route-navId="@navs.Id" asp-route-topCatalogId="@Context.Request.Query["topCatalogId"]"
                        class="nav-link @active">
                         @navs.Name
                     </a>
@@ -62,7 +63,7 @@
 
         </ul>
     </div>
-    <div class="col-md-12 p-2 bg-light d-sm-none">
+    <div class="col-md-12 p-2 bg-white d-sm-none">
         <select class="form-control custom-select" name="SecondaryNavs">
             @foreach (var navs in Model.SecondaryNavs)
             {
@@ -83,8 +84,8 @@
         </select>
     </div>
 
-    <div class="col col-md-10 bg-light">
-        <form asp-action="SetFilter" class="row justify-content-between form-inline text-dark py-1" style="border-bottom:1px solid #ddd">
+    <div class="col col-md-10">
+        <form asp-action="SetFilter" class="row bg-white justify-content-between form-inline text-dark py-1" >
             <input type="hidden" name="topCatalogId" value="@Context.Request.Query["topCatalogId"]" />
             <input type="hidden" name="navId" value="@Context.Request.Query["navId"]" />
             <input type="hidden" name="learnType" value="@TempData["learnType"]" />
@@ -122,7 +123,7 @@
                     var author = StringHelper.SubString(item.Author, 20);
                     author = string.IsNullOrWhiteSpace(author) ? "未知" : author;
                     <div class="col-md-4 px-2 my-2">
-                        <div class="card border-0" style="box-shadow:1px 1px 3px 1px #ccc">
+                        <div class="card border-0" style="box-shadow:0 1px 2px 1px #ddd">
                             <a class="card-img-top" asp-action="@TempData["DetailPage"]" asp-controller="Video" asp-route-id="@item.Id" target="_blank">
                                 <img src="@item.ThumbnailUrl" style="max-height:200px;width:100%" />
                             </a>
@@ -157,14 +158,20 @@
         <section name="blogs" class="row">
             @foreach (var blog in Model.BlogList)
             {
-                <div class="col-lg-6 mt-2 p-2 pl-4">
-                    <h5>
-                        <a class="text-dark" asp-action="Blog" asp-route-id="@blog.Id">@blog.Title</a>
-                    </h5>
-                    <small class="text-muted">
-                        @blog.AuthorName @blog.CreatedTime.ToString("yyyy-MM-dd H:mm")
-                        &nbsp;&nbsp;@(blog.Views == null ? "" : "浏览:" + blog.Views)
-                    </small>
+                <div class="col-lg-12 mt-2 px-4 pt-2 bg-white" style="border-left:2px solid dodgerblue">
+                    <div class="justify-content-between row m-0">
+                        <h5>
+                            <a class="text-info" asp-action="Blog" asp-route-id="@blog.Id">@blog.Title</a>
+                        </h5>
+                        <small class="text-muted">
+                            @blog.AuthorName @blog.CreatedTime.ToString("yyyy-MM-dd H:mm")
+                            &nbsp;&nbsp;@(blog.Views == null ? "" : "浏览: " + blog.Views)
+                        </small>
+                    </div>
+                    <p class="text-dark" style="text-indent:0">
+                        @blog.Description
+                    </p>
+
                 </div>
             }
         </section>
@@ -181,8 +188,7 @@
             $("select[name='SecondaryNavs']").change(function () {
                 var navId = $(this).val();
                 location.href = `/Learn?navId=${navId}
-                    &topCatalogId=@Context.Request.Query["topCatalogId"]
-                    &type=@TempData["learnType"]`;
+                    &topCatalogId=@Context.Request.Query["topCatalogId"]`;
             });
 
         });

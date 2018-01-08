@@ -1,8 +1,9 @@
 
 body {
-    background: rgba(255, 255, 250, 1);
-    font-family: 'Segoe UI', 微软雅黑,Tahoma, Geneva, Verdana, sans-serif
+    background: #f4f4f4;
+    font-family: 'Segoe UI', "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif
 }
+
 button, a {
     cursor: pointer !important;
 }
@@ -22,8 +23,8 @@ p {
 
 
 
-.min-height6{
-    min-height:600px;
+.min-height6 {
+    min-height: 600px;
 }
 
 /*==============*/
@@ -83,8 +84,9 @@ img.bingnews-small {
 }
 
 .nav-search {
-    background-color: #464949 !important;
-    color: #eee !important;
+    border: none;
+    border-bottom: 1px solid #eee;
+    color: Highlight !important;
 }
 /*主页视频*/
 .video-banner {
@@ -92,6 +94,7 @@ img.bingnews-small {
     width: 100%;
     height: auto;
     cursor: pointer;
+    border: 1px solid #eee;
 }
 
     .video-banner > .video-banner-img {
@@ -111,8 +114,8 @@ img.bingnews-small {
         left: 0;
         z-index: 9;
         color: white;
-        opacity: 0.66;
-        background-color: #000000;
+        opacity: 0.6;
+        background-color: #000;
     }
 
 /*搜索结果 */
@@ -124,7 +127,7 @@ img.bingnews-small {
 }
 
 .scrst-title {
-    color: dodgerblue;
+    color: #333;
 }
 
 .scrst-content {
@@ -142,7 +145,7 @@ img.bingnews-small {
 
 /*文章详情*/
 .article-content {
-    background: #fafaf1;
+    background-color: #fff;
     overflow-wrap: normal;
     overflow: auto;
 }
@@ -151,11 +154,12 @@ img.bingnews-small {
     font-size: 1.1rem;
 }
 
-    .document-card:hover, .document-card:hover > a{
+    .document-card:hover, .document-card:hover > a {
         color: white !important;
         background-color: dodgerblue;
     }
-        .document-card:hover > a span.badge-light{
+
+        .document-card:hover > a span.badge-light {
             color: white !important;
             background-color: dodgerblue;
         }
@@ -167,7 +171,7 @@ ul.learn-nav {
     margin-bottom: 0;
     padding: 0 12px;
     padding-left: 0;
-    border:1px solid #eee;
+    border: 1px solid #eee;
     border-left: 4px solid dodgerblue;
     background-color: white;
 }

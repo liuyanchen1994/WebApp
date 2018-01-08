@@ -6,26 +6,37 @@
     var blogList = Model.MsBlogs;
     var downloadList = Model.Downloads;
     var documentList = Model.Documents;
+    var videoList = Model.Videos;
     var mvaVideoList = Model.MvaVideos;
-    var c9VideoList = Model.C9Videos;
     var selfNews = Model.SelfNews;
-    var mvaVideo1 = mvaVideoList[0];
-    var mvaVideo2 = mvaVideoList[1];
-    var mvaVideo3 = mvaVideoList[2];
+    var video1 = videoList[0];
+    var video2 = videoList[1];
+    var video3 = videoList[2];
 }
-
+<style>
+    .card{
+        border:none;
+        border-top:3px solid #47a4f3;
+        border-left:1px dashed #eee;
+        border-right:1px dashed #eee;
+    }
+    .card-header{
+        background-color:#fafafa;
+        border:none;
+    }
+</style>
 <!--左边主体内容-->
 <div class="row">
     <div class="col-md-8">
         <!--新闻-->
         @if (selfNews.Count > 0)
         {
-            <div class="row mb-2 mt-2 py-2" style="background-color:#fff;border:1px solid #ddd">
+            <div class="row mb-2 mt-2 py-2 bg-white" style="border-top:3px solid #bf1bd8">
+                
                 @foreach (var news in selfNews)
                 {
                     <div class="col-md-6">
-                        <h5>
-
+                        <h5 class="m-0">
                             <a asp-controller="Article" asp-action="Detail" asp-route-id="@news.Id" style="color:black !important;">
                                 <strong>
                                     @news.Title
@@ -36,13 +47,14 @@
                 }
             </div>
         }
-
         <!--推荐视频 -->
         <div class="row mb-2">
             <div class="card col-12 p-0">
                 <div class="card-header p-2 d-flex justify-content-between">
                     <div class="col">
-                        推荐视频
+                        <strong>
+                            推荐视频
+                        </strong>
                     </div>
                     <div class="col text-right">
                         <a asp-action="Index" asp-controller="Learn">查看更多</a>
@@ -50,26 +62,26 @@
                 </div>
                 <div class="card-text">
 
-                    <!--MVA视频-->
+                    <!--教学视频-->
                     <div class="row">
                         <div class="col-md-8 m-0">
                             <div class="video-banner">
-                                <a class="video-banner-img" asp-action="MvaDetail" asp-controller="Video" asp-route-id="@mvaVideo1.Id" target="_blank">
-                                    <img src="@mvaVideo1.CourseImage" alt="@mvaVideo1.Title"/>
+                                <a class="video-banner-img" asp-action="Detail" asp-controller="Video" asp-route-id="@video1.Id" target="_blank">
+                                    <img src="@video1.ThumbnailUrl" alt="@video1.Name"/>
                                 </a>
                                 <div class="video-banner-content p-1">
                                     <h5 class="content-title">
-                                        @mvaVideo1.Title
+                                        @video1.Name
                                     </h5>
                                     <div class="content-detail">
                                         <small>
                                             <span class="text-light">
                                                 作者:
                                                 <span class="text-light">
-                                                    @mvaVideo1.Author
+                                                    @video1.Author
                                                 </span>
                                                 &nbsp;&nbsp;
-                                                @mvaVideo1.UpdatedTime.ToString("yyyy-MM-dd")
+                                                @video1.UpdatedTime.ToString("yyyy-MM-dd")
                                             </span>
                                         </small>
                                     </div>
@@ -78,44 +90,44 @@
                         </div>
                         <div class="col-md-4">
                             <div class="video-banner">
-                                <a class="video-banner-img" asp-action="MvaDetail" asp-controller="Video" asp-route-id="@mvaVideo2.Id" target="_blank">
-                                    <img src="@mvaVideo2.CourseImage" alt="@mvaVideo2.Title"/>
+                                <a class="video-banner-img" asp-action="Detail" asp-controller="Video" asp-route-id="@video2.Id" target="_blank">
+                                    <img src="@video2.ThumbnailUrl" alt="@video2.Name"/>
                                 </a>
                                 <div class="video-banner-content p-1">
                                     <h7 class="content-title">
-                                        @mvaVideo2.Title
+                                        @video2.Name
                                     </h7>
                                     <div class="content-detail" hidden>
                                         <small>
                                             <span class="text-light">
                                                 作者:
                                                 <span class="text-light">
-                                                    @mvaVideo2.Author
+                                                    @video2.Author
                                                 </span>
                                                 &nbsp;&nbsp;
-                                                @mvaVideo2.UpdatedTime.ToString("yyyy-MM-dd")
+                                                @video2.UpdatedTime.ToString("yyyy-MM-dd")
                                             </span>
                                         </small>
                                     </div>
                                 </div>
                             </div>
                             <div class="video-banner mt-3">
-                                <a class="video-banner-img" asp-action="MvaDetail" asp-controller="Video" asp-route-id="@mvaVideo3.Id" target="_blank">
-                                    <img src="@mvaVideo3.CourseImage"  alt="@mvaVideo3.Title"/>
+                                <a class="video-banner-img" asp-action="Detail" asp-controller="Video" asp-route-id="@video3.Id" target="_blank">
+                                    <img src="@video3.ThumbnailUrl"  alt="@video3.Name"/>
                                 </a>
                                 <div class="video-banner-content p-1">
                                     <h7 class="content-title">
-                                        @mvaVideo3.Title
+                                        @video3.Name
                                     </h7>
                                     <div class="content-detail" hidden>
                                         <small>
                                             <span class="text-light">
                                                 作者:
                                                 <span class="text-light">
-                                                    @mvaVideo3.Author
+                                                    @video3.Author
                                                 </span>
                                                 &nbsp;&nbsp;
-                                                @mvaVideo3.UpdatedTime.ToString("yyyy-MM-dd")
+                                                @video3.UpdatedTime.ToString("yyyy-MM-dd")
                                             </span>
                                         </small>
                                     </div>
@@ -125,15 +137,15 @@
                         </div>
                     </div>
 
-                    <!--c9视频-->
+                    <!--mva视频-->
                     <div class="row mt-3">
-                        @foreach (var video in c9VideoList)
+                        @foreach (var video in mvaVideoList)
                         {
                             video.SourceUrl = "https://channel9.msdn.com" + video.SourceUrl;
                             <div class="col-md-4">
                                 <div class="video-banner">
                                     <a class="video-banner-img" asp-action="C9Detail" asp-controller="Video" asp-route-id="@video.Id" target="_blank">
-                                        <img src="@video.ThumbnailUrl"  alt="@video.Title"/>
+                                        <img src="@video.CourseImage"  alt="@video.Title"/>
                                     </a>
                                     <div class="video-banner-content p-1">
                                         <h7 class="content-title">
@@ -167,7 +179,9 @@
             <div class="card col-md-6 p-0">
                 <div class="card-header p-2 d-flex justify-content-between">
                     <div class="col">
-                        最新资讯
+                        <strong>
+                            最新资讯
+                        </strong>
                     </div>
                     <div class="col text-right">
                         <a asp-action="Index" asp-controller="News">查看更多</a>
@@ -207,7 +221,9 @@
             </div>
             <div class="card col-md-6 p-0">
                 <div class="card-header p-2">
-                    官方博客
+                    <strong>
+                        官方博客
+                    </strong>
                 </div>
                 <div class="card-block p-1">
                     @foreach (var blog in blogList)
@@ -240,13 +256,16 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 mt-2">
         <!--推荐下载-->
-        <div class="card mb-1">
+        <div class="card mb-1 p-0" style="overflow:hidden">
             <div class="card-block p-0">
-                <div class="p-2 d-flex justify-content-between" style="border-bottom:1px solid #cccccc">
+                <div class="p-2 d-flex justify-content-between card-header">
                     <div class="col">
-                        推荐下载
+                        <strong>
+                            推荐下载
+                        </strong>
+                        
                     </div>
                     <div class="col text-right">
                         <a asp-controller="Download" asp-action="">更多</a>
@@ -270,9 +289,11 @@
         <!--推荐文档-->
         <div class="card mb-1">
             <div class="card-block p-0">
-                <div class="p-2 d-flex justify-content-between" style="border-bottom:1px solid #cccccc">
+                <div class="p-2 d-flex justify-content-between card-header">
                     <div class="col">
-                        快捷文档
+                        <strong>
+                            快捷文档
+                        </strong>
                     </div>
                     <div class="col text-right">
                         <a asp-controller="Document" asp-action="">更多</a>
@@ -297,10 +318,17 @@
         <!--推荐服务-->
         <div class="card mb-1">
             <div class="card-block p-0 text-center">
-                <h5 class="p-2 text-left" style="border-bottom:1px solid #cccccc">推荐服务</h5>
-                <a href="http://www.qcloud.com/redirect.php?redirect=1001&cps_key=8451e9a1ec4d14dec1cd821e079065c1" target="_blank">
-                    <img src="https://msdevccdiag579.blob.core.windows.net/msdev-image/txcloud.jpg" title="腾讯云主机"  alt="腾讯云主机"/>
-                </a>
+                <div class="p-2 text-left card-header">
+                    <strong>
+                        推荐服务
+                    </strong>
+                </div>
+                <div class="p-2">
+                    <a href="http://www.qcloud.com/redirect.php?redirect=1001&cps_key=8451e9a1ec4d14dec1cd821e079065c1" target="_blank">
+                        <img src="https://msdevccdiag579.blob.core.windows.net/msdev-image/txcloud.jpg" title="腾讯云主机" alt="腾讯云主机" width="100%"/>
+                    </a>
+                </div>
+         
             </div>
         </div>
     </div>
