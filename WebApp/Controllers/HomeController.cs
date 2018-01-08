@@ -51,8 +51,8 @@ namespace WebApp.Controllers
                  .Take(3)
                  .ToList();
 
-            var c9Videos = _context.C9videos
-                 .OrderByDescending(m => m.UpdatedTime)
+            var Videos = _context.Video
+                 .OrderByDescending(m => m.CreatedTime)
                  .Take(3)
                  .ToList();
 
@@ -75,7 +75,7 @@ namespace WebApp.Controllers
                 Downloads = downloads,
                 Documents = documents,
                 MvaVideos = mvaVideos,
-                C9Videos = c9Videos,
+                Videos = Videos,
                 SelfNews = selfNews
             };
             return View(data);
@@ -89,13 +89,13 @@ namespace WebApp.Controllers
         /// <returns></returns>
         public IActionResult Search(string keyword)
         {
-            if (string.IsNullOrWhiteSpace(keyword) || keyword.Length < 3)
+            keyword = keyword.Trim();
+            if (string.IsNullOrWhiteSpace(keyword) || keyword.Length < 2)
             {
                 return RedirectToAction("Index");
             }
 
-            Console.WriteLine(keyword);
-            //搜索资源 (文档、下载)
+            // 搜索资源 (文档、下载)
             var resource = _context.Resource
                 .OrderByDescending(m => m.CreatedTime)
                 .Where(m => m.Tag.Contains(keyword) || m.Name.Contains(keyword))
@@ -104,9 +104,17 @@ namespace WebApp.Controllers
                   .ThenInclude(m => m.TopCatalog)
                 .ToList();
 
-            //搜索视频 
+            // 搜索站内博客及视频
+            var blogs = _context.Blog
+                .Where(m => m.Title.Contains(keyword))
+                .ToList();
+            var videos = _context.Video
+                .Where(m => m.Name.Contains(keyword))
+                .ToList();
+
+            // 搜索视频 
             var search = new BingCustomSearchServices(CognitveOptions);
-            var videos = search.SearchVideo(keyword, count: 20)?
+            var searchVideos = search.SearchVideo(keyword, count: 20)?
                 .Where(v => v.OpenGraphImage != null)
                 .Take(10)
                 .ToList();
@@ -116,7 +124,9 @@ namespace WebApp.Controllers
                 new SearchViewModel
                 {
                     ResourceList = resource,
+                    SearchVideoList = searchVideos,
                     VideoList = videos,
+                    BlogList = blogs,
                     AnswerList = answers
                 });
         }

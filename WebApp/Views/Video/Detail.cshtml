@@ -31,19 +31,19 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4 py-3 bg-light" style="border-left:1px solid #ddd">
+    <div class="col-md-4 py-3 bg-white" style="border-left:1px solid #ddd">
         <h6 class="text-primary">
             视频介绍:
         </h6>
-        <p>
+        <p class="bg-light">
             @Html.Raw(Model.Description)
         </p>
 
         <h6 class="text-primary">
             课后习题:
         </h6>
-        <p>
-            @Model.Practice.Content
+        <p class="bg-light py-2">
+            @Html.Raw(Model.Blog?.Practice?.Content.Replace("\n", "</br>"))
         </p>
     </div>
 </div>

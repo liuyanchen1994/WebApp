@@ -6,24 +6,34 @@
 <style>
     .editormd-html-preview {
         background-color: transparent !important;
-        font-size:16px !important;
+        font-size: 16px !important;
     }
+
     p {
         text-indent: 0 !important;
     }
 </style>
-<div class="row">
+<div class="row my-2">
     <section name="article" class="article-content p-2 col-lg-9">
-        <h4 class="text-center my-2">
-            @Model.Blog.Title
-        </h4>
-        <div class="pl-3">
-            <span class="text-info">
-                作者:@Model.Blog.AuthorName
-            </span>
-            <span class="text-muted">
-                @Model.Blog.CreatedTime
-            </span>
+        <h3 class="text-center my-2">
+            <strong>
+                @Model.Blog.Title
+            </strong>
+        </h3>
+        <div class="pl-3 text-center mt-3">
+            <small>
+                <span class="text-info">
+                    作者:@Model.Blog.AuthorName
+                    &nbsp;&nbsp;
+                </span>
+                <span class="text-muted">
+                    @Model.Blog.CreatedTime.ToString("yyyy-MM-dd H:mm")
+                </span>
+                <span class="text-muted">
+                    &nbsp;&nbsp;
+                    (@Model.Blog.Views)
+                </span>
+            </small>
         </div>
         <div id="content" style="display: none;">@Model.Blog.Content</div>
         <div class="my-2" id="mk-content">
@@ -42,9 +52,9 @@
             }
             @if (Model.Blog.Practice != null)
             {
-                <h6>对应实践：</h6>
-                <p>
-                    <a asp-controller="Practice" asp-action="Detail" asp-route-id="@Model.Blog.Practice.Id">@Model.Blog.Practice.Title</a>
+                <h6>实践内容:</h6>
+                <p class="bg-light py-2">
+                    @Html.Raw(Model.Blog.Practice.Content.Replace("\n", "</br>"))
                 </p>
             }
             @if (Model.RelateBlogs?.Count > 0)
