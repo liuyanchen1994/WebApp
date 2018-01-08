@@ -145,7 +145,7 @@ img.bingnews-small {
 
 /*文章详情*/
 .article-content {
-    background: #fafaf1;
+    background-color: #fff;
     overflow-wrap: normal;
     overflow: auto;
 }
