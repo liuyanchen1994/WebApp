@@ -30,7 +30,6 @@ namespace WebApp.Controllers
             {
                 resource = _context.Resource
                     .Where(m=>m.Catalog.Type.Equals("文档"))
-                    .Take(10)
                     .ToList();
             }
 
