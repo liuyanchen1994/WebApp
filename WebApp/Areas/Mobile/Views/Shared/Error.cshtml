@@ -1,0 +1,24 @@
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "异常错误";
+}
+<h1 class="text-danger">中奖了.</h1>
+<h2 class="text-danger">遇到了未处理的程序异常！</h2>
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>Request ID:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+<h3>如何处理？</h3>
+<p>
+    提交错误，举手之劳，为社区做出贡献！
+</p>
+<p>
+    你可以选择无视该错误。如果该错误影响了你的正常操作。你可以选择
+    <strong><a href="mailto:zpty@outlook.com">提交错误!</a></strong>
+    <span class="text-danger">
+        重要：描述发生错误进行的操作，提交发生错误的url。
+    </span>
+</p>

@@ -1,0 +1,28 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <ul class="navbar-nav">
+        <li>
+            <a asp-controller="Manage" class="nav-link text-muted">
+                <span>@UserManager.GetUserName(User)</span>
+            </a>
+        </li>
+        <li>
+            <a class="nav-link text-muted" asp-controller="Account" asp-action="Logout">退出</a>
+        </li>
+    </ul>
+}
+else
+{
+    <ul class="navbar-nav">
+        <li>
+            <a class="nav-link text-muted" asp-controller="Account" asp-action="Login">登录</a>
+        </li>
+        <li>
+            <a class="nav-link text-muted" asp-controller="Account" asp-action="Register">注册</a>
+        </li>
+    </ul>
+}

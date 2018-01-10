@@ -291,10 +291,10 @@ namespace WebApp.Controllers
             TempData["language"] = language;
             return RedirectToAction(nameof(Index), new
             {
-                topCatalogId = topCatalogId,
-                navId = navId,
+                topCatalogId,
+                navId,
                 type = learnType,
-                eventId = eventId
+                eventId
             });
         }
 

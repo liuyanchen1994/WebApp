@@ -15,7 +15,6 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
-using WebApp.Areas.Community.Data;
 using WebApp.DB;
 using WebApp.Models;
 using WebApp.Services;
@@ -36,9 +35,6 @@ namespace WebApp
             //string connectionString = Configuration.GetConnectionString("DefaultConnection");
             string connectionString = Configuration.GetConnectionString("OnlineConnection");
             services.AddDbContext<MSDevContext>(options => options.UseSqlServer(connectionString));
-
-            var communityConnection = Configuration.GetConnectionString("CommunityConnection");
-            services.AddEntityFrameworkNpgsql().AddDbContext<CommunityContext>(options => options.UseNpgsql(communityConnection));
 
             services.AddIdentity<User, IdentityRole>(config =>
             {
@@ -141,14 +137,11 @@ namespace WebApp
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "areas",
+                    name: "area",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                 );
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}");
-                routes.MapRoute(
-                    name: "default-id",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
