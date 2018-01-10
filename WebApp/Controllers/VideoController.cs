@@ -118,10 +118,16 @@ namespace WebApp.Controllers
             //暂时兼容旧链接
             if (video == null)
             {
-                return RedirectToAction(nameof(MvaDetail), new { id = id });
+                return RedirectToAction(nameof(MvaDetail), new { id });
             }
-
-            video.Views++;
+            if (video.Views == null)
+            {
+                video.Views = 1;
+            }
+            else
+            {
+                video.Views++;
+            }
             _context.Update(video);
             _context.SaveChanges();
             return View(video);

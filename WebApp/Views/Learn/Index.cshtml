@@ -85,7 +85,7 @@
     </div>
 
     <div class="col col-md-10">
-        <form asp-action="SetFilter" class="row bg-white justify-content-between form-inline text-dark py-1" >
+        <form asp-action="SetFilter" class="row bg-white justify-content-between form-inline text-dark py-1">
             <input type="hidden" name="topCatalogId" value="@Context.Request.Query["topCatalogId"]" />
             <input type="hidden" name="navId" value="@Context.Request.Query["navId"]" />
             <input type="hidden" name="learnType" value="@TempData["learnType"]" />
@@ -122,24 +122,27 @@
                     //处理作者
                     var author = StringHelper.SubString(item.Author, 20);
                     author = string.IsNullOrWhiteSpace(author) ? "未知" : author;
-                    <div class="col-md-4 px-2 my-2">
-                        <div class="card border-0" style="box-shadow:0 1px 2px 1px #ddd">
+                    <div class="col-md-4 px-3 my-2">
+                        <div class="card border-0 my-1" style="box-shadow:0 1px 2px 1px #ddd;">
                             <a class="card-img-top" asp-action="@TempData["DetailPage"]" asp-controller="Video" asp-route-id="@item.Id" target="_blank">
-                                <img src="@item.ThumbnailUrl" style="max-height:200px;width:100%" />
+                                <img src="@item.ThumbnailUrl" style="max-height:200px;width:100%;border-radius:5px 5px 2px 2px !important" />
                             </a>
                             <div class="card-body p-1">
                                 <h6 class="card-title mb-0">
                                     <a class="text-dark" asp-action="@TempData["DetailPage"]" asp-controller="Video" asp-route-id="@item.Id" target="_blank">
-                                        @Html.Raw(@item.Name)
+                                        <strong>
+                                            @Html.Raw(@item.Name)
+                                        </strong>
                                     </a>
                                 </h6>
                                 <div class="card-text justify-content-between d-flex">
-                                    <div class="text-info">
-                                        <small>
-                                            作者:
+                                    <div>
+                                        <small class="text-info">
                                             <span class="" title="@item.Author">
                                                 @author
                                             </span>
+                                            &nbsp;&nbsp;
+                                            <span class="text-muted">浏览：@item.Views</span>
                                         </small>
                                     </div>
                                     <div class="text-muted">
