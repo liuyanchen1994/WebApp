@@ -10,7 +10,7 @@ using WebApp.Models.ViewModels;
 using WebApp.DB;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApp.Controllers
+namespace WebApp.Areas.Mobile.Controllers
 {
     public class BlogController : Controller
     {

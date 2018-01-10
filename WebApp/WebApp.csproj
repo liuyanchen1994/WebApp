@@ -47,5 +47,11 @@
     <ItemGroup>
       <None Include="appsettings.Development.json" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Areas\Mobile\Views\Video\" />
+      <Folder Include="Areas\Mobile\Views\News\" />
+      <Folder Include="Areas\Mobile\Views\Blog\" />
+      <Folder Include="Areas\Mobile\Views\Document\" />
+    </ItemGroup>
 </Project>
         
