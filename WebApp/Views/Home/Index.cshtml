@@ -21,7 +21,7 @@
         border-right:1px dashed #eee;
     }
     .card-header{
-        background-color:#fafafa;
+        background-color:#eee;
         border:none;
     }
 </style>
@@ -32,17 +32,16 @@
         @if (selfNews.Count > 0)
         {
             <div class="row mb-2 mt-2 py-2 bg-white" style="border-top:3px solid #bf1bd8">
-                
                 @foreach (var news in selfNews)
                 {
                     <div class="col-md-6">
-                        <h5 class="m-0">
+                        <h6 class="m-0">
                             <a asp-controller="Article" asp-action="Detail" asp-route-id="@news.Id" style="color:black !important;">
                                 <strong>
                                     @news.Title
                                 </strong>
                             </a>
-                        </h5>
+                        </h6>
                     </div>
                 }
             </div>
@@ -60,11 +59,10 @@
                         <a asp-action="Index" asp-controller="Learn">查看更多</a>
                     </div>
                 </div>
-                <div class="card-text">
-
+                <div class="card-text p-2 bg-light">
                     <!--教学视频-->
                     <div class="row">
-                        <div class="col-md-8 m-0">
+                        <div class="col-md-8">
                             <div class="video-banner">
                                 <a class="video-banner-img" asp-action="Detail" asp-controller="Video" asp-route-id="@video1.Id" target="_blank">
                                     <img src="@video1.ThumbnailUrl" alt="@video1.Name"/>
