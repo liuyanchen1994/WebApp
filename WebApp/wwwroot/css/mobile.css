@@ -1,0 +1,57 @@
+
+@font-face {
+    font-family: "iconfont";
+    src: url('//at.alicdn.com/t/font_540799_q4ftrz45tv0cz0k9.eot?t=1515818210988'); /* IE9*/
+    src: url('//at.alicdn.com/t/font_540799_q4ftrz45tv0cz0k9.eot?t=1515818210988#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('data:application/x-font-woff;charset=utf-8;base64,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') format('woff'), url('//at.alicdn.com/t/font_540799_q4ftrz45tv0cz0k9.ttf?t=1515818210988') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+    url('//at.alicdn.com/t/font_540799_q4ftrz45tv0cz0k9.svg?t=1515818210988#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-backicon1:before {
+    content: "\e937";
+}
+
+.icon-group:before {
+    content: "\e651";
+}
+
+.icon-news:before {
+    content: "\e61a";
+}
+
+.icon-video:before {
+    content: "\e977";
+}
+
+.icon-document:before {
+    content: "\e63d";
+}
+
+.bn-menu {
+    cursor: pointer;
+}
+
+.bn-menu-icon .iconfont {
+    font-size: 32px;
+}
+
+.bn-menu-title a {
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.title-bar {
+    text-align: center;
+    font-size: 20px !important;
+    height: 40px;
+    padding: 4px;
+    box-shadow: 0 1px 1px 1px #eee;
+}

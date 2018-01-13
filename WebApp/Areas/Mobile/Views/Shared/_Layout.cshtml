@@ -13,7 +13,7 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/mobile.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css"
@@ -26,71 +26,73 @@
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
-    <nav class="navbar navbar-expand-md bg-white">
-        <div class="container">
-            <a class="navbar-brand app-title text-dark" href="/">MSDev</a>
-            <div class="d-flex d-block d-sm-none">
-                <input class="form-control mr-sm-2 nav-search search-input" type="text" placeholder="资源/问题/视频" aria-label="Search">
+    <!--标题栏-->
+    <div class="container-fluid ">
+        <div class="row title-bar">
+            <div class="col-2">
+                <!--返回按钮-->
+                <i class="iconfont icon-backicon1"></i>
             </div>
-            <button class="navbar-toggler navbar-toggler-right navbar-light" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="nav navbar-nav mr-auto">
-                    <li><a class="nav-link text-dark" asp-controller="News" asp-action="Index">资讯</a></li>
-                    @*<li class="dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="dorpdownResource">资源</a>
-                            <div class="dropdown-menu" aria-labelledby="dorpdownResource">
-                                <a class="dropdown-item" asp-controller="Download" asp-action="Index">下载</a>
-                            </div>
-                        </li>*@
-                    <li><a class="nav-link text-dark" asp-controller="Learn" asp-action="Index">学习</a></li>
-                    <li>
-                        <a class="nav-link text-dark" asp-controller="Document" asp-action="Index">文档</a>
-                    </li>
-                    <li>@*<a class="nav-link" asp-controller="Activity" asp-action="Index">活动</a>*@</li>
-                    <li><a class="nav-link text-muted" asp-controller="Home" asp-action="About">关于</a></li>
-                </ul>
-                <div class="d-none d-md-block">
-                    <input class="form-control mr-sm-2 nav-search search-input" type="text" placeholder="资源/问题/视频" aria-label="Search">
-                </div>
-                @Html.Partial("_LoginPartial")
+            <div class="col-8">
+                @ViewData["Title"]
             </div>
-
+            <div class="col-2">
+                <!--功能按钮-->
+                <span></span>
+            </div>
         </div>
-    </nav>
-    <div class="@ViewData["Container"]" style="padding-bottom:60px;">
-        @RenderBody()
-
     </div>
-    <div class="container-fluid bg-white py-3" style="position:fixed;bottom:0;border-top:1px solid #f4f4f4">
-        <footer class="container">
-            <div class="row justify-content-between">
-                <div class="col-md-6">
-                    &copy;
-                    2017 - MSDev.cc
-                    &nbsp;&nbsp;
-                    <a class="" target="_blank"
-                       href="//shang.qq.com/wpa/qunwpa?idkey=ebbb97aa70518e014b2539f45005e1c67f8d8f893794968ec4245b96516a079e">
-                        <img id="qq_group" border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="MSDev社区" title="加入MSDev社区群">
-                    </a>
-                </div>
-                <div col-md-6>
-                    <span>
-                        <a href="https://www.microsoft.com/net/core" target="_blank">.Net Core</a>
-                        生态驱动
-                    </span>
-                    &nbsp;&nbsp;
-                    <span>
-                        <a href="https://azure.microsoft.com/zh-cn/" target="_blank">Azure</a>
-                        云服务支持
-                    </span>
+    <!--内容-->
+    <div class="container-fluid">
+        <div class="row p-2">
+            @RenderBody()
+        </div>
+    </div>
+    <!--底部导航-->
+    <footer class="container-fluid bg-white " style="position:fixed;bottom:0;border-top:1px solid #f4f4f4">
+        <div class="row  text-center">
+            <div class="col-3 ">
+                <div class="bn-menu">
+                    <div class="bn-menu-icon">
+                        <i class="iconfont icon-news"></i>
+                    </div>
+                    <div class="bn-menu-title">
+                        资讯
+                    </div>
                 </div>
             </div>
-        </footer>
-    </div>
+            <div class="col-3 ">
+                <div class="bn-menu">
+                    <div class="bn-menu-icon">
+                        <i class="iconfont icon-document"></i>
+                    </div>
+                    <div class="bn-menu-title">
+                        文档
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 flex-column">
+                <div class="bn-menu">
+                    <div class="bn-menu-icon">
+                        <i class="iconfont icon-video"></i>
+                    </div>
+                    <div class="bn-menu-title">
+                        视频
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 flex-column">
+                <div class="bn-menu">
+                    <div class="bn-menu-icon">
+                        <i class="iconfont icon-group"></i>
+                    </div>
+                    <div class="bn-menu-title">
+                        社区
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
     <environment include="Development">
         <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
                 integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -115,14 +117,5 @@
 </body>
 </html>
 <script>
-    $(document).ready(function () {
-        $(".search-input").keyup(function (event) {
-            var keyword = $(this).val();
-            if (event.keyCode == 13) {
-                if (keyword.length >= 2) {
-                    location.href = "/Home/Search?keyword=" + encodeURIComponent(keyword);
-                }
-            }
-        });
-    });
+
 </script>

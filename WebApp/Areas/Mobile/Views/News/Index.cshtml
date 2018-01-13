@@ -1,0 +1,32 @@
+@using WebApp.Areas.Mobile.Models
+@model NewsViewModel
+@{
+    ViewData["Title"] = "资讯";
+}
+
+<div class="col-sm-12 p-0">
+    @foreach (var bingNews in Model.BingNewsList)
+    {
+        var Url = HttpUtility.ParseQueryString(new Uri(bingNews.Url).Query);
+
+        <div class="row news-list bg-white m-0 mb-2">
+            <div class="col-auto p-1 align-self-center">
+                <a href="@Url["r"]" target="_blank">
+                    <img class="bingnews" src="@bingNews.ThumbnailUrl" alt="" width="64px">
+                </a>
+            </div>
+            <div class="col p-1">
+                <div class="news-title">
+                    <a href="@Url["r"]" target="_blank" style="color:#111">
+                        @bingNews.Title
+                    </a>
+                </div>
+                <div class="news-sectitle">
+                    <small class="text-muted">
+                        @bingNews.UpdatedTime @bingNews.Provider
+                    </small>
+                </div>
+            </div>
+        </div>
+    }
+</div>
