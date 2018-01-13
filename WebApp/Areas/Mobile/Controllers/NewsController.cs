@@ -1,41 +1,36 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
-using Newtonsoft.Json;
-using WebApp.Models.Common;
-using WebApp.Models.ViewModels;
 using WebApp.DB;
+using WebApp.Areas.Mobile.Models;
 
 namespace WebApp.Areas.Mobile.Controllers
 {
-    public class NewsController : Controller
+    public class NewsController : MobileController
     {
         readonly MSDevContext _context;
         public NewsController(MSDevContext context)
         {
             _context = context;
         }
-        public IActionResult Index(string tag)
+        public IActionResult Index(string tag = "科技")
         {
-
             var query = _context.BingNews.OrderByDescending(m => m.CreatedTime)
                 .AsQueryable();
 
             var tags = _context.BingNews.Select(m => m.Tags)
                 .Distinct()
                 .ToList();
+
             if (!string.IsNullOrWhiteSpace(tag))
             {
                 query = query.Where(m => m.Tags.Equals(tag));
             }
 
-            var data = new NewsViewModels
+            var data = new NewsViewModel
             {
                 BingNewsList = query
-                   .Take(20)
+                   .Take(32)
                    .ToList(),
                 Tags = tags
             };

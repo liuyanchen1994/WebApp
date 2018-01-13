@@ -1,1 +1,14 @@
-123
+@using WebApp.Areas.Mobile.Models
+@model NewsViewModel
+@{
+    ViewData["Title"] = "资讯";
+}
+
+<div class="col-auto">
+    <div class="row">
+        @foreach (var item in Model.BingNewsList)
+        {
+            @item.Title
+        }
+    </div>
+</div>

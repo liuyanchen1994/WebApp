@@ -18,14 +18,16 @@ namespace WebApp.Areas.Mobile.Controllers
         readonly IOptions<CognitiveOptions> CognitveOptions;
 
         public HomeController(MSDevContext context,
-            IOptions<CognitiveOptions> options) 
+            IOptions<CognitiveOptions> options)
         {
             _context = context;
             CognitveOptions = options;
         }
+
+
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction(nameof(NewsController.Index), "News");
         }
 
     }
