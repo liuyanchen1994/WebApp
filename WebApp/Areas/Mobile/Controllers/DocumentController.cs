@@ -11,9 +11,7 @@ namespace WebApp.Areas.Mobile.Controllers
 {
     public class DocumentController : MobileController
     {
-        readonly MSDevContext _context;
-
-        public DocumentController(MSDevContext context)
+        public DocumentController(MSDevContext context) : base(context)
         {
             _context = context;
         }

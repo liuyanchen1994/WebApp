@@ -14,14 +14,9 @@ namespace WebApp.Areas.Mobile.Controllers
 {
     public class HomeController : MobileController
     {
-        readonly MSDevContext _context;
-        readonly IOptions<CognitiveOptions> CognitveOptions;
-
-        public HomeController(MSDevContext context,
-            IOptions<CognitiveOptions> options)
+        public HomeController(MSDevContext context):base(context)
         {
             _context = context;
-            CognitveOptions = options;
         }
 
 

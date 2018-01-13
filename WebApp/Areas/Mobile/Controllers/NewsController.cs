@@ -8,8 +8,7 @@ namespace WebApp.Areas.Mobile.Controllers
 {
     public class NewsController : MobileController
     {
-        readonly MSDevContext _context;
-        public NewsController(MSDevContext context)
+        public NewsController(MSDevContext context) : base(context)
         {
             _context = context;
         }
