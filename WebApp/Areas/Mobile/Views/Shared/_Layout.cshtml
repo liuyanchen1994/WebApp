@@ -52,7 +52,7 @@
     <footer class="container-fluid bg-white " style="position:fixed;bottom:0;border-top:1px solid #f4f4f4">
         <div class="row  text-center">
             <div class="col-3 ">
-                <div class="bn-menu">
+                <div class="bn-menu" data-menu="news">
                     <div class="bn-menu-icon">
                         <i class="iconfont icon-news"></i>
                     </div>
@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="col-3 ">
-                <div class="bn-menu">
+                <div class="bn-menu" data-menu="document">
                     <div class="bn-menu-icon">
                         <i class="iconfont icon-document"></i>
                     </div>
@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="col-3 flex-column">
-                <div class="bn-menu">
+                <div class="bn-menu" data-menu="video">
                     <div class="bn-menu-icon">
                         <i class="iconfont icon-video"></i>
                     </div>
@@ -82,7 +82,7 @@
                 </div>
             </div>
             <div class="col-3 flex-column">
-                <div class="bn-menu">
+                <div class="bn-menu" data-menu="community">
                     <div class="bn-menu-icon">
                         <i class="iconfont icon-group"></i>
                     </div>
@@ -117,5 +117,33 @@
 </body>
 </html>
 <script>
+    $(document).ready(function () {
+        // 导航链接
+        $(".bn-menu").click(function () {
+            const menuName = $(this).data("menu");
+            let navRoute = '/mobile';
+            switch (menuName) {
+                case 'news':
+                    navRoute += '/news';
+                    break;
+                case 'document':
+                    navRoute += '/document';
 
+                    break;
+                case 'video':
+                    navRoute += '/video';
+
+                    break;
+                case 'community':
+                    navRoute += '/community';
+                    break;
+                default:
+            }
+            location.href = navRoute;
+            console.log(menuName);
+        }
+        );
+
+
+    });
 </script>
