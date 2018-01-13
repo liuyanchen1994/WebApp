@@ -1,0 +1,75 @@
+@using WebApp.Areas.Mobile.Models
+@model VideoViewModel
+@{
+    ViewData["Title"] = "视频";
+}
+
+<div class="col-12">
+    <div class="row">
+        <select class="col-12 form-control" id="catalog">
+            <option value="">全部</option>
+            @foreach (var catalog in Model.SeriesList)
+            {
+                @foreach (var childCatalog in catalog.InverseTopCatalog)
+                {
+                    if (Context.Request.Query["id"] == childCatalog.Id.ToString())
+                    {
+                        <option value="@childCatalog.Id" selected>
+                            @childCatalog.Name
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@childCatalog.Id">
+                            @childCatalog.Name
+                        </option>
+                    }
+                }
+            }
+        </select>
+    </div>
+
+    @if (Model.VideoList != null)
+    {
+        <div class="row">
+            @foreach (var item in Model.VideoList)
+            {
+                //处理作者
+                var author = StringHelper.SubString(item.Author, 20);
+                author = string.IsNullOrWhiteSpace(author) ? "未知" : author;
+                <div class="col-12 my-1 p-1">
+                    <div class="card border-0 my-1" style="box-shadow:0 1px 2px 1px #ddd;">
+                        <a class="card-img-top" asp-action="@TempData["DetailPage"]" asp-controller="Video" asp-route-id="@item.Id" target="_blank">
+                            <img src="@item.ThumbnailUrl" style="max-height:200px;width:100%;border-radius:5px 5px 2px 2px !important" />
+                        </a>
+                        <div class="card-body p-1">
+                            <h6 class="card-title mb-0">
+                                <a class="text-dark" asp-action="@TempData["DetailPage"]" asp-controller="Video" asp-route-id="@item.Id" target="_blank">
+                                    <strong>
+                                        @Html.Raw(@item.Name)
+                                    </strong>
+                                </a>
+                            </h6>
+                            <div class="card-text justify-content-between d-flex">
+                                <div>
+                                    <small class="text-info">
+                                        <span class="" title="@item.Author">
+                                            @author
+                                        </span>
+                                        &nbsp;&nbsp;
+                                        <span class="text-muted">浏览：@item.Views</span>
+                                    </small>
+                                </div>
+                                <div class="text-muted">
+                                    <small>
+                                        @item.CreatedTime.ToString("yyyy-MM-dd")
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
