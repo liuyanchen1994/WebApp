@@ -12,9 +12,17 @@ using Microsoft.AspNetCore.Http;
 
 namespace WebApp.Areas.Mobile.Controllers
 {
+
     [Area("Mobile")]
     public class MobileController : Controller
     {
 
+        protected MSDevContext _context;
+
+        public MobileController(MSDevContext context)
+        {
+            //ViewData["backUrl"] = values.FirstOrDefault().ToString();
+            _context = context;
+        }
     }
 }

@@ -1,0 +1,46 @@
+@using System.Net
+@model Video
+@{
+    ViewData["Title"] = WebUtility.HtmlDecode(Model.Name);
+}
+
+<div class="col-12 p-0 bg-light text-dark">
+    <div>
+        @if (!string.IsNullOrEmpty(Model.Author))
+        {
+            <span class="text-info" style="font-size:0.9rem">
+                作者:
+                @Model.Author
+                &nbsp;&nbsp;
+                浏览:@Model.Views
+                &nbsp;&nbsp;
+                @Model.UpdatedTime.ToString("yyyy-MM-dd")
+            </span>
+        }
+    </div>
+    <video controls="controls" width="100%" autoplay class="my-2" poster="@Model.ThumbnailUrl">
+        <source src="@Model.Url" type="video/mp4" />
+    </video>
+    <div class="row">
+        <div class="col-md-12">
+            <a asp-controller="community" asp-action="blog" asp-route-id="@Model.Blog?.Id"
+               class="btn btn-sm btn-outline-dark">
+                关联文章
+            </a>
+        </div>
+    </div>
+</div>
+<div class="col-12 mt-2 bg-white p-1">
+    <h6 class="text-primary">
+        视频介绍:
+    </h6>
+    <p class="bg-light">
+        @Html.Raw(Model.Description)
+    </p>
+    @*<h6 class="text-primary">
+            课后习题:
+        </h6>
+        <p class="bg-light py-2">
+            @Html.Raw(Model.Blog?.Practice?.Content.Replace("\n", "</br>"))
+        </p>*@
+</div>

@@ -15,19 +15,18 @@ namespace WebApp.Areas.Mobile.Controllers
 
     public class VideoController : MobileController
     {
-        readonly MSDevContext _context;
-
-        public VideoController(MSDevContext context)
+        public VideoController(MSDevContext context) : base(context)
         {
             _context = context;
         }
 
+        [HttpGet]
         /// <summary>
         /// 视频主页
         /// </summary>
         /// <param name="id">系列id</param>
         /// <returns></returns>
-        public async Task<IActionResult> Index(Guid? id)
+        public IActionResult Index(Guid? id)
         {
             // 获取系列目录
             var series = _context.CataLog
@@ -67,9 +66,15 @@ namespace WebApp.Areas.Mobile.Controllers
             return View(data);
         }
 
+
+
         [HttpGet]
         public IActionResult Detail(Guid id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
             var video = _context.Video
                 .Where(m => m.Status == StatusType.Publish)
                 .Where(m => m.Id == id)

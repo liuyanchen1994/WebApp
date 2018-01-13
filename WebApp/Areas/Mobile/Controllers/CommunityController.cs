@@ -14,21 +14,53 @@ namespace WebApp.Areas.Mobile.Controllers
 {
     public class CommunityController : MobileController
     {
-        readonly MSDevContext _context;
-        readonly IOptions<CognitiveOptions> CognitveOptions;
 
-        public CommunityController(MSDevContext context,
-            IOptions<CognitiveOptions> options)
+        public CommunityController(MSDevContext context) : base(context)
         {
-            _context = context;
-            CognitveOptions = options;
-        }
 
+        }
 
         public IActionResult Index()
         {
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Blog(Guid id)
+        {
+
+            if (id == null) return NotFound();
+            var blog = _context.Blog
+                .Where(m => m.Id == id)
+                .Include(m => m.Catalog)
+                .Include(m => m.Video)
+                .Include(m => m.Practice)
+                .FirstOrDefault();
+
+            if (blog == null) return NotFound();
+
+            if (blog.Video?.Status != StatusType.Publish)
+            {
+                blog.Video = default;
+            }
+
+
+            if (blog.Views == null)
+            {
+                blog.Views = 1;
+            }
+            else
+            {
+                blog.Views++;
+            }
+            _context.Update(blog);
+            _context.SaveChangesAsync();
+
+            return View(new LearnBlogViewModel
+            {
+                Blog = blog,
+                RelateBlogs = default
+            });
+        }
     }
 }

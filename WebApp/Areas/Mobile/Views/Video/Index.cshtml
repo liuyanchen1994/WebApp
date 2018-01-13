@@ -39,12 +39,12 @@
                 author = string.IsNullOrWhiteSpace(author) ? "未知" : author;
                 <div class="col-12 my-1 p-1">
                     <div class="card border-0 my-1" style="box-shadow:0 1px 2px 1px #ddd;">
-                        <a class="card-img-top" asp-action="@TempData["DetailPage"]" asp-controller="Video" asp-route-id="@item.Id" target="_blank">
+                        <a class="card-img-top" asp-action="detail" asp-controller="video" asp-route-id="@item.Id">
                             <img src="@item.ThumbnailUrl" style="max-height:200px;width:100%;border-radius:5px 5px 2px 2px !important" />
                         </a>
                         <div class="card-body p-1">
                             <h6 class="card-title mb-0">
-                                <a class="text-dark" asp-action="@TempData["DetailPage"]" asp-controller="Video" asp-route-id="@item.Id" target="_blank">
+                                <a class="text-dark" asp-action="detail" asp-controller="video" asp-route-id="@item.Id">
                                     <strong>
                                         @Html.Raw(@item.Name)
                                     </strong>

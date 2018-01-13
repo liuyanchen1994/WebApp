@@ -8,7 +8,10 @@ namespace WebApp.DB
 {
     public partial class MSDevContext : IdentityDbContext<User>
     {
+        public MSDevContext()
+        {
 
+        }
         public MSDevContext(DbContextOptions<MSDevContext> options) : base(options)
         {
 
