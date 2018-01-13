@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Areas.Mobile.Controllers
 {
-    public class BlogController : Controller
+    public class BlogController : MobileController
     {
         readonly MSDevContext _context;
         public BlogController(MSDevContext context)

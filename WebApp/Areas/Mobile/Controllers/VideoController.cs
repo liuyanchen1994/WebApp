@@ -12,7 +12,7 @@ using System.Net;
 namespace WebApp.Areas.Mobile.Controllers
 {
 
-    public class VideoController : Controller
+    public class VideoController : MobileController
     {
         readonly MSDevContext _context;
 
