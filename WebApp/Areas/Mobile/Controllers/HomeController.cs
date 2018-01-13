@@ -27,7 +27,7 @@ namespace WebApp.Areas.Mobile.Controllers
 
         public IActionResult Index()
         {
-            return RedirectToAction(nameof(NewsController.Index), "News");
+            return RedirectToAction(nameof(NewsController.Index), "news");
         }
 
     }
