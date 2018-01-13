@@ -3,14 +3,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.DB;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using WebApp.Models.ViewModels;
-using System;
 using System.Collections.Generic;
+using WebApp.Areas.Mobile.Models;
+using System;
 
 namespace WebApp.Areas.Mobile.Controllers
 {
-    public class DocumentController : Controller
+    public class DocumentController : MobileController
     {
         readonly MSDevContext _context;
 
@@ -18,18 +17,18 @@ namespace WebApp.Areas.Mobile.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index(string id)
+        public async Task<IActionResult> Index(Guid? id)
         {
             var resource = new List<Resource>();
-            if (!string.IsNullOrEmpty(id))
+            if (id != null)
             {
-                resource = _context.Resource.Where(m => m.CatalogId.ToString().Equals(id.ToUpper()))
+                resource = _context.Resource.Where(m => m.CatalogId == id)
                     .ToList();
             }
             else
             {
                 resource = _context.Resource
-                    .Where(m=>m.Catalog.Type.Equals("文档"))
+                    .Where(m => m.Catalog.Type.Equals("文档"))
                     .ToList();
             }
 
@@ -38,7 +37,7 @@ namespace WebApp.Areas.Mobile.Controllers
                 .Include(m => m.InverseTopCatalog)
                 .ToArrayAsync();
 
-            var documentList = new DocumentViewModels
+            var documentList = new DocumentViewModel
             {
                 Catalog = catalog,
                 Resource = resource
