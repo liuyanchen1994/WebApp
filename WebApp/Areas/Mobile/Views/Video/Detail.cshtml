@@ -4,31 +4,26 @@
     ViewData["Title"] = WebUtility.HtmlDecode(Model.Name);
 }
 
-<div class="col-12 p-0 bg-light text-dark">
-    <div>
-        @if (!string.IsNullOrEmpty(Model.Author))
-        {
-            <span class="text-info" style="font-size:0.9rem">
-                作者:
-                @Model.Author
-                &nbsp;&nbsp;
-                浏览:@Model.Views
-                &nbsp;&nbsp;
-                @Model.UpdatedTime.ToString("yyyy-MM-dd")
-            </span>
-        }
-    </div>
+<div class="col-12 bg-light text-dark p-0">
+    @if (!string.IsNullOrEmpty(Model.Author))
+    {
+        <span class="text-info" style="font-size:0.9rem">
+            作者:
+            @Model.Author
+            &nbsp;&nbsp;
+            浏览:@Model.Views
+            &nbsp;&nbsp;
+            @Model.UpdatedTime.ToString("yyyy-MM-dd")
+        </span>
+    }
+    <br />
     <video controls="controls" width="100%" autoplay class="my-2" poster="@Model.ThumbnailUrl">
         <source src="@Model.Url" type="video/mp4" />
     </video>
-    <div class="row">
-        <div class="col-md-12">
-            <a asp-controller="community" asp-action="blog" asp-route-id="@Model.Blog?.Id"
-               class="btn btn-sm btn-outline-dark">
-                关联文章
-            </a>
-        </div>
-    </div>
+    <a asp-controller="community" asp-action="blog" asp-route-id="@Model.Blog?.Id"
+       class="btn btn-sm btn-outline-dark">
+        关联文章
+    </a>
 </div>
 <div class="col-12 mt-2 bg-white p-1">
     <h6 class="text-primary">

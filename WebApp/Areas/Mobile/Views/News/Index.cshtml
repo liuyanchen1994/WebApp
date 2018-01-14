@@ -4,7 +4,7 @@
     ViewData["Title"] = "资讯";
 }
 
-<div class="col-sm-12 p-0">
+<div class="col-12 p-0">
     @foreach (var bingNews in Model.BingNewsList)
     {
         var Url = HttpUtility.ParseQueryString(new Uri(bingNews.Url).Query);
