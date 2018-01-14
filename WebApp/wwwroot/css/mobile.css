@@ -40,13 +40,10 @@
 }
 
 .bn-menu-icon .iconfont {
-    font-size: 28px;
+    font-size: 24px;
+    padding: 0 0 !important;
 }
 
-.bn-menu-title a {
-    font-size: 16px;
-    text-decoration: none;
-}
 
 .title-bar {
     text-align: center;
