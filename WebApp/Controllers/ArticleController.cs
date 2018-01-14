@@ -12,10 +12,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Controllers
 {
-    public class BlogController : Controller
+    public class ArticleController : Controller
     {
         readonly MSDevContext _context;
-        public BlogController(MSDevContext context)
+        public ArticleController(MSDevContext context)
         {
             _context = context;
         }
