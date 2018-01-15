@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="io.cordova.myapp7fbd8d" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" defaultlocale="zh-CN" android-versionCode="1" windows-packageVersion="0.0.1.0">
-  <name>App</name>
+  <name>MSDev</name>
   <description>msdev移动APP</description>
   <author href="http://cordova.io" email="dev@cordova.apache.org">nilitor</author>
   <vs:template-name>BlankJS</vs:template-name>
@@ -16,11 +16,13 @@
   <allow-intent href="sms:*" />
   <allow-intent href="mailto:*" />
   <allow-intent href="geo:*" />
+  <allow-intent href=""/>
   <allow-navigation href="http://msdev.cc/*" />
   <allow-navigation href="https://msdev.cc/*" />
   <allow-navigation href="https://docs.microsoft.com/*" />
   <allow-navigation href="https://*/*" />
-
+  
+  
   <platform name="android">
     <allow-intent href="market:*" />
   </platform>
