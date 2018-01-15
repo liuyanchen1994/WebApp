@@ -17,12 +17,13 @@
   <allow-intent href="mailto:*" />
   <allow-intent href="geo:*" />
   <allow-intent href=""/>
-  <allow-navigation href="http://msdev.cc/*" />
+  <!--<allow-navigation href="http://msdev.cc/*" />
   <allow-navigation href="https://msdev.cc/*" />
-  <allow-navigation href="https://docs.microsoft.com/*" />
+  <allow-navigation href="https://docs.microsoft.com/*" />-->
   <allow-navigation href="https://*/*" />
-  
-  
+  <allow-navigation href="https://*/*" />
+
+
   <platform name="android">
     <allow-intent href="market:*" />
   </platform>
