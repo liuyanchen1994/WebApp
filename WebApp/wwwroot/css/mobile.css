@@ -44,6 +44,9 @@
     padding: 0 0 !important;
 }
 
+.bn-menu-title {
+    font-size: 14px !important;
+}
 
 .title-bar {
     text-align: center;
