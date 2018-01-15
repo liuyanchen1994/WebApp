@@ -170,6 +170,11 @@ namespace WebApp.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult App()
+        {
+            return View();
+        }
         [Route("/404")]
         public IActionResult Page404()
         {

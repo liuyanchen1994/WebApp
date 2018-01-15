@@ -39,7 +39,7 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav mr-auto">
-                    <li><a class="nav-link text-dark" asp-controller="News" asp-action="Index">资讯</a></li>
+                    <li><a class="nav-link text-dark" asp-controller="news" asp-action="index">资讯</a></li>
                     @*<li class="dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="dorpdownResource">资源</a>
                             <div class="dropdown-menu" aria-labelledby="dorpdownResource">
@@ -47,12 +47,18 @@
 
                             </div>
                         </li>*@
-                    <li><a class="nav-link text-dark" asp-controller="Learn" asp-action="Index">学习</a></li>
+                    <li><a class="nav-link text-dark" asp-controller="learn" asp-action="index">学习</a></li>
                     <li>
-                        <a class="nav-link text-dark" asp-controller="Document" asp-action="Index">文档</a>
+                        <a class="nav-link text-dark" asp-controller="document" asp-action="index">文档</a>
                     </li>
                     <li>@*<a class="nav-link" asp-controller="Activity" asp-action="Index">活动</a>*@</li>
-                    <li><a class="nav-link text-muted" asp-controller="Home" asp-action="About">关于</a></li>
+                    <li><a class="nav-link text-muted" asp-controller="home" asp-action="about">关于</a></li>
+                    <li>
+                        <a asp-controller="home" asp-action="app"
+                           class="nav-link text-danger">
+                            App
+                        </a>
+                    </li>
                 </ul>
                 <div class="d-none d-md-block">
                     <input class="form-control mr-sm-2 nav-search search-input" type="text" placeholder="资源/问题/视频" aria-label="Search">
