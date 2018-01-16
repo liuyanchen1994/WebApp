@@ -1,3 +1,4 @@
+using Alipay.AopSdk.AspnetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
@@ -56,7 +57,6 @@ namespace WebApp
 
                 options.User.RequireUniqueEmail = true;
             });
-
             services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
             {
                 microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
@@ -98,12 +98,24 @@ namespace WebApp
                 };
             });
 
+            // 阿里支付
+            services.AddAlipay(options =>
+            {
+                options.AlipayPublicKey = Configuration["Services:AliPay:PublicKey"];
+                options.PrivateKey = Configuration["Services:AliPay:PrivateKey"];
+                options.AppId = Configuration["Services:AliPay:AppId"];
+                options.Uid = Configuration["Services:AliPay:PrivateKey"];
+                options.Gatewayurl = "https://openapi.alipay.com/gateway.do";
+                options.SignType = "RSA2";
+                options.CharSet = "UTF-8";
+
+            });
+
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddMvc().AddJsonOptions(
                 options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
-
             services.Configure<AuthMessageSenderOptions>(Configuration.GetSection("Services").GetSection("SendGrid"));
             services.Configure<CognitiveOptions>(Configuration.GetSection("Services").GetSection("CognitiveServices"));
 
