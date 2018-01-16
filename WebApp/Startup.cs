@@ -129,7 +129,12 @@ namespace WebApp
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            app.UseStaticFiles();
+            app.UseStaticFiles((new StaticFileOptions()
+            {
+                ServeUnknownFileTypes = true,
+                DefaultContentType = "application/x-msdownload"
+            }));
+
             app.UseAuthentication();
 
             app.UseStatusCodePagesWithRedirects("/404");
