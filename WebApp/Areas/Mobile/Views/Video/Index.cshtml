@@ -73,3 +73,15 @@
         </div>
     }
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#catalog").change(function () {
+                const value = $(this).val();
+                location.href = "?id=" + value;
+            }
+            );
+        })
+    </script>
+}
