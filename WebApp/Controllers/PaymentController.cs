@@ -31,16 +31,15 @@ namespace WebApp.Controllers
             DefaultAopClient client = new DefaultAopClient("https://openapi.alipaydev.com/gateway.do", "2016090800466366", "MIIEogIBAAKCAQEAuCcfh+EJHfMwzXC6b8HfzjYDcH7y79dKAdh5Y5rXOO/4y9stKke+F4Pdp7BOzu6N8/jse7xxCiVLdyUO0L/ck5hOWna//fdQPcSbEyYBUQn+CQy7+uDbsZRniXeeaHJBnK5fot3oHzpHe4dScnvG5NKRJAYsaQW5vD8cVc/m31yuocbyPgqUllblK3h8Lg/nh64bKl8e0Hck1EgGm7+W0+IojM9rcMY1BrdIlUiuP25u8I3zPFH5Tjk4otCvm+xDsukeJiftmDrhtmW3cGtTpNFtr6DK+acfNVccyiaGeCidvLcT3ziO8V7Cy1oQVk+8j5qg83xzCslvF0kZwwrQXwIDAQABAoIBAErfbUx7zI8mz5LX4JWLyAk5oNBebTvi1q5Fa6V50UPPHeMUrBpirQE2liqV3pT4HTMy5EOy7GrpmvNIV+u79lz0MfdKDOmfYjqa80ony6U9YNIhIVTxk6Fx617TCc8BlXe01iGMA9KeiW3KKVVuygFDM8vnzqqsr0XAiy7ApuftP4ujFCJhDZ/PSaKB1/YNJQjz/2GRjqbYT5irre3Mjz7FgyN19CJmSnjshdixp0ItOTQ7QsHYE537gGZhEXs+RDFopF+w4y45kfUUh1IpBxD7jlD1zO3OHXJxBqSiJxz4iO8FS/OYdQUMoGpTtJc6bMnmZcLSwnfV9RTIB381BoECgYEA7+AcpfIpKWgc1zOJRKTjBdKe77LTjto30UlyeskpUofKVRqEYTgALL7POlH16L9gA2R8HvsSEmAPGw7P4ptYO+Kfi3TeiG6RwT5K+JSB8g0xqwvDEVOD3May+nfnaz5sMktWNirSFHbbymfh99mj+4E1drv3cOuDJR6v2qicTyECgYEAxIgcUkcG6CpHagxYfaboyvmglbq/9ZD+ruZSvqG877NT0NLqEPZ6ZOd6AS9m/GsC6pUABtFfXK256oZ7H8bqsfIFTfoUbjiy3fXNuniuvqtLTGL+2kyCazhV15kLtX24wCV6M32Yc1DvGPywAI40UG9D6D2MTCuu7KgO715or38CgYA9p8AVU0oLL4yCL+fvceY8X+ekOrWv+RzxuUwojT4GzYpPF5LBHlDFL4I6PkjTuyTlmlVg7S229WPMk6ERYNZsBhL2GGL+dFUYc3d3r0w7N/L1QP+xm2LAQ35LbLhZ02CiCMUvBRCcW/SgcNUfDJzej1Z7n1K5fn9l8h5HOKF8oQKBgBP7Hp4C2KHsAny2qpyDxrE0Ne5jITcPOcWAZzM4cGQSYFgfyWpWFNWDbzUFo7vQCWjeIzWOPdrHUtqUN5pgd+YFjCKEZWVbYFwOrI7jzChYc/xdKDn7g1rxTFDyH22hTZJDfSwU/dXjiZuJvT8hNhJjbY0EDOqFmnA3GeWePJhzAoGAXioZrM79oG/iN59XuAA5Arl5UjkCsKPa1rfALCSfEoJfvH1UAQ1SbuM0MMIAOGJc/yPdDjyv8Kdy7z867gxo6m0vuLdyJ6qL/KI//mNLJpW30I6/pYsWO1LIIxusxTkv459mvGufn1WH0LHpAf4b84/uq2EDszVat7MEt48NlSI=", "json", "2.0",
                 "RSA2", "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyWWqIIJ0KKDUPk6fgbxXLxCDqVWTvV4mplocxRsjFPvZC2e4uHs6hq3n8/bc/ZnLcavDTCx56L+TsTKN8w4984pqYPgkYXjWl26hMvVJ2GizjRGw+FeM+1uqiWzrDflX3Cp/o8HKSeFqjA+HXpX+nFg94XJfYIAf8vtHKCusdJE6YRmUZ7lCYH01M59b3KQBeX2q304GwC27xgZ1ZOuqGdngNeeTo0WgTpfKOzgQkUVDNLjVJhxk6i71vzfJ5QUUVIEff1UNlLK1C/kCGDaSY8DGPXni+BfdQekVxdqO1aV5JvaZVW9KrxnXfyAf0FYelBbqym4qzJu98+8eee/oyQIDAQAB", "UTF-8", false);
 
-            AlipayOpenAuthTokenAppModel model = new AlipayOpenAuthTokenAppModel();
-
-            //如果使用app_auth_code换取token，则为authorization_code，如果使用refresh_token换取新的token，则为refresh_token
-            model.GrantType = "authorization_code";
-
-            //与refresh_token二选一，用户对应用授权后得到，即第一步中开发者获取到的app_auth_code值
-            model.Code = "ab64829e4d5b4e2aabd2ab6bae0dcB72";
-
-            //与code二选一，可为空，刷新令牌时使用
-            model.RefreshToken = "";
+            var model = new AlipayOpenAuthTokenAppModel
+            {
+                //如果使用app_auth_code换取token，则为authorization_code，如果使用refresh_token换取新的token，则为refresh_token
+                GrantType = "authorization_code",
+                //与refresh_token二选一，用户对应用授权后得到，即第一步中开发者获取到的app_auth_code值
+                Code = "ab64829e4d5b4e2aabd2ab6bae0dcB72",
+                //与code二选一，可为空，刷新令牌时使用
+                RefreshToken = ""
+            };
 
             AlipayOpenAuthTokenAppRequest request = new AlipayOpenAuthTokenAppRequest();
 
@@ -69,7 +68,7 @@ namespace WebApp.Controllers
             //			    Config.SignType, Config.AlipayPublicKey, Config.CharSet, false);
 
             // 组装业务参数model
-            AlipayTradePagePayModel model = new AlipayTradePagePayModel
+            var model = new AlipayTradePagePayModel
             {
                 Body = itemBody,
                 Subject = subject,
@@ -78,18 +77,18 @@ namespace WebApp.Controllers
                 ProductCode = "FAST_INSTANT_TRADE_PAY"
             };
 
-            AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
+            var request = new AlipayTradePagePayRequest();
             // 设置同步回调地址
-            request.SetReturnUrl("http://localhost:5000/Pay/Callback");
+            request.SetReturnUrl("http://localhost:37962/Payment/Callback");
             // 设置异步通知接收地址
-            request.SetNotifyUrl("");
+            request.SetNotifyUrl("http://localhost:37962/Payment/Notify");
             // 将业务model载入到request
             request.SetBizModel(model);
 
             var response = _alipayService.SdkExecute(request);
             Console.WriteLine($"订单支付发起成功，订单号：{tradeno}");
             //跳转支付宝支付
-            //Response.Redirect(Config.Gatewayurl + "?" + response.Body);
+            Response.Redirect(_alipayService.Options.Gatewayurl + "?" + response.Body);
         }
 
 
