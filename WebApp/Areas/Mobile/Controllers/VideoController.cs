@@ -31,7 +31,7 @@ namespace WebApp.Areas.Mobile.Controllers
             // 获取系列目录
             var series = _context.CataLog
                 .Where(m => m.Value.Equals("CourseVideo"))
-                .Include(m => m.TopCatalog)
+                .Include(m => m.InverseTopCatalog)
                 .ToList();
 
             // 获取默认系列
