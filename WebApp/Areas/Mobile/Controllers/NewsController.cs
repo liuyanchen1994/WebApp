@@ -12,7 +12,7 @@ namespace WebApp.Areas.Mobile.Controllers
         {
             _context = context;
         }
-        public IActionResult Index(string tag = "科技")
+        public IActionResult Index(string tag = "微软")
         {
             var query = _context.BingNews.OrderByDescending(m => m.CreatedTime)
                 .AsQueryable();
