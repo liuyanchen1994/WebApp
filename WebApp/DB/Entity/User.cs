@@ -21,7 +21,7 @@ namespace WebApp.DB
         /// </summary>
         [MaxLength(8)]
         public string Sex { get; set; }
-        public DateTime? Birthday{ get; set; }
+        public DateTime? Birthday { get; set; }
         [MaxLength(32)]
         public string City { get; set; }
         /// <summary>
@@ -50,5 +50,7 @@ namespace WebApp.DB
         public ICollection<UserActivity> UserActivity { get; set; }
 
         public ICollection<PracticeAnswer> PracticeAnswer { get; set; }
+        public ICollection<UserServices> UserServices { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }
