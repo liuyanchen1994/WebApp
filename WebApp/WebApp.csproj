@@ -8,7 +8,7 @@
 
         <LangVersion>latest</LangVersion>
 
-        <ApplicationInsightsResourceId>/subscriptions/2d79448b-8cde-4a9c-b34d-e6b92736c69d/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/WebApp</ApplicationInsightsResourceId>
+        <ApplicationInsightsResourceId>/subscriptions/6200f501-7363-4d69-9481-70e13ed77799/resourcegroups/msdevcc/providers/microsoft.insights/components/WebApp</ApplicationInsightsResourceId>
 
         <ApplicationInsightsAnnotationResourceId>/subscriptions/2d79448b-8cde-4a9c-b34d-e6b92736c69d/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/WebApp</ApplicationInsightsAnnotationResourceId>
     </PropertyGroup>
@@ -27,6 +27,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.AzureKeyVault" Version="2.0.0" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
         <PackageReference Include="Sendgrid" Version="9.9.0" />
+
     </ItemGroup>
 
     <ItemGroup>
@@ -45,9 +46,6 @@
       <None Update=".bowerrc">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-    </ItemGroup>
-    <ItemGroup>
-      <None Include="appsettings.Development.json" />
     </ItemGroup>
 </Project>
         

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -7,14 +6,15 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using WebApp.Models;
 using WebApp.Models.AccountViewModels;
 using WebApp.Services;
-using Newtonsoft.Json;
 using WebApp.DB;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Caching.Redis;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace WebApp.Controllers
 {
@@ -24,19 +24,26 @@ namespace WebApp.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly MSDevContext _context;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly IConfiguration _configuration;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
+            MSDevContext context,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            IConfiguration configuration
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
             _emailSender = emailSender;
             _logger = logger;
+            _configuration = configuration;
         }
 
         [TempData]
@@ -71,12 +78,42 @@ namespace WebApp.Controllers
                         return View(model);
                     }
                 }
-                // This doesn't count login failures towards account lockout
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "不存在该用户");
+                    return View(model);
+                }
+
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    // login success
                     _logger.LogInformation("User logged in.");
+                    // get user services from redis,if it's null,select it from database and save to redis
+                    var cacheOptions = new DistributedCacheEntryOptions()
+                    {
+                        AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(24)
+                    };
+
+                    using (var cache = new RedisCache(new RedisCacheOptions { Configuration = _configuration["Services:Redis:ConnectionString"] }))
+                    {
+                        // exist in redis?
+                        var exist = await cache.GetStringAsync("user_" + user.Id);
+                        if (string.IsNullOrWhiteSpace(exist))
+                        {
+                            // select from database
+                            var userServices = _context.UserServices.Where(m => m.User == user)
+                               .ToList();
+
+                            // save to redis
+                            if (userServices != null)
+                            {
+                                user.UserServices = userServices;
+                                await cache.SetStringAsync("user_" + user.Id, JsonConvert.SerializeObject(user));
+                            }
+                        }
+                    }
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -90,7 +127,7 @@ namespace WebApp.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "登录失败，用户名或密码错误");
                     return View(model);
                 }
             }
