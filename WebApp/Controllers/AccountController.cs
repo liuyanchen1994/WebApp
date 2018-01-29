@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -11,9 +10,9 @@ using WebApp.Models.AccountViewModels;
 using WebApp.Services;
 using WebApp.DB;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Caching.Redis;
 using Microsoft.Extensions.Caching.Distributed;
-using System.Text;
+using Microsoft.AspNetCore.Http;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace WebApp.Controllers
@@ -28,6 +27,7 @@ namespace WebApp.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
+        private readonly IDistributedCache _cache;
 
         public AccountController(
             UserManager<User> userManager,
@@ -35,7 +35,8 @@ namespace WebApp.Controllers
             MSDevContext context,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
-            IConfiguration configuration
+            IConfiguration configuration,
+            IDistributedCache cache
             )
         {
             _userManager = userManager;
@@ -44,6 +45,7 @@ namespace WebApp.Controllers
             _emailSender = emailSender;
             _logger = logger;
             _configuration = configuration;
+            _cache = cache;
         }
 
         [TempData]
@@ -90,30 +92,17 @@ namespace WebApp.Controllers
                 {
                     // login success
                     _logger.LogInformation("User logged in.");
-                    // get user services from redis,if it's null,select it from database and save to redis
-                    var cacheOptions = new DistributedCacheEntryOptions()
-                    {
-                        AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(24)
-                    };
 
-                    using (var cache = new RedisCache(new RedisCacheOptions { Configuration = _configuration["Services:Redis:ConnectionString"] }))
-                    {
-                        // exist in redis?
-                        var exist = await cache.GetStringAsync("user_" + user.Id);
-                        if (string.IsNullOrWhiteSpace(exist))
-                        {
-                            // select from database
-                            var userServices = _context.UserServices.Where(m => m.User == user)
-                               .ToList();
+                    // select from database
+                    var userServices = _context.UserServices.Where(m => m.UserId == user.Id)
+                       .ToList();
 
-                            // save to redis
-                            if (userServices != null)
-                            {
-                                user.UserServices = userServices;
-                                await cache.SetStringAsync("user_" + user.Id, JsonConvert.SerializeObject(user));
-                            }
-                        }
+                    // save to redis
+                    if (userServices != null)
+                    {
+                        user.UserServices = userServices;
                     }
+                    _cache.SetString("user_" + user.Id, JsonConvert.SerializeObject(user));
                     return RedirectToLocal(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -312,6 +301,8 @@ namespace WebApp.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
+            var userId = _userManager.GetUserId(User);
+            _cache.Remove("user_" + userId);
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 

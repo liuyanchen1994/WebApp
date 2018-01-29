@@ -111,6 +111,13 @@ namespace WebApp
 
             });
 
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = Configuration["Services:Redis:ConnectionString"];
+                //options.InstanceName = "SampleInstance";
+            });
+
+
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddMvc().AddJsonOptions(
                 options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -148,7 +155,6 @@ namespace WebApp
             }));
 
             app.UseAuthentication();
-
             app.UseStatusCodePagesWithRedirects("/404");
 
             app.UseMvc(routes =>
