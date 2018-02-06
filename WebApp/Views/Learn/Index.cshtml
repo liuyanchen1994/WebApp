@@ -17,7 +17,7 @@
         }
     </ul>
 </div>
-<div class="row">
+@*<div class="row">
     <ul class="learn-nav d-flex col-12">
         <li class="nav-title">博客</li>
         @foreach (var item in Model.ArticleCatalogs)
@@ -29,7 +29,7 @@
             </li>
         }
     </ul>
-</div>
+</div>*@
 
 @*<div class="row">
         <ul class="learn-nav d-flex">
@@ -159,12 +159,12 @@
             }
         </section>
         <section name="blogs" class="row">
-            @foreach (var blog in Model.BlogList)
+            @*@foreach (var blog in Model.BlogList)
             {
                 <div class="col-lg-12 mt-2 px-4 pt-2 bg-white" style="border-left:2px solid dodgerblue">
                     <div class="justify-content-between row m-0">
                         <h5>
-                            <a class="text-info" asp-action="Blog" asp-route-id="@blog.Id">@blog.Title</a>
+                            <a class="text-info" asp-controller="Article" asp-action="@blog.Catalog.Value" asp-route-id="@blog.Id">@blog.Title</a>
                         </h5>
                         <small class="text-muted">
                             @blog.AuthorName @blog.CreatedTime.ToString("yyyy-MM-dd H:mm")
@@ -176,7 +176,7 @@
                     </p>
 
                 </div>
-            }
+            }*@
         </section>
         <section name="practices"></section>
     </div>

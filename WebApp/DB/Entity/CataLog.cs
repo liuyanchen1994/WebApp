@@ -1,8 +1,11 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace WebApp.DB
 {
+    [JsonObject(IsReference = true)]
     public partial class Catalog
     {
         public Catalog()
@@ -22,6 +25,8 @@ namespace WebApp.DB
         public string Value { get; set; }
 
         public Catalog TopCatalog { get; set; }
+
+        [JsonIgnore]
         public ICollection<Catalog> InverseTopCatalog { get; set; }
         public ICollection<Resource> Resource { get; set; }
     }

@@ -59,14 +59,14 @@ namespace WebApp.Controllers
                 PageSize = pageSize,
                 RouteUrl = Request.Path + $"?navId={navId}&topCatalogId={topCatalogId}&eventId={eventId}"
             };
-            //博客一级目录
+            // 视频一级目录
             var videoCatalogs = _context.CataLog.Where(m => m.Type.Equals("视频") && m.IsTop == 1).ToList();
-            //视频一级目录
-            var articleCatalogs = _context.CataLog.Where(m => m.Type.Equals("文章") && m.IsTop == 1).ToList();
+           
+            //var articleCatalogs = _context.CataLog.Where(m => m.Type.Equals("文章") && m.IsTop == 1).ToList();
 
             var topCatalog = new Catalog();
             var secondaryNav = new List<Catalog>(); //左侧二级目录
-            var blogList = new List<Blog>();
+            //var blogList = new List<Blog>();
             var videoList = new List<Video>();
             var eventList = new List<C9Event>();//大会视频主题
 
@@ -255,25 +255,25 @@ namespace WebApp.Controllers
                         break;
                 }
             }
-            if (catalog.Type.Equals("文章"))
-            {
-                blogList = _context.Blog
-                    .Where(m => m.Catalog.Id.ToString().Equals(navId))
-                    .Where(m => m.Status.Equals(StatusType.Publish))
-                    .OrderByDescending(m => m.CreatedTime)
-                    .ToList();
-                pageOption.Total = blogList
-                    .Where(m => m.Status.Equals(StatusType.Publish))
-                    .Count();
-            }
+            //if (catalog.Type.Equals("文章"))
+            //{
+            //    blogList = _context.Blog
+            //        .Where(m => m.Catalog.Id.ToString().Equals(navId))
+            //        .Where(m => m.Status.Equals(StatusType.Publish))
+            //        .OrderByDescending(m => m.CreatedTime)
+            //        .ToList();
+            //    pageOption.Total = blogList
+            //        .Where(m => m.Status.Equals(StatusType.Publish))
+            //        .Count();
+            //}
 
             ViewBag.NavId = navId.Trim();
             return View(new LearnViewModels
             {
                 VideoCatalogs = videoCatalogs,
-                ArticleCatalogs = articleCatalogs,
+                //ArticleCatalogs = articleCatalogs,
                 SecondaryNavs = secondaryNav,
-                BlogList = blogList,
+                //BlogList = blogList,
                 VideoList = videoList,
                 Pager = pageOption,
                 EventList = eventList

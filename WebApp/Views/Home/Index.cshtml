@@ -7,22 +7,23 @@
     var downloadList = Model.Downloads;
     var documentList = Model.Documents;
     var videoList = Model.Videos;
-    var mvaVideoList = Model.MvaVideos;
+    var c9VideoList = Model.C9Videos;
     var selfNews = Model.SelfNews;
     var video1 = videoList[0];
     var video2 = videoList[1];
     var video3 = videoList[2];
 }
 <style>
-    .card{
-        border:none;
-        border-top:3px solid #47a4f3;
-        border-left:1px dashed #eee;
-        border-right:1px dashed #eee;
+    .card {
+        border: none;
+        border-top: 3px solid #47a4f3;
+        border-left: 1px dashed #eee;
+        border-right: 1px dashed #eee;
     }
-    .card-header{
-        background-color:#eee;
-        border:none;
+
+    .card-header {
+        background-color: #f4f4f4;
+        border-bottom: 1px solid #eee;
     }
 </style>
 <!--左边主体内容-->
@@ -65,7 +66,7 @@
                         <div class="col-md-8">
                             <div class="video-banner">
                                 <a class="video-banner-img" asp-action="Detail" asp-controller="Video" asp-route-id="@video1.Id" target="_blank">
-                                    <img src="@video1.ThumbnailUrl" alt="@video1.Name"/>
+                                    <img src="@video1.ThumbnailUrl" alt="@video1.Name" />
                                 </a>
                                 <div class="video-banner-content p-1">
                                     <h5 class="content-title">
@@ -89,7 +90,7 @@
                         <div class="col-md-4">
                             <div class="video-banner">
                                 <a class="video-banner-img" asp-action="Detail" asp-controller="Video" asp-route-id="@video2.Id" target="_blank">
-                                    <img src="@video2.ThumbnailUrl" alt="@video2.Name"/>
+                                    <img src="@video2.ThumbnailUrl" alt="@video2.Name" />
                                 </a>
                                 <div class="video-banner-content p-1">
                                     <h7 class="content-title">
@@ -111,7 +112,7 @@
                             </div>
                             <div class="video-banner mt-3">
                                 <a class="video-banner-img" asp-action="Detail" asp-controller="Video" asp-route-id="@video3.Id" target="_blank">
-                                    <img src="@video3.ThumbnailUrl"  alt="@video3.Name"/>
+                                    <img src="@video3.ThumbnailUrl" alt="@video3.Name" />
                                 </a>
                                 <div class="video-banner-content p-1">
                                     <h7 class="content-title">
@@ -137,18 +138,17 @@
 
                     <!--mva视频-->
                     <div class="row mt-3">
-                        @foreach (var video in mvaVideoList)
+                        @foreach (var video in c9VideoList)
                         {
                             video.SourceUrl = "https://channel9.msdn.com" + video.SourceUrl;
                             <div class="col-md-4">
                                 <div class="video-banner">
                                     <a class="video-banner-img" asp-action="MvaDetail" asp-controller="Video" asp-route-id="@video.Id" target="_blank">
-                                        <img src="@video.CourseImage"  alt="@video.Title"/>
+                                        <img src="@video.ThumbnailUrl" />
                                     </a>
-                                    <div class="video-banner-content p-1">
+                                    <div class="video-banner-content p-1" title="@Html.Raw(video.Title)">
                                         <h7 class="content-title">
-                                            @Html.Raw(@video.Title)
-
+                                            @StringHelper.ReplaceHtmlTag(@video.Title, 40)
                                         </h7>
                                         <div class="content-detail" hidden>
                                             <small>
@@ -218,11 +218,17 @@
                 </div>
             </div>
             <div class="card col-md-6 p-0">
-                <div class="card-header p-2">
-                    <strong>
-                        官方博客
-                    </strong>
+                <div class="card-header p-2 d-flex justify-content-between">
+                    <div class="col">
+                        <strong>
+                            博客动态
+                        </strong>
+                    </div>
+                    <div class="col text-right">
+                        @*<a asp-action="Index" asp-controller="Article">查看更多</a>*@
+                    </div>
                 </div>
+
                 <div class="card-block p-1">
                     @foreach (var blog in blogList)
                     {
@@ -263,7 +269,7 @@
                         <strong>
                             推荐下载
                         </strong>
-                        
+
                     </div>
                     <div class="col text-right">
                         <a asp-controller="Download" asp-action="">更多</a>
@@ -275,7 +281,7 @@
                         <a href="@download.AbsolutePath" style="text-decoration:none" target="_blank" title="@download.Description">
                             @if (!string.IsNullOrEmpty(download.Imgurl))
                             {
-                                <img src="@download.Imgurl" title="@download.Name" width="36" height="36" class="m-1" alt="@download.Name"/>
+                                <img src="@download.Imgurl" title="@download.Name" width="36" height="36" class="m-1" alt="@download.Name" />
 
                             }
                             <span>@download.Name</span>
@@ -303,7 +309,7 @@
                         <a href="@document.AbsolutePath" style="text-decoration:none" target="_blank" title="@document.Description">
                             @if (!string.IsNullOrEmpty(document.Imgurl))
                             {
-                                <img src="@document.Imgurl" title="@document.Name" width="36" height="36" class="m-1" style="border-radius:2px !important" alt="@document.Name"/>
+                                <img src="@document.Imgurl" title="@document.Name" width="36" height="36" class="m-1" style="border-radius:2px !important" alt="@document.Name" />
                             }
 
                             <span>@document.Name</span>
@@ -323,10 +329,10 @@
                 </div>
                 <div class="p-2">
                     <a href="http://www.qcloud.com/redirect.php?redirect=1001&cps_key=8451e9a1ec4d14dec1cd821e079065c1" target="_blank">
-                        <img src="https://msdevccdiag579.blob.core.windows.net/msdev-image/txcloud.jpg" title="腾讯云主机" alt="腾讯云主机" width="100%"/>
+                        <img src="https://msdevccdiag579.blob.core.windows.net/msdev-image/txcloud.jpg" title="腾讯云主机" alt="腾讯云主机" width="100%" />
                     </a>
                 </div>
-         
+
             </div>
         </div>
     </div>

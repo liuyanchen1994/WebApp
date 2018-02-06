@@ -18,6 +18,9 @@ namespace WebApp.DB
         }
 
         #region DbSet
+        public DbSet<UserServices> UserServices { get; set; }
+        public DbSet<Order> Order { get; set; }
+        public DbSet<Commodity> Commodity { get; set; }
         public DbSet<Config> Config { get; set; }
         public DbSet<C9Event> C9Event { get; set; }
         public DbSet<EventVideo> EventVideo { get; set; }
@@ -52,6 +55,30 @@ namespace WebApp.DB
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<UserServices>(entity =>
+            {
+                entity.HasOne(e => e.User)
+                .WithMany(u => u.UserServices)
+                .HasForeignKey(e => e.UserId);
+            });
+
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.HasIndex(e => e.SerialNumber);
+                entity.HasOne(e => e.Commodity);
+
+                entity.HasOne(e => e.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(e => e.UserId);
+            });
+
+            modelBuilder.Entity<Commodity>(entity =>
+            {
+                entity.HasIndex(e => e.Name);
+                entity.HasIndex(e => e.SerialNumber).IsUnique();
+                entity.HasIndex(e => e.TargetId).IsUnique();
+            });
             modelBuilder.Entity<Blog>(entity =>
             {
                 entity.HasOne(e => e.Video)

@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Net.Http;
@@ -111,9 +112,21 @@ namespace WebApp
 
             });
 
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = Configuration["Services:Redis:ConnectionString"];
+                //options.InstanceName = "SampleInstance";
+            });
+
+
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddMvc().AddJsonOptions(
-                options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All;
+                }
+                );
 
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
             services.Configure<AuthMessageSenderOptions>(Configuration.GetSection("Services").GetSection("SendGrid"));
@@ -148,11 +161,11 @@ namespace WebApp
             }));
 
             app.UseAuthentication();
-
             app.UseStatusCodePagesWithRedirects("/404");
 
             app.UseMvc(routes =>
             {
+
                 routes.MapRoute(
                     name: "area",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"

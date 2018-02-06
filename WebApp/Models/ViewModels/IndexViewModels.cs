@@ -15,6 +15,7 @@ namespace WebApp.Models.ViewModels
         public List<Resource> Downloads { get; set; }
         public List<Resource> Documents { get; set; }
 
+        public List<C9Videos> C9Videos { get; set; }
         public List<Blog> SelfNews { get; set; }
 
     }

@@ -31,7 +31,7 @@ namespace WebApp.Areas.Mobile.Controllers
             }
 
             var catalog = await _context.CataLog
-                .Where(m => m.Type == "文档" && m.IsTop == 1)
+                .Where(m => m.Type.Equals("文档") && m.IsTop == 1)
                 .Include(m => m.InverseTopCatalog)
                 .ToArrayAsync();
 
