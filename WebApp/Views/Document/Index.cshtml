@@ -12,32 +12,29 @@
 </style>
 <div class="row">
     <div class="col-md-3 mt-2">
-        @{
-            @foreach (var catalog in Model.Catalog)
-            {
-                <div class="list-group">
-                    <a class="list-group-item list-group-item-action list-group-item-heading p-2"
-                       data-toggle="collapse" href="#collapse-@catalog.Value" aria-expanded="true" aria-controls="collapse-@catalog.Value"
-                       style="background-color:#fafafa">
-                        <strong>
-                            @catalog.Name
-                        </strong>
-                    </a>
-                    <div class="collapse show" id="collapse-@catalog.Value">
-                        @foreach (var childCatalog in catalog.InverseTopCatalog)
+        @foreach (var catalog in Model.Catalog)
+        {
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action list-group-item-heading p-2"
+                   data-toggle="collapse" href="#collapse-@catalog.Value" aria-expanded="true" aria-controls="collapse-@catalog.Value"
+                   style="background-color:#fafafa">
+                    <strong>
+                        @catalog.Name
+                    </strong>
+                </a>
+                <div class="collapse show" id="collapse-@catalog.Value">
+                    @foreach (var childCatalog in catalog.InverseTopCatalog)
+                    {
+                        var id = ViewContext.RouteData.Values["id"]?.ToString();
+                        string liClass = "";
+                        if (id == childCatalog.Id.ToString().ToLower())
                         {
-                            var id = ViewContext.RouteData.Values["id"]?.ToString();
-                            string liClass = "";
-                            if (id == childCatalog.Id.ToString().ToLower())
-                            {
-                                liClass = "active";
-                            }
-                            <a asp-route-id="@childCatalog.Id" class="list-group-item p-2 pl-4 @liClass">@childCatalog.Name</a>
+                            liClass = "active";
                         }
-                    </div>
+                        <a asp-route-id="@childCatalog.Id" class="list-group-item p-2 pl-4 @liClass">@childCatalog.Name</a>
+                    }
                 </div>
-
-            }
+            </div>
         }
     </div>
 

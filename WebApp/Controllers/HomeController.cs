@@ -44,10 +44,8 @@ namespace WebApp.Controllers
                 .Take(8)
                 .ToList();
 
-            var mvaVideos = _context.MvaVideos
+            var c9Videos = _context.C9videos
                  .OrderByDescending(m => m.UpdatedTime)
-                 .Where(m => m.IsRecommend)
-                 .Where(m => m.LanguageCode.Equals("zh-cn"))
                  .Take(3)
                  .ToList();
 
@@ -74,7 +72,7 @@ namespace WebApp.Controllers
                 MsBlogs = msBlogs,
                 Downloads = downloads,
                 Documents = documents,
-                MvaVideos = mvaVideos,
+                C9Videos = c9Videos,
                 Videos = Videos,
                 SelfNews = selfNews
             };
