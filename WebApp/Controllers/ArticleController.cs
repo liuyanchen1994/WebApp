@@ -20,17 +20,25 @@ namespace WebApp.Controllers
         {
             _context = context;
         }
-        public IActionResult Index(string catalog = "articleSelfNews")
+        public IActionResult Index(string catalog = "csharpQuickStart")
         {
-            //获取目录分类
+            // 获取目录分类
+            var topCatalogId = _context.CataLog.Where(m => m.Name.Equals("教程"))
+                .Select(m => m.Id)
+                .FirstOrDefault();
+
             var catalogs = _context.CataLog
-                .Where(m => m.Type.Equals("文章") && m.IsTop == 1)
-                .Include(m => m.InverseTopCatalog)
+                .Where(m => m.TopCatalogId == topCatalogId)
                 .ToList();
 
-            //查询新闻 
+            // 查询新闻 
+            if (string.IsNullOrWhiteSpace(catalog))
+            {
+                catalog = catalogs.FirstOrDefault().Value;
+            }
             var news = _context.Blog
                 .Where(m => m.Catalog.Value.Equals(catalog))
+                .OrderByDescending(m => m.CreatedTime)
                 .ToList();
 
             return View(new ArticleViewModels
